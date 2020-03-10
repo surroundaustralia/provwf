@@ -1,6 +1,8 @@
 from rdflib import Graph, Namespace, URIRef, BNode, Literal
 from rdflib.namespace import RDF, XSD
 from datetime import datetime, timezone
+import random
+import string
 
 
 class ProvReporter:
@@ -72,3 +74,23 @@ class ProvReporter:
         ))
 
         return g
+
+    def serialize(self, graph, file_path_str=None):
+        if file_path_str is None:
+            return graph.serialize(format='turtle').decode('utf-8')
+        else:
+            try:
+                with open(file_path_str, 'w') as f:
+                    f.write(graph.serialize(format="turtle").decode('utf-8'))
+            except IOError as e:
+                raise e
+
+
+class ProvWorkflowException(Exception):
+    pass
+
+
+if __name__ == '__main__':
+    pr = ProvReporter()
+    g = pr.prov_to_graph()
+    pr.serialize(g)

@@ -6,7 +6,7 @@ from rdflib.namespace import RDF
 def test_ProvReporter_prov_to_graph():
     """A basic ProvReporter should prov_to_graph an Activity with a startedAtTime & endedAtTime
 
-    :return:
+    :return: None
     """
 
     PROV = Namespace('http://www.w3.org/ns/prov#')

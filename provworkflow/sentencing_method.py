@@ -1,4 +1,5 @@
-from .block import Block
+from provworkflow import ProvWorkflowException
+from provworkflow import Block
 from rdflib import Graph, Namespace, URIRef, BNode, Literal
 from rdflib.namespace import RDFS, XSD
 
