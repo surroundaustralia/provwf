@@ -1,5 +1,5 @@
 from rdflib import Graph, Namespace, URIRef, BNode, Literal
-from rdflib.namespace import RDFS, XSD
+from rdflib.namespace import RDF, XSD
 from datetime import datetime, timezone
 
 
@@ -40,7 +40,7 @@ class ProvReporter:
 
         g.add((
             self.uri,
-            RDFS.type,
+            RDF.type,
             self.PROV.Activity
         ))
 
@@ -67,7 +67,7 @@ class ProvReporter:
         # all Activities have a endedAtTime
         g.add((
             self.uri,
-            self.PROV.startedAtTime,
+            self.PROV.endedAtTime,
             Literal(self.ended_at_time.isoformat(), datatype=XSD.dateTime)
         ))
 
