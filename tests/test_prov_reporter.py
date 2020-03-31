@@ -9,7 +9,7 @@ def test_ProvReporter_prov_to_graph():
     :return: None
     """
 
-    PROV = Namespace('http://www.w3.org/ns/prov#')
+    PROV = Namespace("http://www.w3.org/ns/prov#")
 
     pr = ProvReporter()
     g = pr.prov_to_graph()
@@ -31,5 +31,5 @@ def test_ProvReporter_prov_to_graph():
     assert g.query(q), "startedAtTime must be less than endedAtTime"
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     test_ProvReporter_prov_to_graph()

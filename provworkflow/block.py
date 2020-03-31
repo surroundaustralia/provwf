@@ -4,7 +4,6 @@ from rdflib.namespace import RDF
 
 
 class Block(ProvReporter):
-
     def __init__(self, uri=None, label=None):
         super().__init__(uri=uri, label=label)
 
@@ -12,10 +11,6 @@ class Block(ProvReporter):
         g = super().prov_to_graph(g)
 
         # add in type
-        g.add((
-            self.uri,
-            RDF.type,
-            self.PROVWF.Block
-        ))
+        g.add((self.uri, RDF.type, self.PROVWF.Block))
 
         return g

@@ -5,7 +5,6 @@ from rdflib.namespace import RDFS, XSD
 
 
 class SentencingMethod(Block):
-
     def __init__(self, name):
         super().__init__(name)
         self.name = name
@@ -14,10 +13,6 @@ class SentencingMethod(Block):
         g = super().prov_to_graph(g)
 
         # add in type
-        g.add((
-            URIRef(self.uri),
-            RDFS.type,
-            self.PROVWF.Block
-        ))
+        g.add((URIRef(self.uri), RDFS.type, self.PROVWF.SentencingMethod))
 
         return g

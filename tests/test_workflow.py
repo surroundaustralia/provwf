@@ -10,8 +10,8 @@ def test_Workflow_prov_to_graph():
     :return: None
     """
 
-    PROV = Namespace('http://www.w3.org/ns/prov#')
-    PROVWF = Namespace('https://data.surroundaustralia.com/def/profworkflow#')
+    PROV = Namespace("http://www.w3.org/ns/prov#")
+    PROVWF = Namespace("https://data.surroundaustralia.com/def/profworkflow#")
 
     w = Workflow()
     b1 = Block()
@@ -32,5 +32,5 @@ def test_Workflow_prov_to_graph():
     assert count == 2, "This Workflow must contain 2 Blocks"
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     test_Workflow_prov_to_graph()

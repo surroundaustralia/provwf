@@ -9,8 +9,8 @@ def test_Block_prov_to_graph():
     :return: None
     """
 
-    PROV = Namespace('http://www.w3.org/ns/prov#')
-    PROVWF = Namespace('https://data.surroundaustralia.com/def/profworkflow#')
+    PROV = Namespace("http://www.w3.org/ns/prov#")
+    PROVWF = Namespace("https://data.surroundaustralia.com/def/profworkflow#")
 
     b = Block()
     g = b.prov_to_graph()
@@ -20,5 +20,5 @@ def test_Block_prov_to_graph():
     assert (None, RDF.type, PROVWF.Block) in g, "g must contain a provwf:Block"
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     test_Block_prov_to_graph()
