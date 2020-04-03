@@ -8,6 +8,7 @@ class IlluminClient(Block):
     def __init__(self):
         super().__init__()
 
+        self.query = None
         self.query_result = None
         self.illumin_error = None
 
@@ -17,9 +18,18 @@ class IlluminClient(Block):
         # add in type
         g.add((URIRef(self.uri), RDF.type, self.PROVWF.IlluminClient))
 
+        # add in the query
+        g.add((
+            URIRef(self.uri),
+            self.PROVWF.hadIlluminQuery,
+            Literal(self.query, datatype=XSD.string)
+        ))
+
         return g
 
     def send_query(self, query):
+        # store this query for PROV
+        self.query = query
         # validate query is GraphQL
         # send to Illumin (SOP)
         # store result somehow
@@ -31,3 +41,12 @@ class IlluminClient(Block):
 
 class IlluminException(Exception):
     pass
+
+
+if __name__ == "__main__":
+    ic = IlluminClient()
+    q = """
+        PUT IN NICE GraphQL!
+        """
+
+    ic.send_query(q)
