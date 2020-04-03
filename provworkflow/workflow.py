@@ -19,6 +19,7 @@ class Workflow(ProvReporter):
                 "A Workflow must have at least one Block within it"
             )
 
+        # TODO: can I do the g2 test here?
         g = super().prov_to_graph(g)
 
         # add in type

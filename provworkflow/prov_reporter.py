@@ -1,5 +1,5 @@
 from rdflib import Graph, Namespace, URIRef, BNode, Literal
-from rdflib.namespace import RDF, XSD
+from rdflib.namespace import RDF, RDFS, XSD
 from datetime import datetime, timezone
 
 
@@ -44,7 +44,7 @@ class ProvReporter:
             g.add(
                 (
                     self.uri,
-                    self.PROV.startedAtTime,
+                    RDFS.label,
                     Literal(self.label, datatype=XSD.string),
                 )
             )
@@ -76,11 +76,11 @@ class ProvReporter:
 
     def serialize(self, graph, file_path_str=None):
         if file_path_str is None:
-            return graph.serialize(format="turtle").decode("utf-8")
+            return graph.serialize(format="trig").decode("utf-8")
         else:
             try:
                 with open(file_path_str, "w") as f:
-                    f.write(graph.serialize(format="turtle").decode("utf-8"))
+                    f.write(graph.serialize(format="trig").decode("utf-8"))
             except IOError as e:
                 raise e
 

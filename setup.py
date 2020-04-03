@@ -42,7 +42,7 @@ setup(
         'Programming Language :: Python :: 3.8',
     ],
     keywords='workflow provenance semantic',  # Optional
-    package_dir={'': 'src'},  # Optional
+    package_dir={'': 'provworkflow'},  # Optional
     packages=find_packages(where='src'),  # Required
     python_requires='>=3.6',
     project_urls={  # Optional
