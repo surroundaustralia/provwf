@@ -29,6 +29,7 @@ def test_Workflow_prov_to_graph():
     for o in g.subject_objects(PROVWF.hadBlock):
         count += 1
 
+    print(g.serialize(format="turtle").decode())
     assert count == 2, "This Workflow must contain 2 Blocks"
 
 

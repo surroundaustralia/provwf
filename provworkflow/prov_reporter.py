@@ -1,18 +1,19 @@
-from rdflib import Graph, Namespace, URIRef, BNode, Literal
-from rdflib.namespace import RDF, RDFS, XSD
-from datetime import datetime, timezone
+from rdflib import Graph, Namespace, URIRef, Literal
+from rdflib.namespace import PROV, RDF, RDFS, XSD
+from datetime import datetime
+import uuid
 
 
 class ProvReporter:
     def __init__(self, uri_str=None, label=None):
-        self.PROV = Namespace("http://www.w3.org/ns/prov#")
         self.PROVWF = Namespace("https://data.surroundaustralia.com/def/profworkflow#")
+        self.BLK = Namespace("https://data.surroundaustralia.com/dataset/block/")
 
-        # give it a Blank Node if one not given
+        # give it an opaque UUID URI if one not given
         if uri_str is not None:
             self.uri = URIRef(uri_str)
         else:
-            self.uri = BNode()
+            self.uri = URIRef(self.BLK + str(uuid.uuid1()))
         self.label = label
 
         self.started_at_time = datetime.now()
@@ -31,44 +32,38 @@ class ProvReporter:
         if g is None:
             g = Graph()
 
-        g.bind("prov", self.PROV)
+        g.bind("prov", PROV)
         g.bind("provwf", self.PROVWF)
 
         # this instance's URI
-        g.add((self.uri, RDF.type, self.PROV.Activity))
+        g.add((self.uri, RDF.type, PROV.Activity))
 
         # add a label if this Activity has one
         if self.label is not None:
-            g.add(
-                (
-                    self.uri,
-                    RDFS.label,
-                    Literal(self.label, datatype=XSD.string),
-                )
-            )
+            g.add((
+                self.uri,
+                RDFS.label,
+                Literal(self.label, datatype=XSD.string),
+            ))
 
         # all Activities have a startedAtTime
         # made at __init__() time
-        g.add(
-            (
-                self.uri,
-                self.PROV.startedAtTime,
-                Literal(self.started_at_time.isoformat(), datatype=XSD.dateTime),
-            )
-        )
+        g.add((
+            self.uri,
+            PROV.startedAtTime,
+            Literal(self.started_at_time.isoformat(), datatype=XSD.dateTime),
+        ))
 
         # if we don't yet have an endedAtTime recorded, make it now
         if self.ended_at_time is None:
             self.ended_at_time = datetime.now()
 
         # all Activities have a endedAtTime
-        g.add(
-            (
-                self.uri,
-                self.PROV.endedAtTime,
-                Literal(self.ended_at_time.isoformat(), datatype=XSD.dateTime),
-            )
-        )
+        g.add((
+            self.uri,
+            PROV.endedAtTime,
+            Literal(self.ended_at_time.isoformat(), datatype=XSD.dateTime),
+        ))
 
         return g
 

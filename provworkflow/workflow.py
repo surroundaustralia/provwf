@@ -1,5 +1,5 @@
 from provworkflow import ProvReporter, ProvWorkflowException
-from rdflib.namespace import RDF
+from rdflib.namespace import PROV, RDF
 from rdflib import Graph
 from franz.openrdf.connect import ag_connect
 from franz.openrdf.rio.rdfformat import RDFFormat
@@ -34,7 +34,7 @@ class Workflow(ProvReporter):
 
         if graph_uri_str is not None:
             g2 = Graph(identifier=graph_uri_str)
-            g2.bind("prov", self.PROV)
+            g2.bind("prov", PROV)
             g2.bind("provwf", self.PROVWF)
             g2 += g
 

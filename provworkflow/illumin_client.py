@@ -1,7 +1,7 @@
 from provworkflow import ProvWorkflowException
 from provworkflow import Block
 from rdflib import Graph, Namespace, URIRef, BNode, Literal
-from rdflib.namespace import RDF, RDFS, XSD
+from rdflib.namespace import PROV, RDF, RDFS, XSD
 
 
 class IlluminClient(Block):
@@ -25,7 +25,7 @@ class IlluminClient(Block):
         g.add((
             iq,
             RDF.type,
-            self.PROV.Activity
+            PROV.Activity
         ))
         g.add((
             iq,
@@ -34,12 +34,12 @@ class IlluminClient(Block):
         ))
         g.add((
             iq,
-            self.PROV.startedAtTime,
+            PROV.startedAtTime,
             Literal(self.query_start, datatype=XSD.dateTime)
         ))
         g.add((
             iq,
-            self.PROV.endedAtTime,
+            PROV.endedAtTime,
             Literal(self.query_start, datatype=XSD.dateTime)
         ))
 
@@ -48,21 +48,21 @@ class IlluminClient(Block):
         g.add((
             query_entity,
             RDF.type,
-            self.PROV.Entity
+            PROV.Entity
         ))
         g.add((
             query_entity,
             RDF.type,
-            self.PROV.Plan
+            PROV.Plan
         ))
         g.add((
             query_entity,
-            self.PROV.value,
+            PROV.value,
             Literal(self.query, datatype=XSD.string)
         ))
         g.add((
             iq,
-            self.PROV.used,
+            PROV.used,
             query_entity
         ))
 
@@ -71,33 +71,33 @@ class IlluminClient(Block):
         g.add((
             query_result,
             RDF.type,
-            self.PROV.Entity
+            PROV.Entity
         ))
         if self.illumin_error:
             g.add((
                 query_result,
                 RDF.type,
-                self.PROV.IlluminError
+                PROV.IlluminError
             ))
             g.add((
                 query_result,
-                self.PROV.value,
+                PROV.value,
                 Literal(self.illumin_error, datatype=XSD.string)
             ))
         else:
             g.add((
                 query_result,
                 RDF.type,
-                self.PROV.IlluminResult
+                PROV.IlluminResult
             ))
             g.add((
                 query_result,
-                self.PROV.value,
+                PROV.value,
                 Literal(self.illumin_result, datatype=XSD.string)
             ))
         g.add((
             iq,
-            self.PROV.generated,
+            PROV.generated,
             query_result
         ))
 

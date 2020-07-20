@@ -1,5 +1,4 @@
-from .prov_reporter import ProvReporter, ProvWorkflowException
-from rdflib import Graph, Namespace, URIRef, BNode, Literal
+from .prov_reporter import ProvReporter
 from rdflib.namespace import RDF
 
 

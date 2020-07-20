@@ -1,7 +1,6 @@
-from provworkflow import ProvWorkflowException
 from provworkflow import Block
-from rdflib import Graph, Namespace, URIRef, BNode, Literal
-from rdflib.namespace import RDF, RDFS, XSD
+from rdflib import URIRef
+from rdflib.namespace import RDF
 
 
 class SentencingMethod(Block):
