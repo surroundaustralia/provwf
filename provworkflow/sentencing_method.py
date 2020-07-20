@@ -5,10 +5,13 @@ from rdflib.namespace import RDF, RDFS, XSD
 
 
 class SentencingMethod(Block):
-    def __init__(self, id):
-        # TODO: use given ID to look up SM URI
+    def __init__(self, id, label=None):
+        # TODO: use given ID to look up SM URI form a controlled list
         sm_uri = "http://fake-sm-uri.com"
-        sm_label = "SM x"
+        if label is not None:
+            sm_label = "SM x"
+        else:
+            sm_label = "Sentencing Method {}".format(id)
         super().__init__(uri_str=sm_uri, label=sm_label)
 
     def prov_to_graph(self, g=None):

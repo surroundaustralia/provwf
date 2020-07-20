@@ -8,7 +8,11 @@ class ProvReporter:
         self.PROV = Namespace("http://www.w3.org/ns/prov#")
         self.PROVWF = Namespace("https://data.surroundaustralia.com/def/profworkflow#")
 
-        self.uri = uri_str
+        # give it a Blank Node if one not given
+        if uri_str is not None:
+            self.uri = URIRef(uri_str)
+        else:
+            self.uri = BNode()
         self.label = label
 
         self.started_at_time = datetime.now()
@@ -31,12 +35,6 @@ class ProvReporter:
         g.bind("provwf", self.PROVWF)
 
         # this instance's URI
-        # give it a Blank Node if one not given
-        if self.uri is not None:
-            self.uri = URIRef(self.uri)
-        else:
-            self.uri = BNode()
-
         g.add((self.uri, RDF.type, self.PROV.Activity))
 
         # add a label if this Activity has one
