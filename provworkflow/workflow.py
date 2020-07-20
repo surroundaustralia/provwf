@@ -1,5 +1,4 @@
 from provworkflow import ProvReporter, ProvWorkflowException
-from provworkflow import _config as config
 from rdflib.namespace import RDF
 from rdflib import Graph
 from franz.openrdf.connect import ag_connect
