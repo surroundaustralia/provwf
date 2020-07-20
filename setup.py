@@ -11,7 +11,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='provworkflow',  # Required
-    version='0.1',  # Required
+    version='0.2',  # Required
     description='This is a Python library for creating workflows of methods that log their actions according '
                 'to the PROV-O standard.',  # Optional
     long_description=long_description,  # Optional
