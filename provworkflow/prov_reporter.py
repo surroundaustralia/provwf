@@ -11,7 +11,7 @@ class ProvReporter:
         self.uri = uri
         self.label = label
 
-        self.started_at_time = datetime.now(timezone.utc)
+        self.started_at_time = datetime.now()
         self.ended_at_time = None
 
     def prov_to_graph(self, g=None):
@@ -61,7 +61,7 @@ class ProvReporter:
 
         # if we don't yet have an endedAtTime recorded, make it now
         if self.ended_at_time is None:
-            self.ended_at_time = datetime.now(timezone.utc)
+            self.ended_at_time = datetime.now()
 
         # all Activities have a endedAtTime
         g.add(
