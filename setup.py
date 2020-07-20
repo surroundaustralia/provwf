@@ -43,7 +43,7 @@ setup(
     ],
     keywords='workflow provenance semantic',  # Optional
     package_dir={'': 'provworkflow'},  # Optional
-    packages=find_packages(where='src'),  # Required
+    packages=find_packages(),  # Required
     python_requires='>=3.6',
     project_urls={  # Optional
         'Source': 'https://bitbucket.org/surroundbitbucket/provworkflow/src/master/',
