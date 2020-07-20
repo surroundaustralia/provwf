@@ -8,8 +8,8 @@ import signal
 
 
 class Workflow(ProvReporter):
-    def __init__(self, uri=None, label=None, blocks=None):
-        super().__init__(uri=uri, label=label)
+    def __init__(self, uri_str=None, label=None, blocks=None):
+        super().__init__(uri_str=uri_str, label=label)
         self.blocks = blocks
         if self.blocks is None:
             self.blocks = []

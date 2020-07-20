@@ -9,7 +9,7 @@ class SentencingMethod(Block):
         # TODO: use given ID to look up SM URI
         sm_uri = "http://fake-sm-uri.com"
         sm_label = "SM x"
-        super().__init__(uri=sm_uri, label=sm_label)
+        super().__init__(uri_str=sm_uri, label=sm_label)
 
     def prov_to_graph(self, g=None):
         g = super().prov_to_graph(g)

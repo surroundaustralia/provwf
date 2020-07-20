@@ -4,11 +4,11 @@ from datetime import datetime, timezone
 
 
 class ProvReporter:
-    def __init__(self, uri=None, label=None):
+    def __init__(self, uri_str=None, label=None):
         self.PROV = Namespace("http://www.w3.org/ns/prov#")
         self.PROVWF = Namespace("https://data.surroundaustralia.com/def/profworkflow#")
 
-        self.uri = uri
+        self.uri = uri_str
         self.label = label
 
         self.started_at_time = datetime.now()
