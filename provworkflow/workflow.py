@@ -14,7 +14,7 @@ class Workflow(ProvReporter):
         if self.blocks is None:
             self.blocks = []
 
-    def prov_to_graph(self, g=None, graph_uri=None):
+    def prov_to_graph(self, g=None, graph_uri_str=None):
         if self.blocks is None or len(self.blocks) < 1:
             raise ProvWorkflowException(
                 "A Workflow must have at least one Block within it"
@@ -32,8 +32,8 @@ class Workflow(ProvReporter):
             # associate this Block with this Workflow
             g.add((self.uri, self.PROVWF.hadBlock, block.uri))
 
-        if graph_uri is not None:
-            g2 = Graph(identifier=graph_uri)
+        if graph_uri_str is not None:
+            g2 = Graph(identifier=graph_uri_str)
             g2.bind("prov", self.PROV)
             g2.bind("provwf", self.PROVWF)
             g2 += g
