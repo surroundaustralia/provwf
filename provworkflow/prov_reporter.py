@@ -7,13 +7,13 @@ import uuid
 class ProvReporter:
     def __init__(self, uri_str=None, label=None):
         self.PROVWF = Namespace("https://data.surroundaustralia.com/def/profworkflow#")
-        self.BLK = Namespace("https://data.surroundaustralia.com/dataset/block/")
+        self.PWF = Namespace("https://data.surroundaustralia.com/dataset/provworkflow/")
 
         # give it an opaque UUID URI if one not given
         if uri_str is not None:
             self.uri = URIRef(uri_str)
         else:
-            self.uri = URIRef(self.BLK + str(uuid.uuid1()))
+            self.uri = URIRef(self.PWF + str(uuid.uuid1()))
         self.label = label
 
         self.started_at_time = datetime.now()
