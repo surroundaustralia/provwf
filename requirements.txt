@@ -2,3 +2,4 @@ rdflib
 pytest
 agraph-python
 black
+requests
