@@ -1,5 +1,5 @@
-rdflib
+rdflib>=5.0.0
 pytest
-agraph-python
+agraph-python==101.0.6
 black
 requests
