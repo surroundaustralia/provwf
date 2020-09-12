@@ -1,6 +1,6 @@
 from provworkflow import ProvReporter, ProvWorkflowException
-from rdflib.namespace import PROV, RDF
-from rdflib import Graph
+from rdflib.namespace import RDF
+from rdflib import Graph, URIRef
 from franz.openrdf.connect import ag_connect
 from franz.openrdf.rio.rdfformat import RDFFormat
 import os
@@ -9,20 +9,23 @@ import requests
 
 
 class Workflow(ProvReporter):
-    def __init__(self, uri_str=None, label=None, blocks=None):
-        super().__init__(uri_str=uri_str, label=label)
+    def __init__(self, uri_str=None, label=None, blocks=None, named_graph_uri=None):
+        super().__init__(uri_str=uri_str, label=label, named_graph_uri=named_graph_uri)
         self.blocks = blocks
         if self.blocks is None:
             self.blocks = []
 
-    def prov_to_graph(self, g=None, graph_uri_str=None):
+    def prov_to_graph(self, g=None):
         if self.blocks is None or len(self.blocks) < 1:
             raise ProvWorkflowException(
                 "A Workflow must have at least one Block within it"
             )
 
-        # TODO: can I do the g2 test here?
-        g = super().prov_to_graph(g)
+        if g is None:
+            if self.named_graph_uri is not None:
+                g = Graph(identifier=URIRef(self.named_graph_uri))
+            else:
+                g = Graph()
 
         # add in type
         g.add((self.uri, RDF.type, self.PROVWF.Workflow))
@@ -33,15 +36,10 @@ class Workflow(ProvReporter):
             # associate this Block with this Workflow
             g.add((self.uri, self.PROVWF.hadBlock, block.uri))
 
-        if graph_uri_str is not None:
-            g2 = Graph(identifier=graph_uri_str)
-            g2.bind("prov", PROV)
-            g2.bind("provwf", self.PROVWF)
-            g2 += g
+        # build all the details for the Workflow itself
+        g = super().prov_to_graph(g)
 
-            return g2
-        else:
-            return g
+        return g
 
     # see http://192.168.0.132:10035/doc/python/tutorial/example006.html
     def send_file_to_allegro(self, turtle_file_path, context_uri=None):
