@@ -1,8 +1,8 @@
 from provworkflow import ProvReporter, ProvWorkflowException
 from rdflib.namespace import RDF
 from rdflib import Graph, URIRef
-from franz.openrdf.connect import ag_connect
-from franz.openrdf.rio.rdfformat import RDFFormat
+# from franz.openrdf.connect import ag_connect
+# from franz.openrdf.rio.rdfformat import RDFFormat
 import os
 import signal
 import requests
