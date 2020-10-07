@@ -137,7 +137,10 @@ class Workflow(ProvReporter):
         except Exception as exc:
             print(exc)
 
-    def prov_to_graphdb(self):
+    def prov_to_graphdb(self, data = 'prov'):
+        if data == 'prov':
+            data = self.prov_to_graph().serialize(format="turtle").decode("utf-8")
+
         GRAPH_DB_BASE_URI = os.environ.get("GRAPH_DB_BASE_URI", "http://localhost:7200")
         GRAPH_DB_REPO_ID = os.environ.get("GRAPH_DB_REPO_ID", "sarobot")
         GRAPHDB_USR = os.environ.get("GRAPHDB_USR", "admin")
@@ -146,7 +149,7 @@ class Workflow(ProvReporter):
         r = requests.post(
             GRAPH_DB_BASE_URI + "/repositories/" + GRAPH_DB_REPO_ID + "/statements",
             params={"context": "null"},
-            data=self.prov_to_graph().serialize(format="turtle").decode("utf-8"),
+            data=data,
             headers={"Content-Type": "text/turtle"},
             auth=(GRAPHDB_USR, GRAPHDB_PWD)
         )
