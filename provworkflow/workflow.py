@@ -153,5 +153,6 @@ class Workflow(ProvReporter):
             headers={"Content-Type": "text/turtle"},
             auth=(GRAPHDB_USR, GRAPHDB_PWD)
         )
+        print(r.status_code)
         if r.status_code != 204:
             raise Exception("GraphDB says: {}".format(r.text))
