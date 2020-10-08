@@ -7,7 +7,7 @@ GRAPH_DB_REPO_ID = os.environ.get("GRAPH_DB_REPO_ID", "sortrobot")
 GRAPHDB_USR = os.environ.get("GRAPHDB_USR", "admin")
 GRAPHDB_PWD = os.environ.get("GRAPHDB_PWD", "sortrobot")
 
-def to_graphdb(self, graph : Graph):
+def to_graphdb(graph : Graph):
     """
     generic util to write a given graph to graphdb
     :param self:
