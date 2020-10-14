@@ -20,7 +20,7 @@ def to_graphdb(graph : Graph):
     r = requests.post(
         GRAPH_DB_BASE_URI + "/repositories/" + GRAPH_DB_REPO_ID + "/statements",
         params={"context": "null"},
-        data=data,
+        data=data.encode('utf-8'),
         headers={"Content-Type": "text/turtle"},
         auth=(GRAPHDB_USR, GRAPHDB_PWD)
     )
