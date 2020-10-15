@@ -140,7 +140,7 @@ class Workflow(ProvReporter):
     def prov_to_graphdb(self, data = 'prov'):
         if data == 'prov':
             data = self.prov_to_graph().serialize(format="turtle").decode("utf-8")
-            with open('/home/dhabgood/repos/processing/tmp','w') as f:
+            with open('/home/dhabgood/repos/processing/tmp/graph.ttl','w') as f:
                 f.write(data)
 
         GRAPH_DB_BASE_URI = os.environ.get("GRAPH_DB_BASE_URI", "http://localhost:7200")
