@@ -1,7 +1,7 @@
-from provworkflow import ProvReporter, ProvWorkflowException
+from provworkflow import ProvReporter, ProvWorkflowException, to_graphdb
 from rdflib.namespace import RDF
 from rdflib import Graph, URIRef
-from utils import to_graphdb
+# from utils import to_graphdb
 # from franz.openrdf.connect import ag_connect
 # from franz.openrdf.rio.rdfformat import RDFFormat
 import os
