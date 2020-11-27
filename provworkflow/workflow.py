@@ -1,6 +1,7 @@
 from provworkflow import ProvReporter, ProvWorkflowException
 from rdflib.namespace import RDF
 from rdflib import Graph, URIRef
+from utils import to_graphdb
 # from franz.openrdf.connect import ag_connect
 # from franz.openrdf.rio.rdfformat import RDFFormat
 import os
@@ -137,24 +138,6 @@ class Workflow(ProvReporter):
         except Exception as exc:
             print(exc)
 
-    def prov_to_graphdb(self, data = 'prov'):
-        if data == 'prov':
-            data = self.prov_to_graph().serialize(format="turtle").decode("utf-8")
-            with open('/home/dhabgood/repos/processing/tmp/graph.ttl','w') as f:
-                f.write(data)
+    def prov_to_graphdb(self):
 
-        GRAPH_DB_BASE_URI = os.environ.get("GRAPH_DB_BASE_URI", "http://localhost:7200")
-        GRAPH_DB_REPO_ID = os.environ.get("GRAPH_DB_REPO_ID", "sarobot")
-        GRAPHDB_USR = os.environ.get("GRAPHDB_USR", "admin")
-        GRAPHDB_PWD = os.environ.get("GRAPHDB_PWD", "sarobot")
-
-        r = requests.post(
-            GRAPH_DB_BASE_URI + "/repositories/" + GRAPH_DB_REPO_ID + "/statements",
-            params={"context": "null"},
-            data=data,
-            headers={"Content-Type": "text/turtle"},
-            auth=(GRAPHDB_USR, GRAPHDB_PWD)
-        )
-        # print(r.status_code)
-        if r.status_code != 204:
-            raise Exception("GraphDB says: {}".format(r.text))
+        to_graphdb(self.prov_to_graph())

@@ -33,5 +33,17 @@ def test_Workflow_prov_to_graph():
     assert count == 2, "This Workflow must contain 2 Blocks"
 
 
+def test_prov_to_graphdb():
+    """
+    Test writing to graphdb
+    """
+
+    w = Workflow()
+    b1 = Block()
+    w.blocks.append(b1)
+    w.prov_to_graphdb()
+
+
 if __name__ == "__main__":
     test_Workflow_prov_to_graph()
+    test_prov_to_graphdb()
