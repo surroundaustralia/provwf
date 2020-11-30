@@ -16,7 +16,7 @@ def to_graphdb(graph: Graph):
     GRAPHDB_USR = os.environ.get("GRAPHDB_USR", "admin")
     GRAPHDB_PWD = os.environ.get("GRAPHDB_PWD", "sortrobot")
 
-    data = graph.serialize(format="turtle").decode("utf-8")
+    data = graph.serialize(format="turtle", encoding="utf-8")
 
     r = requests.post(
         GRAPH_DB_BASE_URI + "/repositories/" + GRAPH_DB_REPO_ID + "/statements",
