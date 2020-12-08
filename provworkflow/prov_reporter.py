@@ -1,7 +1,11 @@
+import uuid
+from datetime import datetime
+from typing import Union
+
 from rdflib import Graph, Namespace, URIRef, Literal
 from rdflib.namespace import PROV, RDF, RDFS, XSD
-from datetime import datetime
-import uuid
+
+from provworkflow.utils import to_graphdb, to_sop
 
 
 class ProvReporter:
@@ -82,6 +86,27 @@ class ProvReporter:
                     f.write(s)
             except IOError as e:
                 raise e
+
+    def persist(self, persistence_methods: Union[str, list], **persistence_kwargs):
+        """
+        Persists ProvReporter instance graphs to one or more triplestores, or on disk.
+        """
+
+        if type(persistence_methods) == str:
+            persistence_methods = [persistence_methods]
+
+        for method in persistence_methods:
+            assert method in ['GraphDB', 'SOP', 'TTL']
+
+        # generate the graph to write
+        g = self.prov_to_graph()
+        # write to one or more persistence layers
+        if 'GraphDB' in persistence_methods:
+            to_graphdb(g, self.named_graph_uri)
+        if 'SOP' in persistence_methods:
+            to_sop(g, self.named_graph_uri)
+        if 'TTL_file' in persistence_methods:
+            self.serialize(persistence_kwargs['workflow_graph_file'])
 
 
 class ProvWorkflowException(Exception):

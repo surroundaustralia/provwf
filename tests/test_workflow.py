@@ -33,17 +33,29 @@ def test_Workflow_prov_to_graph():
     assert count == 2, "This Workflow must contain 2 Blocks"
 
 
-def test_prov_to_graphdb():
+def test_persist_to_graphdb():
     """
-    Test writing to graphdb
+    Test persisting to graphdb
     """
 
     w = Workflow()
     b1 = Block()
     w.blocks.append(b1)
-    w.prov_to_graphdb()
+    w.persist('GraphDB')
+
+
+def test_persist_to_SOP():
+    """
+    Test persisting to SOP
+    """
+
+    w = Workflow()
+    b1 = Block()
+    w.blocks.append(b1)
+    w.persist('SOP')
 
 
 if __name__ == "__main__":
     test_Workflow_prov_to_graph()
-    test_prov_to_graphdb()
+    test_persist_to_graphdb()
+    test_persist_to_SOP()
