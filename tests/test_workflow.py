@@ -49,7 +49,7 @@ def test_persist_to_SOP():
     Test persisting to SOP
     """
 
-    w = Workflow(named_graph_uri='http://example.com/named_graph_uri')
+    w = Workflow(named_graph_uri='urn:x-evn-master:test_datagraph')
     b1 = Block()
     w.blocks.append(b1)
     w.persist('SOP')
