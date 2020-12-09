@@ -24,6 +24,10 @@ def to_graphdb(graph: Graph, context="null"):
 
     data = graph.serialize(format="turtle", encoding="utf-8")
 
+    # graphdb expects the context (named graph) wrapped in < & >
+    if context != "null":
+        context = '<'+context+'>'
+
     r = requests.post(
         GRAPH_DB_BASE_URI + "/repositories/" + GRAPH_DB_REPO_ID + "/statements",
         params={"context": context},

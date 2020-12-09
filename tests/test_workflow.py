@@ -38,7 +38,7 @@ def test_persist_to_graphdb():
     Test persisting to graphdb
     """
 
-    w = Workflow()
+    w = Workflow(named_graph_uri='http://example.com/test')
     b1 = Block()
     w.blocks.append(b1)
     w.persist('GraphDB')
