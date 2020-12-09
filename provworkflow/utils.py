@@ -26,7 +26,10 @@ def to_graphdb(graph: Graph, context="null"):
 
     # graphdb expects the context (named graph) wrapped in < & >
     if context != "null":
-        context = '<'+context+'>'
+        if context is None:
+            context = "null"
+        else:
+            context = '<'+context+'>'
 
     r = requests.post(
         GRAPH_DB_BASE_URI + "/repositories/" + GRAPH_DB_REPO_ID + "/statements",
