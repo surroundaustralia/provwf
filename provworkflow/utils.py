@@ -1,12 +1,12 @@
 import logging
-import os
-from rdflib import Graph
-import requests
 # from franz.openrdf.connect import ag_connect
 # from franz.openrdf.rio.rdfformat import RDFFormat
 import os
 import signal
+from typing import Union
+
 import requests
+from rdflib import Graph
 
 
 def to_graphdb(graph: Graph, context="null"):
@@ -211,3 +211,30 @@ def prov_to_allegro(self):
         connect_and_send()
     except Exception as exc:
         print(exc)
+
+
+def persist_graph(graph, persistence_methods: Union[str, list], named_graph_uri, **persistence_kwargs):
+    """
+    Persists ProvReporter instance graphs to one or more triplestores, or on disk.
+    """
+
+    if type(persistence_methods) == str:
+        persistence_methods = [persistence_methods]
+
+    for method in persistence_methods:
+        assert method in ['GraphDB', 'SOP', 'TTL']
+
+    # write to one or more persistence layers
+    if 'GraphDB' in persistence_methods:
+        to_graphdb(graph, named_graph_uri)
+    if 'SOP' in persistence_methods:
+        to_sop(graph, named_graph_uri)
+    if 'TTL_file' in persistence_methods:
+        graph.serialize
+        if named_graph_uri != None:
+            s = graph.serialize(format="trig").decode()
+        else:
+            s = graph.serialize(format="turtle").decode()
+        with open(persistence_kwargs['workflow_graph_file']) as file:
+            file.write(s)
+        # serialize()
