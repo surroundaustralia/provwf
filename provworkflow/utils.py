@@ -228,8 +228,11 @@ def persist_graph(graph, persistence_methods: Union[str, list], named_graph_uri,
     if type(persistence_methods) == str:
         persistence_methods = [persistence_methods]
 
+    workflow_graph_file = "process_ga_out.ttl"
+    if 'workflow_graph_file' in persistence_kwargs :
+        workflow_graph_file = persistence_kwargs['workflow_graph_file']
     for method in persistence_methods:
-        assert method in ['GraphDB', 'SOP', 'TTL']
+        assert method in ['GraphDB', 'SOP', 'TTL_file']
 
     # write to one or more persistence layers
     if 'GraphDB' in persistence_methods:
@@ -242,6 +245,6 @@ def persist_graph(graph, persistence_methods: Union[str, list], named_graph_uri,
             s = graph.serialize(format="trig").decode()
         else:
             s = graph.serialize(format="turtle").decode()
-        with open(persistence_kwargs['workflow_graph_file']) as file:
+        with open(workflow_graph_file, "w") as file:
             file.write(s)
         # serialize()
