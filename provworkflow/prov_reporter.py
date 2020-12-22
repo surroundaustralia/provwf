@@ -2,31 +2,35 @@ import logging
 import os
 import signal
 import uuid
-from datetime import datetime
 from typing import Union
 
 import requests
-from rdflib import Graph, Namespace, URIRef, Literal
-from rdflib.namespace import PROV, RDF, RDFS, XSD
 from franz.openrdf.connect import ag_connect
 from franz.openrdf.rio.rdfformat import RDFFormat
-from provworkflow.utils import make_sparql_insert_data, query_sop_sparql
+from rdflib import Graph, Namespace, URIRef, Literal
+from rdflib.namespace import PROV, RDF, RDFS, XSD, ClosedNamespace
+
+from .utils import make_sparql_insert_data, query_sop_sparql
+
+PROVWF = ClosedNamespace(
+    uri=URIRef("https://data.surroundaustralia.com/def/profworkflow#"),
+    terms=["ProvReporter", "Workflow", "Block",],
+)
+
+
+PWFS = Namespace("https://data.surroundaustralia.com/dataset/provworkflows/")
 
 
 class ProvReporter:
-    def __init__(self, uri: URIRef = None, label=None, named_graph_uri: URIRef = None):
-        self.PROVWF = Namespace("https://data.surroundaustralia.com/def/profworkflow#")
-        self.PWF = Namespace("https://data.surroundaustralia.com/dataset/provworkflow/")
-
+    def __init__(
+        self, uri: URIRef = None, label: str = None, named_graph_uri: URIRef = None,
+    ):
         # give it an opaque UUID URI if one not given
         if uri is not None:
             self.uri = uri
         else:
-            self.uri = URIRef(self.PWF + str(uuid.uuid1()))
+            self.uri = URIRef(PWFS + str(uuid.uuid1()))
         self.label = label
-
-        self.started_at_time = datetime.now()
-        self.ended_at_time = None
 
         self.named_graph_uri = named_graph_uri
 
@@ -42,37 +46,15 @@ class ProvReporter:
             else:
                 g = Graph()
         g.bind("prov", PROV)
-        g.bind("provwf", self.PROVWF)
+        g.bind("provwf", PROVWF)
+        g.bind("pwfs", PWFS)
 
         # this instance's URI
-        g.add((self.uri, RDF.type, PROV.Activity))
+        g.add((self.uri, RDF.type, PROVWF.ProvReporter))
 
         # add a label if this Activity has one
         if self.label is not None:
             g.add((self.uri, RDFS.label, Literal(self.label, datatype=XSD.string),))
-
-        # all Activities have a startedAtTime
-        # made at __init__() time
-        g.add(
-            (
-                self.uri,
-                PROV.startedAtTime,
-                Literal(self.started_at_time.isoformat(), datatype=XSD.dateTime),
-            )
-        )
-
-        # if we don't yet have an endedAtTime recorded, make it now
-        if self.ended_at_time is None:
-            self.ended_at_time = datetime.now()
-
-        # all Activities have a endedAtTime
-        g.add(
-            (
-                self.uri,
-                PROV.endedAtTime,
-                Literal(self.ended_at_time.isoformat(), datatype=XSD.dateTime),
-            )
-        )
 
         return g
 
@@ -251,7 +233,7 @@ class ProvReporter:
 
     def persist(
         self, methods: Union[str, list], rdf_file_path: str = "prov_reporter"
-    ) -> None:
+    ) -> Union[None, str]:
         if type(methods) == str:
             methods = [methods]
 

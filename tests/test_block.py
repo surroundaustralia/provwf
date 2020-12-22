@@ -21,4 +21,4 @@ def test_prov_to_graph():
 
 
 if __name__ == "__main__":
-    test_Block_prov_to_graph()
+    test_prov_to_graph()

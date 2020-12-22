@@ -1,6 +1,6 @@
-from provworkflow import ProvReporter, ProvReporterException
-from rdflib import URIRef, Graph
-from rdflib.namespace import PROV, RDF
+from provworkflow import ProvReporter, ProvReporterException, PROVWF
+from rdflib import URIRef, Graph, Literal
+from rdflib.namespace import PROV, RDF, RDFS, XSD
 import os
 import requests
 import pytest
@@ -15,21 +15,20 @@ def test_prov_to_graph():
     pr = ProvReporter()
     g = pr.prov_to_graph()
 
-    # check all properties required do exist
-    assert (None, RDF.type, PROV.Activity) in g, "g must contain a prov:Activity"
-    assert (None, PROV.startedAtTime, None) in g, "g must contain a prov:startedAtTime"
-    assert (None, PROV.endedAtTime, None) in g, "g must contain a prov:endedAtTime"
+    assert (
+        None,
+        RDF.type,
+        PROVWF.ProvReporter,
+    ) in g, "g must contain a provwf:ProvReporter"
 
-    # check endedAtTime > startedAtTime
-    q = """
-        ASK {
-            ?a  prov:startedAtTime ?s ;
-                prov:endedAtTime ?e .
-            FILTER (?e > ?s) 
-        }
-        
-    """
-    assert g.query(q), "startedAtTime must be less than endedAtTime"
+    pr2 = ProvReporter(label="Test PR")
+    g2 = pr2.prov_to_graph()
+
+    assert (
+        None,
+        RDFS.label,
+        Literal("Test PR", datatype=XSD.string),
+    ) in g2, "g must contain the label 'Test PR'"
 
 
 def test_persist_to_string():
@@ -108,7 +107,7 @@ if __name__ == "__main__":
     test_prov_to_graph()
     test_persist_to_string()
     test_persist_to_file()
-    test_persist_to_graphdb()
-    test_persist_to_sop()
-    # test_persist_to_allegro()
+    # test_persist_to_graphdb()
+    # test_persist_to_sop()
+    # # test_persist_to_allegro()
     test_persist_unknown()
