@@ -11,7 +11,7 @@ def test_Workflow_prov_to_allegro():
     w = Workflow()
     b1 = Block()
     w.blocks.append(b1)
-    w.prov_to_allegro()
+    w._persist_to_allegro()
 
 if __name__ == "__main__":
     test_Workflow_prov_to_allegro()

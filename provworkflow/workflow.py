@@ -1,19 +1,18 @@
+from .prov_reporter import ProvReporter, ProvReporterException
 from rdflib import Graph, URIRef
 from rdflib.namespace import RDF
 
-from provworkflow import ProvReporter, ProvWorkflowException
-
 
 class Workflow(ProvReporter):
-    def __init__(self, uri_str=None, label=None, blocks=None, named_graph_uri=None):
-        super().__init__(uri_str=uri_str, label=label, named_graph_uri=named_graph_uri)
+    def __init__(self, uri=None, label=None, blocks=None, named_graph_uri=None):
+        super().__init__(uri=uri, label=label, named_graph_uri=named_graph_uri)
         self.blocks = blocks
         if self.blocks is None:
             self.blocks = []
 
     def prov_to_graph(self, g=None):
         if self.blocks is None or len(self.blocks) < 1:
-            raise ProvWorkflowException(
+            raise ProvReporterException(
                 "A Workflow must have at least one Block within it"
             )
 
