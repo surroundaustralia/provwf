@@ -3,7 +3,7 @@ from rdflib import Namespace
 from rdflib.namespace import RDF
 
 
-def test_Block_prov_to_graph():
+def test_prov_to_graph():
     """A basic Block should prov_to_graph an Activity which is specialised as provwf:Block
 
     :return: None

@@ -35,6 +35,8 @@ class Workflow(ProvReporter):
         g = super().prov_to_graph(g)
 
         return g
-    
+
     def persist(self, *args, **kwargs):
-        super(Workflow, self).persist(named_graph_uri=self.named_graph_uri, *args, **kwargs)
+        super(Workflow, self).persist(
+            named_graph_uri=self.named_graph_uri, *args, **kwargs
+        )

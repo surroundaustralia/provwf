@@ -3,7 +3,7 @@ from rdflib import Namespace
 from rdflib.namespace import RDF
 
 
-def test_Workflow_prov_to_graph():
+def test_prov_to_graph():
     """A basic Workflow should prov_to_graph an Activity which is specialised as provwf:Workflow and has at least
     1 Block within it
 
@@ -38,10 +38,10 @@ def test_persist_to_graphdb():
     Test persisting to graphdb
     """
 
-    w = Workflow(named_graph_uri='http://example.com/test')
+    w = Workflow(named_graph_uri="http://example.com/test")
     b1 = Block()
     w.blocks.append(b1)
-    w.persist('GraphDB')
+    w.persist("GraphDB")
 
 
 def test_persist_to_SOP():
@@ -49,10 +49,10 @@ def test_persist_to_SOP():
     Test persisting to SOP
     """
 
-    w = Workflow(named_graph_uri='urn:x-evn-master:test_datagraph')
+    w = Workflow(named_graph_uri="urn:x-evn-master:test_datagraph")
     b1 = Block()
     w.blocks.append(b1)
-    w.persist('SOP')
+    w.persist("SOP")
 
 
 if __name__ == "__main__":

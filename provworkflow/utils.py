@@ -25,8 +25,9 @@ def query_sop_sparql(named_graph_uri, query, update=False):
         if reuse_sessions and saved_session_cookies:
             s.cookies = saved_session_cookies
         else:
-            s.post(endpoint + "/tbl/j_security_check",
-                   {"j_username": username, "j_password": password},
+            s.post(
+                endpoint + "/tbl/j_security_check",
+                {"j_username": username, "j_password": password},
             )
             # detect success!
             if reuse_sessions:
@@ -62,6 +63,8 @@ def make_sparql_insert_data(graph_uri, g):
             {}
         }}
     }}
-    """.format(graph_uri, nt)
+    """.format(
+        graph_uri, nt
+    )
 
     return q

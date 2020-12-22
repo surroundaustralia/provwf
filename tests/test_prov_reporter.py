@@ -57,7 +57,11 @@ def test_persist_to_graphdb():
     pr = ProvReporter()
     ttl = pr.persist(["graphdb", "string"])
     activity_uri = None
-    for s in Graph().parse(data=ttl, format="turtle").subjects(predicate=RDF.type, object=PROV.Activity):
+    for s in (
+        Graph()
+        .parse(data=ttl, format="turtle")
+        .subjects(predicate=RDF.type, object=PROV.Activity)
+    ):
         activity_uri = str(s)
 
     GRAPH_DB_BASE_URI = os.environ.get("GRAPH_DB_BASE_URI", "http://localhost:7200")
@@ -78,9 +82,9 @@ def test_persist_to_graphdb():
         GRAPH_DB_BASE_URI + "/repositories/" + GRAPH_DB_REPO_ID,
         params={"query": q},
         headers={"Accept": "application/sparql-results+json"},
-        auth=(GRAPHDB_USR, GRAPHDB_PWD)
+        auth=(GRAPHDB_USR, GRAPHDB_PWD),
     )
-    gdb_activity_uri = (r.json()["results"]["bindings"][0]["activity_uri"]["value"])
+    gdb_activity_uri = r.json()["results"]["bindings"][0]["activity_uri"]["value"]
     assert gdb_activity_uri == activity_uri
 
 

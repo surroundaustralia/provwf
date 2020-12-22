@@ -49,30 +49,30 @@ class ProvReporter:
 
         # add a label if this Activity has one
         if self.label is not None:
-            g.add((
-                self.uri,
-                RDFS.label,
-                Literal(self.label, datatype=XSD.string),
-            ))
+            g.add((self.uri, RDFS.label, Literal(self.label, datatype=XSD.string),))
 
         # all Activities have a startedAtTime
         # made at __init__() time
-        g.add((
-            self.uri,
-            PROV.startedAtTime,
-            Literal(self.started_at_time.isoformat(), datatype=XSD.dateTime),
-        ))
+        g.add(
+            (
+                self.uri,
+                PROV.startedAtTime,
+                Literal(self.started_at_time.isoformat(), datatype=XSD.dateTime),
+            )
+        )
 
         # if we don't yet have an endedAtTime recorded, make it now
         if self.ended_at_time is None:
             self.ended_at_time = datetime.now()
 
         # all Activities have a endedAtTime
-        g.add((
-            self.uri,
-            PROV.endedAtTime,
-            Literal(self.ended_at_time.isoformat(), datatype=XSD.dateTime),
-        ))
+        g.add(
+            (
+                self.uri,
+                PROV.endedAtTime,
+                Literal(self.ended_at_time.isoformat(), datatype=XSD.dateTime),
+            )
+        )
 
         return g
 
@@ -118,9 +118,11 @@ class ProvReporter:
             params={"context": context},
             data=data,
             headers={"Content-Type": "text/turtle"},
-            auth=(GRAPHDB_USR, GRAPHDB_PWD)
+            auth=(GRAPHDB_USR, GRAPHDB_PWD),
         )
-        logging.info(f"Attempted to write triples to GraphDB and got status code: {r.status_code} returned")
+        logging.info(
+            f"Attempted to write triples to GraphDB and got status code: {r.status_code} returned"
+        )
         if r.status_code != 204:
             raise Exception(f"GraphDB says: {r.text}")
 
@@ -140,7 +142,9 @@ class ProvReporter:
         query = make_sparql_insert_data(self.named_graph_uri, g)
         r = query_sop_sparql(self.named_graph_uri, query, update=True)
 
-        logging.info(f"Attempted to write triples to SOP and got status code: {r.status_code} returned")
+        logging.info(
+            f"Attempted to write triples to SOP and got status code: {r.status_code} returned"
+        )
         if not r.ok:
             raise Exception(f"SOP HTTP error: {r.text}")
 
@@ -166,19 +170,21 @@ class ProvReporter:
             os.environ.get("ALLEGRO_HOST"),
             os.environ.get("ALLEGRO_PORT"),
             os.environ.get("ALLEGRO_USER"),
-            os.environ.get("ALLEGRO_PASSWORD")
+            os.environ.get("ALLEGRO_PASSWORD"),
         ]
-        assert all(v is not None for v in vars), "You must set the following environment variables: " \
-                                                 "ALLEGRO_REPO, ALLEGRO_HOST, ALLEGRO_PORT, ALLEGRO_USER & " \
-                                                 "ALLEGRO_PASSWORD"
+        assert all(v is not None for v in vars), (
+            "You must set the following environment variables: "
+            "ALLEGRO_REPO, ALLEGRO_HOST, ALLEGRO_PORT, ALLEGRO_USER & "
+            "ALLEGRO_PASSWORD"
+        )
 
         def connect_and_send():
             with ag_connect(
-                    os.environ["ALLEGRO_REPO"],
-                    host=os.environ["ALLEGRO_HOST"],
-                    port=int(os.environ["ALLEGRO_PORT"]),
-                    user=os.environ["ALLEGRO_USER"],
-                    password=os.environ["ALLEGRO_PASSWORD"],
+                os.environ["ALLEGRO_REPO"],
+                host=os.environ["ALLEGRO_HOST"],
+                port=int(os.environ["ALLEGRO_PORT"]),
+                user=os.environ["ALLEGRO_USER"],
+                password=os.environ["ALLEGRO_PASSWORD"],
             ) as conn:
                 conn.addData(
                     g.serialize(format="turtle").decode("utf-8"),
@@ -244,9 +250,8 @@ class ProvReporter:
     #         print(exc)
 
     def persist(
-            self,
-            methods: Union[str, list],
-            rdf_file_path: str = "prov_reporter") -> None:
+        self, methods: Union[str, list], rdf_file_path: str = "prov_reporter"
+    ) -> None:
         if type(methods) == str:
             methods = [methods]
 
