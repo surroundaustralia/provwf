@@ -2,13 +2,14 @@ import logging
 import os
 import signal
 import uuid
+import datetime
 from typing import Union
 
 import requests
 from franz.openrdf.connect import ag_connect
 from franz.openrdf.rio.rdfformat import RDFFormat
 from rdflib import Graph, URIRef, Literal
-from rdflib.namespace import PROV, OWL, RDF, RDFS, XSD
+from rdflib.namespace import DCTERMS, PROV, OWL, RDF, RDFS, XSD
 
 from .namespace import PROVWF, PWFS
 from .utils import make_sparql_insert_data, query_sop_sparql, get_version_uri
@@ -29,6 +30,7 @@ class ProvReporter:
 
         # from Git info
         self.version_uri = URIRef(get_version_uri())
+        self.created = Literal(datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"), datatype=XSD.dateTimeStamp)
 
     def prov_to_graph(self, g: Graph = None) -> Graph:
         """Reports self (instance properties and class type) to an in-memory graph using PROV-O
@@ -45,11 +47,13 @@ class ProvReporter:
         g.bind("provwf", PROVWF)
         g.bind("pwfs", PWFS)
         g.bind("owl", OWL)
+        g.bind("dcterms", DCTERMS)
 
         # this instance's URI
         g.add((self.uri, RDF.type, PROVWF.ProvReporter))
         # soft typing using the version_uri
         g.add((self.uri, OWL.versionIRI, self.version_uri))
+        g.add((self.uri, DCTERMS.created, self.created))
 
         # add a label if this Activity has one
         if self.label is not None:

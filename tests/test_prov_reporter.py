@@ -1,7 +1,7 @@
 from provworkflow.prov_reporter import ProvReporter, ProvReporterException
 from provworkflow.namespace import PROVWF
 from rdflib import URIRef, Graph, Literal
-from rdflib.namespace import OWL, RDF, RDFS, XSD
+from rdflib.namespace import DCTERMS, OWL, RDF, RDFS, XSD
 import os
 import requests
 import pytest
@@ -17,6 +17,11 @@ def test_prov_to_graph():
 
     assert (pr.uri, OWL.versionIRI, pr.version_uri) in g, \
         "g must contain an owl:versionIRI property for the provwf:ProvReporter instance"
+
+    assert (pr.uri, DCTERMS.created, None) in g, \
+        "g must contain a dcterms:created property for the provwf:ProvReporter instance"
+
+    print(g.serialize(format="ttl").decode())
 
     pr2 = ProvReporter(label="Test PR")
     g2 = pr2.prov_to_graph()
