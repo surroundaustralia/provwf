@@ -12,6 +12,10 @@ from .agent import Agent
 
 
 class Activity(ProvReporter):
+    """prov:Activity
+
+    was_associated_with: prov:wasAssociatedWith
+    """
     def __init__(
         self,
         uri: URIRef = None,
@@ -31,11 +35,6 @@ class Activity(ProvReporter):
         self.was_associated_with = was_associated_with
 
     def prov_to_graph(self, g: Graph = None) -> Graph:
-        """Reports self (instance properties and class type) to an in-memory graph using PROV-O
-
-        :param g: rdflib Graph. If given, this function will add its contents to g. If not, it will create new
-        :return: rdflib Graph
-        """
         g = super().prov_to_graph(g)
 
         # add in type

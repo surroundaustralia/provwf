@@ -16,6 +16,18 @@ from .utils import make_sparql_insert_data, query_sop_sparql, get_version_uri
 
 
 class ProvReporter:
+    """Created provwf:ProvReporter instances.
+
+    For its Semantic Web definition, see https://data.surroundaustralia.com/def/provworkflow/ProvReporter
+     (not available yet)
+
+    ProvReporter is a superclass of all PROV classes (Entity, Activity, Agent) and is created here just to facilitate
+    logging. You should NOT directly instantiate this class - it is essentially abstract. Use instead, Entity, Activity
+    etc., including grandchildren such as Block & Workflow.
+
+    ProvReporters automatically record created times (dcterms:created) and an instance version IRI which is collected
+    from the instance's Git version (URI of the Git origin repo, not local).
+    """
     def __init__(
         self, uri: URIRef = None, label: str = None, named_graph_uri: URIRef = None,
     ):
@@ -33,11 +45,6 @@ class ProvReporter:
         self.created = Literal(datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"), datatype=XSD.dateTimeStamp)
 
     def prov_to_graph(self, g: Graph = None) -> Graph:
-        """Reports self (instance properties and class type) to an in-memory graph using PROV-O
-
-        :param g: rdflib Graph. If given, this function will add its contents to g. If not, it will create new
-        :return: rdflib Graph
-        """
         if g is None:
             if self.named_graph_uri is not None:
                 g = Graph(identifier=URIRef(self.named_graph_uri))

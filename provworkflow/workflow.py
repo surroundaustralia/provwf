@@ -10,7 +10,10 @@ from .block import Block
 
 
 class Workflow(Activity):
-    """A Workflow is a specialised Activity that contains 1+ Blocks (also specialised Activity instances).
+    """A Workflow is a specialised prov:Activity that contains 1+ Blocks (also specialised Activity instances).
+
+    For its Semantic Web definition, see https://data.surroundaustralia.com/def/provworkflow/Workflow (not available
+    yet).
 
     You cannot set the _used_ or _generated_ properties of a Workflow as you can for other Activities as these are
     calculated automatically, based on the _used_ & _generated_ properties of the Blocks the Workflow contains.

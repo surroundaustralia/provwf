@@ -10,6 +10,10 @@ from .namespace import PROVWF
 
 
 class Block(Activity):
+    """A specialised type of prov:Activity that must live within a Workflow.
+
+    For its Semantic Web definition, see https://data.surroundaustralia.com/def/provworkflow/Block (not available yet)
+    """
     def __init__(
         self,
         uri: URIRef = None,

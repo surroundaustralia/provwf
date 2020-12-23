@@ -1,5 +1,5 @@
 if __name__ == "__main__":
-    # setup
+    # setup a GraphDB repository for testing
     from _graphdb_utils import *
     m = setup_graphdb()
     if m is not None:
@@ -32,9 +32,7 @@ if __name__ == "__main__":
     import test_workflow as wf
     wf.test_prov_to_graph()
 
-
-
-    # teardown
+    # teardown GraphDB testing repository
     m = teardown_graphdb()
     if m is not None:
         print(m)

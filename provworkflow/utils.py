@@ -57,6 +57,7 @@ def query_sop_sparql(named_graph_uri, query, update=False):
 
 
 def make_sparql_insert_data(graph_uri, g):
+    """Places RDF into a SPARQL INSERT DATA query"""
     nt = g.serialize(format="nt").decode()
 
     q = """
@@ -73,6 +74,7 @@ def make_sparql_insert_data(graph_uri, g):
 
 
 def is_git_repo(path):
+    """Determine whether the path is a Git repo"""
     try:
         _ = git.Repo(path).git_dir
         return path
@@ -81,6 +83,7 @@ def is_git_repo(path):
 
 
 def get_git_repo():
+    """Finds the Git repo location (folder) if a given file is within one, however deep"""
     p = Path(__file__).parent
     if is_git_repo(p):
         return p
@@ -89,6 +92,7 @@ def get_git_repo():
 
 
 def get_tag_or_commit(only_commit=False):
+    """Gets a file's Git commit or Tag. Can be forced to get only the commit"""
     repo = git.Repo(get_git_repo())
     if only_commit:
         return repo.heads.master.commit
@@ -100,12 +104,14 @@ def get_tag_or_commit(only_commit=False):
 
 
 def get_repo_uri():
+    """Gets the URI of a file's repo's origin"""
     repo = git.Repo(get_git_repo())
     origin_uri_with_user = repo.remotes.origin.url
     return "https://" + origin_uri_with_user.split("@")[1]
 
 
 def get_version_uri():
+    """Gets the URI of a file's origin's commit or tag"""
     repo_uri = get_repo_uri()
     id = str(get_tag_or_commit())
 

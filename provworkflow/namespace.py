@@ -4,7 +4,7 @@ from rdflib.namespace import ClosedNamespace
 # this namespace is closed, i.e. it contains _all_ the members of the ProvWF Ontology
 # only members listed in _terms_ can be implemented like PROVWF.{member}
 PROVWF = ClosedNamespace(
-    uri=URIRef("https://data.surroundaustralia.com/def/profworkflow#"),
+    uri=URIRef("https://data.surroundaustralia.com/def/provworkflow/"),
     terms=["ProvReporter", "Workflow", "Block", "hadBlock", "serviceParameters"],
 )
 

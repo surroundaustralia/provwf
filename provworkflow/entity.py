@@ -10,6 +10,16 @@ from .agent import Agent
 
 
 class Entity(ProvReporter):
+    """prov:Entity
+
+    property: (prov:value) should be used to contain simple literal values.
+
+    access_uri: (dcat:accessURL) should be used to contain links used to access the content of the Entity, e.g. a
+                Google Cloud Services API call or an S2 Bucket link.
+
+    service_parameters: (provwf:serviceParameters) should be used to contain any parameters used for web services
+                        accessed via access_uri that are not contained within the URI itself.
+    """
     def __init__(
         self,
         uri: URIRef = None,
@@ -38,11 +48,6 @@ class Entity(ProvReporter):
         self.was_attributed_to = was_attributed_to
 
     def prov_to_graph(self, g: Graph = None) -> Graph:
-        """Reports self (instance properties and class type) to an in-memory graph using PROV-O
-
-        :param g: rdflib Graph. If given, this function will add its contents to g. If not, it will create new
-        :return: rdflib Graph
-        """
         g = super().prov_to_graph(g)
 
         g.bind("dcat", DCAT)
