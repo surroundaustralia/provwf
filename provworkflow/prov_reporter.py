@@ -74,7 +74,7 @@ class ProvReporter:
         if g is None:
             g = self.prov_to_graph()
 
-        GRAPH_DB_BASE_URI = os.environ.get("GRAPH_DB_BASE_URI", "http://localhost:7200")
+        GRAPH_DB_SYSTEM_URI = os.environ.get("GRAPH_DB_SYSTEM_URI", "http://localhost:7200")
         GRAPH_DB_REPO_ID = os.environ.get("GRAPH_DB_REPO_ID", "provwftesting")
         GRAPHDB_USR = os.environ.get("GRAPHDB_USR", "")
         GRAPHDB_PWD = os.environ.get("GRAPHDB_PWD", "")
@@ -89,7 +89,7 @@ class ProvReporter:
                 context = "<" + self.named_graph_uri + ">"
 
         r = requests.post(
-            GRAPH_DB_BASE_URI + "/repositories/" + GRAPH_DB_REPO_ID + "/statements",
+            GRAPH_DB_SYSTEM_URI + "/repositories/" + GRAPH_DB_REPO_ID + "/statements",
             params={"context": context},
             data=data,
             headers={"Content-Type": "text/turtle"},

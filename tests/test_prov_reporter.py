@@ -58,7 +58,11 @@ def test_persist_to_graphdb():
     if gdb_error is not None:
         pytest.skip(gdb_error)
 
+    GRAPH_DB_SYSTEM_URI = os.environ.get("GRAPH_DB_SYSTEM_URI", "http://localhost:7200")
+    GRAPHDB_USR = os.environ.get("GRAPHDB_USR", "")
+    GRAPHDB_PWD = os.environ.get("GRAPHDB_PWD", "")
     os.environ["GRAPH_DB_REPO_ID"] = "provwftesting"
+
     pr = ProvReporter()
     ttl = pr.persist(["graphdb", "string"])
     pr_uri = None
@@ -69,10 +73,6 @@ def test_persist_to_graphdb():
     ):
         pr_uri = str(s)
 
-    GRAPH_DB_BASE_URI = os.environ.get("GRAPH_DB_BASE_URI", "http://localhost:7200")
-    GRAPH_DB_REPO_ID = os.environ.get("GRAPH_DB_REPO_ID", "provwftesting")
-    GRAPHDB_USR = os.environ.get("GRAPHDB_USR", "")
-    GRAPHDB_PWD = os.environ.get("GRAPHDB_PWD", "")
     q = """
         PREFIX prov: <http://www.w3.org/ns/prov#>
         PREFIX provwf: <{}>
@@ -83,7 +83,7 @@ def test_persist_to_graphdb():
         LIMIT 1
         """.format(PROVWF)
     r = requests.get(
-        GRAPH_DB_BASE_URI + "/repositories/" + GRAPH_DB_REPO_ID,
+        GRAPH_DB_SYSTEM_URI + "/repositories/" + os.environ["GRAPH_DB_REPO_ID"],
         params={"query": q},
         headers={"Accept": "application/sparql-results+json"},
         auth=(GRAPHDB_USR, GRAPHDB_PWD),
@@ -92,9 +92,10 @@ def test_persist_to_graphdb():
     assert gdb_pr_uri == pr_uri
 
 
-def test_persist_to_sop():
-    pr = ProvReporter()
-    pr.persist("sop")
+# TODO: David to test
+# def test_persist_to_sop():
+#     pr = ProvReporter()
+#     pr.persist("sop")
 
 
 # TODO: implement as needed
@@ -113,6 +114,6 @@ if __name__ == "__main__":
     test_persist_to_string()
     test_persist_to_file()
     test_persist_to_graphdb()
-    test_persist_to_sop()
+    # test_persist_to_sop()
     # test_persist_to_allegro()
     test_persist_unknown()
