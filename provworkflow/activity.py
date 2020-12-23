@@ -26,8 +26,8 @@ class Activity(ProvReporter):
         self.started_at_time = datetime.now()
         self.ended_at_time = None
 
-        self.used = used
-        self.generated = generated
+        self.used = used if used is not None else []
+        self.generated = generated if generated is not None else []
         self.was_associated_with = was_associated_with
 
     def prov_to_graph(self, g: Graph = None) -> Graph:
@@ -65,7 +65,7 @@ class Activity(ProvReporter):
 
         if self.was_associated_with is not None:
             self.was_associated_with.prov_to_graph(g)
-            g.add((self.uri, PROV.wasAssocaitedWith, self.was_associated_with.uri))
+            g.add((self.uri, PROV.wasAssociatedWith, self.was_associated_with.uri))
 
         # if we don't yet have an endedAtTime recorded, make it now
         if self.ended_at_time is None:

@@ -1,2 +1,2 @@
 # Examples
-This folder contains examples of outputs from test instances of ProvWorkflow.
+This folder contains examples of small implementations of ProvWF.

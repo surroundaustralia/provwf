@@ -57,7 +57,7 @@ class ProvReporter:
 
         # add a label if this Activity has one
         if self.label is not None:
-            g.add((self.uri, RDFS.label, Literal(self.label, datatype=XSD.string),))
+            g.add((self.uri, RDFS.label, Literal(self.label, datatype=XSD.string)))
 
         return g
 

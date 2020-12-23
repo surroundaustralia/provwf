@@ -5,7 +5,7 @@ from rdflib.namespace import ClosedNamespace
 # only members listed in _terms_ can be implemented like PROVWF.{member}
 PROVWF = ClosedNamespace(
     uri=URIRef("https://data.surroundaustralia.com/def/profworkflow#"),
-    terms=["ProvReporter", "Workflow", "Block", "hadBlock"],
+    terms=["ProvReporter", "Workflow", "Block", "hadBlock", "serviceParameters"],
 )
 
 # this is the fall-back namespace for Workflow instances
