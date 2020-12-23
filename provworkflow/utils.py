@@ -1,7 +1,8 @@
 # from franz.openrdf.connect import ag_connect
 # from franz.openrdf.rio.rdfformat import RDFFormat
 import os
-
+from pathlib import Path
+import git
 import requests
 
 
@@ -69,3 +70,60 @@ def make_sparql_insert_data(graph_uri, g):
     )
 
     return q
+
+
+def is_git_repo(path):
+    try:
+        _ = git.Repo(path).git_dir
+        return path
+    except git.exc.InvalidGitRepositoryError:
+        return False
+
+
+def get_git_repo():
+    p = Path(__file__).parent
+    if is_git_repo(p):
+        return p
+    else:
+        return is_git_repo(p.parent)
+
+
+def get_tag_or_commit(only_commit=False):
+    repo = git.Repo(get_git_repo())
+    if only_commit:
+        return repo.heads.master.commit
+
+    if repo.tags:
+         return repo.tags[0]
+    else:
+        return repo.heads.master.commit
+
+
+def get_repo_uri():
+    repo = git.Repo(get_git_repo())
+    origin_uri_with_user = repo.remotes.origin.url
+    return "https://" + origin_uri_with_user.split("@")[1]
+
+
+def get_version_uri():
+    repo_uri = get_repo_uri()
+    id = str(get_tag_or_commit())
+
+    if "bitbucket" in repo_uri:
+        if len(id) < 10:  # tag
+            path = "/commits/tag/"
+        else:  # commit
+            path = "/commits/"
+    elif "github" in repo_uri:
+        if len(id) < 10:  # tag
+            path = "/releases/tag/"
+        else:  # commit
+            path = "/commit/"
+    # TODO: David to add
+    # elif "??" in repo_uri: # CodeCommit
+    #     pass
+    else:
+        raise Exception("Only GitHub & BitBucket repos are supported")
+
+    return repo_uri.replace(".git", "") + path + id
+

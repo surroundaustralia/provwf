@@ -1,7 +1,7 @@
 from provworkflow.prov_reporter import ProvReporter, ProvReporterException
 from provworkflow.namespace import PROVWF
 from rdflib import URIRef, Graph, Literal
-from rdflib.namespace import RDF, RDFS, XSD
+from rdflib.namespace import OWL, RDF, RDFS, XSD
 import os
 import requests
 import pytest
@@ -9,28 +9,20 @@ from _graphdb_utils import setup_graphdb
 
 
 def test_prov_to_graph():
-    """A basic ProvReporter should prov_to_graph an Activity with a startedAtTime & endedAtTime
-
-    :return: None
-    """
-
     pr = ProvReporter()
     g = pr.prov_to_graph()
 
-    assert (
-        None,
-        RDF.type,
-        PROVWF.ProvReporter,
-    ) in g, "g must contain a provwf:ProvReporter"
+    assert (pr.uri, RDF.type, PROVWF.ProvReporter) in g, \
+        "g must contain a provwf:ProvReporter"
+
+    assert (pr.uri, OWL.versionIRI, pr.version_uri) in g, \
+        "g must contain an owl:versionIRI property for the provwf:ProvReporter instance"
 
     pr2 = ProvReporter(label="Test PR")
     g2 = pr2.prov_to_graph()
 
-    assert (
-        None,
-        RDFS.label,
-        Literal("Test PR", datatype=XSD.string),
-    ) in g2, "g must contain the label 'Test PR'"
+    assert (pr2.uri, RDFS.label, Literal("Test PR", datatype=XSD.string)) in g2, \
+        "g must contain the label 'Test PR'"
 
 
 def test_persist_to_string():
@@ -111,9 +103,9 @@ def test_persist_unknown():
 
 if __name__ == "__main__":
     test_prov_to_graph()
-    test_persist_to_string()
-    test_persist_to_file()
-    test_persist_to_graphdb()
-    # test_persist_to_sop()
-    # test_persist_to_allegro()
-    test_persist_unknown()
+    # test_persist_to_string()
+    # test_persist_to_file()
+    # test_persist_to_graphdb()
+    # # test_persist_to_sop()
+    # # test_persist_to_allegro()
+    # test_persist_unknown()

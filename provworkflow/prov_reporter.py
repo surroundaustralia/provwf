@@ -8,10 +8,10 @@ import requests
 from franz.openrdf.connect import ag_connect
 from franz.openrdf.rio.rdfformat import RDFFormat
 from rdflib import Graph, URIRef, Literal
-from rdflib.namespace import PROV, RDF, RDFS, XSD
+from rdflib.namespace import PROV, OWL, RDF, RDFS, XSD
 
 from .namespace import PROVWF, PWFS
-from .utils import make_sparql_insert_data, query_sop_sparql
+from .utils import make_sparql_insert_data, query_sop_sparql, get_version_uri
 
 
 class ProvReporter:
@@ -23,9 +23,12 @@ class ProvReporter:
             self.uri = uri
         else:
             self.uri = URIRef(PWFS + str(uuid.uuid1()))
-        self.label = label
+        self.label = Literal(label) if label else None
 
         self.named_graph_uri = named_graph_uri
+
+        # from Git info
+        self.version_uri = URIRef(get_version_uri())
 
     def prov_to_graph(self, g: Graph = None) -> Graph:
         """Reports self (instance properties and class type) to an in-memory graph using PROV-O
@@ -41,9 +44,12 @@ class ProvReporter:
         g.bind("prov", PROV)
         g.bind("provwf", PROVWF)
         g.bind("pwfs", PWFS)
+        g.bind("owl", OWL)
 
         # this instance's URI
         g.add((self.uri, RDF.type, PROVWF.ProvReporter))
+        # soft typing using the version_uri
+        g.add((self.uri, OWL.versionIRI, self.version_uri))
 
         # add a label if this Activity has one
         if self.label is not None:
