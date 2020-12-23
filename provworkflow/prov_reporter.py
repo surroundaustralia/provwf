@@ -7,18 +7,11 @@ from typing import Union
 import requests
 from franz.openrdf.connect import ag_connect
 from franz.openrdf.rio.rdfformat import RDFFormat
-from rdflib import Graph, Namespace, URIRef, Literal
-from rdflib.namespace import PROV, RDF, RDFS, XSD, ClosedNamespace
+from rdflib import Graph, URIRef, Literal
+from rdflib.namespace import PROV, RDF, RDFS, XSD
 
+from .namespace import PROVWF, PWFS
 from .utils import make_sparql_insert_data, query_sop_sparql
-
-PROVWF = ClosedNamespace(
-    uri=URIRef("https://data.surroundaustralia.com/def/profworkflow#"),
-    terms=["ProvReporter", "Workflow", "Block",],
-)
-
-
-PWFS = Namespace("https://data.surroundaustralia.com/dataset/provworkflows/")
 
 
 class ProvReporter:
@@ -82,7 +75,7 @@ class ProvReporter:
             g = self.prov_to_graph()
 
         GRAPH_DB_BASE_URI = os.environ.get("GRAPH_DB_BASE_URI", "http://localhost:7200")
-        GRAPH_DB_REPO_ID = os.environ.get("GRAPH_DB_REPO_ID", "wf")
+        GRAPH_DB_REPO_ID = os.environ.get("GRAPH_DB_REPO_ID", "provwftesting")
         GRAPHDB_USR = os.environ.get("GRAPHDB_USR", "")
         GRAPHDB_PWD = os.environ.get("GRAPHDB_PWD", "")
 

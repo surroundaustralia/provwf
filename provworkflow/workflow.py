@@ -3,9 +3,10 @@ from typing import List
 from rdflib import URIRef, Graph
 from rdflib.namespace import RDF
 
-from .prov_reporter import PROVWF
+from .namespace import PROVWF
 from .activity import Activity
 from .agent import Agent
+from .block import Block
 
 
 class Workflow(Activity):
@@ -53,7 +54,7 @@ class Workflow(Activity):
         for block in self.blocks:
             block.prov_to_graph(g)
             # associate this Block with this Workflow
-            g.add((self.uri, self.PROVWF.hadBlock, block.uri))
+            g.add((self.uri, PROVWF.hadBlock, block.uri))
 
         # build all the details for the Workflow itself
         g = super().prov_to_graph(g)

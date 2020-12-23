@@ -1,4 +1,4 @@
-from provworkflow import Block
+from provworkflow.block import Block
 from rdflib import Namespace
 from rdflib.namespace import RDF
 

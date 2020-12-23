@@ -1,6 +1,9 @@
-from provworkflow import Workflow, Block
+from provworkflow.workflow import Workflow
+import provworkflow.block
 from rdflib import Namespace
 from rdflib.namespace import RDF
+import pytest
+import requests
 
 
 def test_prov_to_graph():
@@ -14,8 +17,8 @@ def test_prov_to_graph():
     PROVWF = Namespace("https://data.surroundaustralia.com/def/profworkflow#")
 
     w = Workflow()
-    b1 = Block()
-    b2 = Block()
+    b1 = provworkflow.block.Block()
+    b2 = provworkflow.block.Block()
     w.blocks.append(b1)
     w.blocks.append(b2)
     g = w.prov_to_graph()
@@ -29,33 +32,8 @@ def test_prov_to_graph():
     for o in g.subject_objects(PROVWF.hadBlock):
         count += 1
 
-    print(g.serialize(format="turtle").decode())
     assert count == 2, "This Workflow must contain 2 Blocks"
 
 
-def test_persist_to_graphdb():
-    """
-    Test persisting to graphdb
-    """
-
-    w = Workflow(named_graph_uri="http://example.com/test")
-    b1 = Block()
-    w.blocks.append(b1)
-    w.persist("GraphDB")
-
-
-def test_persist_to_SOP():
-    """
-    Test persisting to SOP
-    """
-
-    w = Workflow(named_graph_uri="urn:x-evn-master:test_datagraph")
-    b1 = Block()
-    w.blocks.append(b1)
-    w.persist("SOP")
-
-
 if __name__ == "__main__":
-    test_Workflow_prov_to_graph()
-    test_persist_to_graphdb()
-    test_persist_to_SOP()
+    test_prov_to_graph()

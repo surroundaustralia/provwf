@@ -6,6 +6,7 @@ from rdflib.namespace import RDF
 from .activity import Activity
 from .agent import Agent
 from .entity import Entity
+from .namespace import PROVWF
 
 
 class Block(Activity):
@@ -31,6 +32,6 @@ class Block(Activity):
         g = super().prov_to_graph(g)
 
         # add in type
-        g.add((self.uri, RDF.type, self.PROVWF.Block))
+        g.add((self.uri, RDF.type, PROVWF.Block))
 
         return g
