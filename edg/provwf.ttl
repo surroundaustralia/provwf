@@ -11,7 +11,7 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<https://data.surroundaustralia.com/def/provworkflow>
+<https://data.surroundaustralia.com/def/provwf>
   a owl:Ontology ;
   a prof:Profile ;
   owl:imports <https://w3c.github.io/dx-prof/prof/rdf/prof.ttl> ;
