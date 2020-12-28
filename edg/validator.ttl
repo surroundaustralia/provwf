@@ -1,0 +1,29 @@
+# baseURI: https://data.surroundaustralia.com/def/provwf/shapes
+
+@prefix : <https://data.surroundaustralia.com/def/provwf/shapes> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix provwf: <https://data.surroundaustralia.com/def/provwf/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+provwf:Shapes
+  a owl:Ontology ;
+  skos:definition "Validation SHACL Shapes for the ProvWorkflow Profile"@en ;
+  skos:prefLabel "ProvWorkflow Profile SHACL Shapes" ;
+.
+provwf:WorkflowShape
+  a sh:NodeShape ;
+  sh:property [
+      a sh:PropertyShape ;
+      sh:path provwf:hadBlock ;
+      sh:class provwf:Block ;
+      sh:description "A Workflow must have at least one Block" ;
+      sh:minCount 1 ;
+      sh:name "had block" ;
+      sh:nodeKind sh:IRI ;
+    ] ;
+  sh:targetClass provwf:Workflow ;
+.

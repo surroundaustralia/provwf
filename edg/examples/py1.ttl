@@ -1,0 +1,63 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix provwf: <https://data.surroundaustralia.com/def/provworkflow/> .
+@prefix pwfs: <https://data.surroundaustralia.com/dataset/provworkflows/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+pwfs:452426f0-48ef-11eb-9697-acde48001122 a prov:Activity,
+        provwf:ProvReporter,
+        provwf:Workflow ;
+    rdfs:label "My Simple Workflow"^^xsd:string ;
+    dcterms:created "2020-12-28T09:30:05Z"^^xsd:dateTimeStamp ;
+    owl:versionIRI <https://bitbucket.org/surroundbitbucket/provworkflow/commits/tag/0.5> ;
+    prov:endedAtTime "2020-12-28T19:30:05.956763"^^xsd:dateTime ;
+    prov:startedAtTime "2020-12-28T19:30:05.934965"^^xsd:dateTime ;
+    provwf:hadBlock pwfs:4525311c-48ef-11eb-9697-acde48001122 .
+
+pwfs:4525311c-48ef-11eb-9697-acde48001122 a prov:Activity,
+        provwf:Block,
+        provwf:ProvReporter ;
+    dcterms:created "2020-12-28T09:30:05Z"^^xsd:dateTimeStamp ;
+    owl:versionIRI <https://bitbucket.org/surroundbitbucket/provworkflow/commits/tag/0.5> ;
+    prov:endedAtTime "2020-12-28T19:30:05.956367"^^xsd:dateTime ;
+    prov:generated pwfs:45266ed8-48ef-11eb-9697-acde48001122 ;
+    prov:startedAtTime "2020-12-28T19:30:05.940740"^^xsd:dateTime ;
+    prov:used pwfs:452598b4-48ef-11eb-9697-acde48001122,
+        pwfs:452600ba-48ef-11eb-9697-acde48001122 ;
+    prov:wasAssociatedWith <https://orcid.org/0000-0002-8742-7730> .
+
+pwfs:452598b4-48ef-11eb-9697-acde48001122 a prov:Entity,
+        provwf:ProvReporter ;
+    dcterms:created "2020-12-28T09:30:05Z"^^xsd:dateTimeStamp ;
+    owl:versionIRI <https://bitbucket.org/surroundbitbucket/provworkflow/commits/tag/0.5> ;
+    prov:value "local data" .
+
+pwfs:452600ba-48ef-11eb-9697-acde48001122 a prov:Entity,
+        provwf:ProvReporter ;
+    dcterms:created "2020-12-28T09:30:05Z"^^xsd:dateTimeStamp ;
+    owl:versionIRI <https://bitbucket.org/surroundbitbucket/provworkflow/commits/tag/0.5> ;
+    dcat:accesURL "http://example.com/endpoint"^^xsd:anyURI ;
+    provwf:serviceParameters """
+{
+    "a": 42,
+    "q": "unknown"
+}
+
+Accept: application/json
+""" .
+
+pwfs:45266ed8-48ef-11eb-9697-acde48001122 a prov:Entity,
+        provwf:ProvReporter ;
+    dcterms:created "2020-12-28T09:30:05Z"^^xsd:dateTimeStamp ;
+    owl:versionIRI <https://bitbucket.org/surroundbitbucket/provworkflow/commits/tag/0.5> ;
+    dcat:accesURL "http://fake-s3-in-aws.com/object/x"^^xsd:anyURI ;
+    prov:wasAttributedTo <https://orcid.org/0000-0002-8742-7730> .
+
+<https://orcid.org/0000-0002-8742-7730> a prov:Agent,
+        provwf:ProvReporter ;
+    rdfs:label "Nick"^^xsd:string ;
+    dcterms:created "2020-12-28T09:30:05Z"^^xsd:dateTimeStamp ;
+    owl:versionIRI <https://bitbucket.org/surroundbitbucket/provworkflow/commits/tag/0.5> .

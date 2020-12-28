@@ -135,3 +135,6 @@ dmypy.json
 
 # secret config file
 _config.py
+
+# Mac
+.DS_Store
