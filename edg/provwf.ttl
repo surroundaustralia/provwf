@@ -54,15 +54,15 @@ The additions to PROV-O made by this Specification's data model (its ontology) a
   a prof:ResourceDescriptor ;
   dcterms:conformsTo <http://www.w3.org/TR/owl2-rdf-based-semantics/> ;
   dcterms:format "text/turtle" ;
-  skos:prefLabel "Shapes" ;
+  skos:prefLabel "SHACL Shapes" ;
   prof:hasArtifact <https://bitbucket.org/surroundbitbucket/provwf/src/master/provwf/edg/shapes.ttl> ;
   prof:hasRole role:validation ;
 .
 <https://data.surroundaustralia.com/def/provwf/manifest>
   a prof:ResourceDescriptor ;
-  dcterms:conformsTo <https://data.surroundaustralia.com/def/manifest> ;  # Rob to verify
+  dcterms:conformsTo <https://data.surroundaustralia.org/ontology/standards-baseline> ;  # Rob to verify
   dcterms:format "text/turtle" ;
-  skos:prefLabel "ProvWorkflow SOP Manifest" ;
+  skos:prefLabel "SOP Manifest" ;
   prof:hasArtifact <https://bitbucket.org/surroundbitbucket/provwf/src/master/provwf/edg/manifest.ttl> ;
-  prof:hasRole role:vocabulary ;
+  prof:hasRole role:manifest ;
 .
