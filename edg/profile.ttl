@@ -24,6 +24,7 @@ The additions to PROV-O made by this Specification's data model (its ontology) a
   prof:hasPart <https://data.surroundaustralia.com/def/provwf/eg1> ;
   prof:hasPart <https://data.surroundaustralia.com/def/provwf/ont> ;
   prof:hasPart <https://data.surroundaustralia.com/def/provwf/shapes> ;
+  prof:hasPart <https://data.surroundaustralia.com/def/provwf/manifest> ;
   prof:hasPart <https://data.surroundaustralia.com/def/provwf/ont.html> ;
   prof:isProfileOf <https://www.w3.org/TR/prov-o/> ;
 .
