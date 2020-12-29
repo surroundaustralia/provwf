@@ -14,7 +14,25 @@ from .agent import Agent
 class Activity(ProvReporter):
     """prov:Activity
 
-    was_associated_with: prov:wasAssociatedWith
+    :param uri: A URI you assign to the ProvReporter instance. If None, a UUID-based URI will be created,
+    defaults to None
+    :type uri: Union[URIRef, str], optional
+
+    :param label: A text label you assign, defaults to None
+    :type label: str, optional
+
+    :param named_graph_uri: A Named Graph URI you assign, defaults to None
+    :type named_graph_uri: Union[URIRef, str], optional
+
+    :param used: A list of Entities used (prov:used) by this Block
+    :type used: List[Block], optional
+
+    :param generated: A list of Entities used (prov:generated) by this Block
+    :type generated: List[Block], optional
+
+    :param was_associated_with: An Agent that ran this Block (prov:wasAssociatedWith), may or may not be the same as
+        the one associated with the Workflow, defaults to None
+    :type was_associated_with: Agent, optional
     """
     def __init__(
         self,

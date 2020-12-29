@@ -15,7 +15,29 @@ class Block(Activity):
 
     For its Semantic Web definition, see https://data.surroundaustralia.com/def/provworkflow/Block (not available yet)
 
+    :param uri: A URI you assign to the ProvReporter instance. If None, a UUID-based URI will be created,
+    defaults to None
+    :type uri: Union[URIRef, str], optional
 
+    :param label: A text label you assign, defaults to None
+    :type label: str, optional
+
+    :param named_graph_uri: A Named Graph URI you assign, defaults to None
+    :type named_graph_uri: Union[URIRef, str], optional
+
+    :param used: A list of Entities used (prov:used) by this Block
+    :type used: List[Block], optional
+
+    :param generated: A list of Entities used (prov:generated) by this Block
+    :type generated: List[Block], optional
+
+    :param was_associated_with: An Agent that ran this Block (prov:wasAssociatedWith), may or may not be the same as
+        the one associated with the Workflow, defaults to None
+    :type was_associated_with: Agent, optional
+
+    :param class_uri: A URI for the class of this specialised type of Block. Instances of this class will be typed
+        (rdf:type) with this URI as well as being subclassed (rdfs:subClassOf) provwf:Block
+    :type class_uri: Union[URIRef, str], optional
     """
     def __init__(
         self,

@@ -21,6 +21,22 @@ class Workflow(Activity):
 
     You can either set the (list of) the Workflow's Blocks at creation time or afterwards. The order is unimportant as
     Block ordering is understood using Blocks' startedAtTime property.
+
+    :param uri: A URI you assign to the ProvReporter instance. If None, a UUID-based URI will be created,
+    defaults to None
+    :type uri: Union[URIRef, str], optional
+
+    :param label: A text label you assign, defaults to None
+    :type label: str, optional
+
+    :param named_graph_uri: A Named Graph URI you assign, defaults to None
+    :type named_graph_uri: Union[URIRef, str], optional
+
+    :param was_associated_with: An Agent that ran this Workflow (prov:wasAssociatedWith), defaults to None
+    :type was_associated_with: Agent, optional
+
+    :param blocks: A list of Blocks that were run by this Workflow
+    :type blocks: List[Block], optional
     """
 
     def __init__(
