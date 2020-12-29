@@ -36,3 +36,5 @@ if __name__ == "__main__":
     m = teardown_graphdb()
     if m is not None:
         print(m)
+
+    print("testing done")

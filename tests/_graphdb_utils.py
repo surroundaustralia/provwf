@@ -11,6 +11,10 @@ def setup_graphdb():
     # check to see if we have a repository available for testing
     r = requests.get("http://localhost:7200/rest/repositories", headers={"Accept": "application/json"})
     have_repo = False
+    if hasattr(r.json(), "message"):
+        if r.json()["message"] == "There is no active location!":
+            return "Local GraphDB has no active locations"
+
     for repo in r.json():
         if repo["id"] == "provwftesting":
             have_repo = True

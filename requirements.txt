@@ -1,7 +1,7 @@
 pip>=20.3.3
 rdflib>=5.0.0
 pytest
-agraph-python==101.0.6
+# agraph-python==101.0.6
 black
 requests
 gitpython

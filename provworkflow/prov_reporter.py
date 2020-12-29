@@ -1,16 +1,17 @@
 import logging
 import os
-import signal
+# import signal
 import uuid
-import datetime
+from _datetime import datetime
 from typing import Union
 
 import requests
-from franz.openrdf.connect import ag_connect
-from franz.openrdf.rio.rdfformat import RDFFormat
+# from franz.openrdf.connect import ag_connect
+# from franz.openrdf.rio.rdfformat import RDFFormat
 from rdflib import Graph, URIRef, Literal
 from rdflib.namespace import DCTERMS, PROV, OWL, RDF, RDFS, XSD
 
+from .exceptions import ProvWorkflowException
 from .namespace import PROVWF, PWFS
 from .utils import make_sparql_insert_data, query_sop_sparql, get_version_uri
 
@@ -27,22 +28,33 @@ class ProvReporter:
 
     ProvReporters automatically record created times (dcterms:created) and an instance version IRI which is collected
     from the instance's Git version (URI of the Git origin repo, not local).
+
+    :param uri: A URI you assign to the ProvReporter instance. If None, a UUID-based URI will be created,
+    defaults to None
+    :type uri: Union[URIRef, str], optional
+
+    :param label: A text label you assign, defaults to None
+    :type label: str, optional
+
+    :param named_graph_uri: A Named Graph URI you assign, defaults to None
+    :type named_graph_uri: Union[URIRef, str], optional
     """
     def __init__(
-        self, uri: URIRef = None, label: str = None, named_graph_uri: URIRef = None,
+        self, uri: Union[URIRef, str] = None,
+            label: Union[Literal, str] = None,
+            named_graph_uri: Union[URIRef, str] = None,
     ):
-        # give it an opaque UUID URI if one not given
+        # give it an opaque UUID-based URI if one not given
         if uri is not None:
-            self.uri = uri
+            self.uri = URIRef(uri) if type(uri) == str else uri
         else:
             self.uri = URIRef(PWFS + str(uuid.uuid1()))
-        self.label = Literal(label) if label else None
-
-        self.named_graph_uri = named_graph_uri
+        self.label = Literal(label) if type(label) == str else label
+        self.named_graph_uri = URIRef(named_graph_uri) if type(named_graph_uri) == str else named_graph_uri
 
         # from Git info
         self.version_uri = URIRef(get_version_uri())
-        self.created = Literal(datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"), datatype=XSD.dateTimeStamp)
+        self.created = Literal(datetime.now().astimezone().strftime("%Y-%m-%dT%H:%M:%S%z"), datatype=XSD.dateTimeStamp)
 
     def prov_to_graph(self, g: Graph = None) -> Graph:
         if g is None:
@@ -141,60 +153,60 @@ class ProvReporter:
             raise Exception(f"SOP HTTP error: {r.text}")
 
     # TODO: retest this method as needed
-    def _persist_to_allegro(self, g: Graph = None):
-        """Sends the provenance graph of this Workflow to an AllegroGraph instance as a Turtle string
-
-        The URI assigned to the Workflow us used for AllegroGraph context (graph URI) or a Blank Node is generated, if
-        one is not given.
-
-        The function will error out if connection & transfer not complete after 5 seconds.
-
-        Environment variables are required for connection details.
-
-        :return: None
-        :rtype: None
-        """
-        if g is None:
-            g = self.prov_to_graph()
-
-        vars = [
-            os.environ.get("ALLEGRO_REPO"),
-            os.environ.get("ALLEGRO_HOST"),
-            os.environ.get("ALLEGRO_PORT"),
-            os.environ.get("ALLEGRO_USER"),
-            os.environ.get("ALLEGRO_PASSWORD"),
-        ]
-        assert all(v is not None for v in vars), (
-            "You must set the following environment variables: "
-            "ALLEGRO_REPO, ALLEGRO_HOST, ALLEGRO_PORT, ALLEGRO_USER & "
-            "ALLEGRO_PASSWORD"
-        )
-
-        def connect_and_send():
-            with ag_connect(
-                os.environ["ALLEGRO_REPO"],
-                host=os.environ["ALLEGRO_HOST"],
-                port=int(os.environ["ALLEGRO_PORT"]),
-                user=os.environ["ALLEGRO_USER"],
-                password=os.environ["ALLEGRO_PASSWORD"],
-            ) as conn:
-                conn.addData(
-                    g.serialize(format="turtle").decode("utf-8"),
-                    rdf_format=RDFFormat.TURTLE,
-                    context=conn.createURI(self.uri) if self.uri is not None else None,
-                )
-
-        def handler(signum, frame):
-            raise Exception("Connecting to AllegroGraph failed")
-
-        signal.signal(signal.SIGALRM, handler)
-
-        signal.alarm(5)
-
-        try:
-            connect_and_send()
-        except Exception as exc:
-            print(exc)
+    # def _persist_to_allegro(self, g: Graph = None):
+    #     """Sends the provenance graph of this Workflow to an AllegroGraph instance as a Turtle string
+    #
+    #     The URI assigned to the Workflow us used for AllegroGraph context (graph URI) or a Blank Node is generated, if
+    #     one is not given.
+    #
+    #     The function will error out if connection & transfer not complete after 5 seconds.
+    #
+    #     Environment variables are required for connection details.
+    #
+    #     :return: None
+    #     :rtype: None
+    #     """
+    #     if g is None:
+    #         g = self.prov_to_graph()
+    #
+    #     vars = [
+    #         os.environ.get("ALLEGRO_REPO"),
+    #         os.environ.get("ALLEGRO_HOST"),
+    #         os.environ.get("ALLEGRO_PORT"),
+    #         os.environ.get("ALLEGRO_USER"),
+    #         os.environ.get("ALLEGRO_PASSWORD"),
+    #     ]
+    #     assert all(v is not None for v in vars), (
+    #         "You must set the following environment variables: "
+    #         "ALLEGRO_REPO, ALLEGRO_HOST, ALLEGRO_PORT, ALLEGRO_USER & "
+    #         "ALLEGRO_PASSWORD"
+    #     )
+    #
+    #     def connect_and_send():
+    #         with ag_connect(
+    #             os.environ["ALLEGRO_REPO"],
+    #             host=os.environ["ALLEGRO_HOST"],
+    #             port=int(os.environ["ALLEGRO_PORT"]),
+    #             user=os.environ["ALLEGRO_USER"],
+    #             password=os.environ["ALLEGRO_PASSWORD"],
+    #         ) as conn:
+    #             conn.addData(
+    #                 g.serialize(format="turtle").decode("utf-8"),
+    #                 rdf_format=RDFFormat.TURTLE,
+    #                 context=conn.createURI(self.uri) if self.uri is not None else None,
+    #             )
+    #
+    #     def handler(signum, frame):
+    #         raise Exception("Connecting to AllegroGraph failed")
+    #
+    #     signal.signal(signal.SIGALRM, handler)
+    #
+    #     signal.alarm(5)
+    #
+    #     try:
+    #         connect_and_send()
+    #     except Exception as exc:
+    #         print(exc)
 
     # # see http://192.168.0.132:10035/doc/python/tutorial/example006.html
     # def send_file_to_allegro(self, turtle_file_path, context_uri=None):
@@ -250,7 +262,7 @@ class ProvReporter:
         known_methods = ["graphdb", "sop", "allegro", "file", "string"]
         for method in methods:
             if method not in known_methods:
-                raise ProvReporterException(
+                raise ProvWorkflowException(
                     "A persistent method you selected, {}, is not in the list of known methods, '{}'".format(
                         method, "', '".join(known_methods)
                     )
@@ -273,7 +285,3 @@ class ProvReporter:
                 return g.serialize(format="turtle").decode()
             else:
                 return g.serialize(format="trig").decode()
-
-
-class ProvReporterException(Exception):
-    pass

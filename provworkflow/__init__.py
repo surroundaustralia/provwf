@@ -1,6 +1,7 @@
-from .activity import Activity, ActivityException
+from .activity import Activity
 from .agent import Agent
 from .block import Block
 from .entity import Entity
-from .prov_reporter import ProvReporter, ProvReporterException, PROVWF, PWFS
-from .workflow import Workflow, WorkflowException
+from .exceptions import ProvWorkflowException
+from .prov_reporter import ProvReporter, PROVWF, PWFS
+from .workflow import Workflow

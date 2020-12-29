@@ -6,7 +6,7 @@ from rdflib.namespace import PROV, RDF, XSD
 
 # from franz.openrdf.connect import ag_connect
 # from franz.openrdf.rio.rdfformat import RDFFormat
-from .prov_reporter import ProvReporter, ProvReporterException
+from .prov_reporter import ProvReporter
 from .entity import Entity
 from .agent import Agent
 
@@ -46,7 +46,9 @@ class Activity(ProvReporter):
             (
                 self.uri,
                 PROV.startedAtTime,
-                Literal(self.started_at_time.isoformat(), datatype=XSD.dateTime),
+                Literal(
+                    datetime.now().astimezone().strftime("%Y-%m-%dT%H:%M:%S%z"),
+                    datatype=XSD.dateTimeStamp),
             )
         )
 
@@ -75,12 +77,11 @@ class Activity(ProvReporter):
             (
                 self.uri,
                 PROV.endedAtTime,
-                Literal(self.ended_at_time.isoformat(), datatype=XSD.dateTime),
+                Literal(
+                    datetime.now().astimezone().strftime("%Y-%m-%dT%H:%M:%S%z"),
+                    datatype=XSD.dateTimeStamp),
             )
         )
 
         return g
 
-
-class ActivityException(ProvReporterException):
-    pass

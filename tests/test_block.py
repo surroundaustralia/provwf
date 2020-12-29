@@ -1,6 +1,5 @@
-from provworkflow.block import Block
-from rdflib import Namespace
-from rdflib.namespace import RDF
+from provworkflow import Block, PROVWF
+from rdflib.namespace import RDF, PROV
 
 
 def test_prov_to_graph():
@@ -8,9 +7,6 @@ def test_prov_to_graph():
 
     :return: None
     """
-
-    PROV = Namespace("http://www.w3.org/ns/prov#")
-    PROVWF = Namespace("https://data.surroundaustralia.com/def/profworkflow#")
 
     b = Block()
     g = b.prov_to_graph()

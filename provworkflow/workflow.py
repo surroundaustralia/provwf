@@ -7,6 +7,7 @@ from .namespace import PROVWF
 from .activity import Activity
 from .agent import Agent
 from .block import Block
+from . import ProvWorkflowException
 
 
 class Workflow(Activity):
@@ -42,7 +43,7 @@ class Workflow(Activity):
 
     def prov_to_graph(self, g=None):
         if self.blocks is None or len(self.blocks) < 1:
-            raise WorkflowException("A Workflow must have at least one Block within it")
+            raise ProvWorkflowException("A Workflow must have at least one Block within it")
 
         if g is None:
             if self.named_graph_uri is not None:

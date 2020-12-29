@@ -15,7 +15,7 @@ def test_prov_to_graph():
         elif p == PROV.endedAtTime:
             eat = o.toPython()
 
-    assert eat > sat, "An Activity's startedAtTime must be less than its endedAtTime"
+    assert eat >= sat, "An Activity's endedAtTime must be greater than, or equal to, its startedAtTime"
 
 
 if __name__ == "__main__":

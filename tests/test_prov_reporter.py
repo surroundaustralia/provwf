@@ -1,4 +1,5 @@
-from provworkflow.prov_reporter import ProvReporter, ProvReporterException
+from provworkflow.prov_reporter import ProvReporter
+from provworkflow import ProvWorkflowException
 from provworkflow.namespace import PROVWF
 from rdflib import URIRef, Graph, Literal
 from rdflib.namespace import DCTERMS, OWL, RDF, RDFS, XSD
@@ -20,8 +21,6 @@ def test_prov_to_graph():
 
     assert (pr.uri, DCTERMS.created, None) in g, \
         "g must contain a dcterms:created property for the provwf:ProvReporter instance"
-
-    print(g.serialize(format="ttl").decode())
 
     pr2 = ProvReporter(label="Test PR")
     g2 = pr2.prov_to_graph()
@@ -102,7 +101,7 @@ def test_persist_to_graphdb():
 
 def test_persist_unknown():
     pr = ProvReporter()
-    with pytest.raises(ProvReporterException):
+    with pytest.raises(ProvWorkflowException):
         pr.persist("unknown")
 
 

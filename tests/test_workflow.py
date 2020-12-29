@@ -1,9 +1,7 @@
-from provworkflow.workflow import Workflow
+from provworkflow import Workflow, PROVWF, ProvWorkflowException
 import provworkflow.block
-from rdflib import Namespace
-from rdflib.namespace import RDF
-import pytest
-import requests
+from rdflib.namespace import RDF, PROV
+from datetime import datetime
 
 
 def test_prov_to_graph():
@@ -12,9 +10,6 @@ def test_prov_to_graph():
 
     :return: None
     """
-
-    PROV = Namespace("http://www.w3.org/ns/prov#")
-    PROVWF = Namespace("https://data.surroundaustralia.com/def/profworkflow#")
 
     w = Workflow()
     b1 = provworkflow.block.Block()
@@ -33,6 +28,28 @@ def test_prov_to_graph():
         count += 1
 
     assert count == 2, "This Workflow must contain 2 Blocks"
+
+    # check start/end times of Blocks are within Workflow's
+    for o in g.objects(subject=w.uri, predicate=PROV.startedAtTime):
+        w_sat = datetime.strptime(str(o), "%Y-%m-%dT%H:%M:%S%z")
+
+    for o in g.objects(subject=w.uri, predicate=PROV.endedAtTime):
+        w_eat = datetime.strptime(str(o), "%Y-%m-%dT%H:%M:%S%z")
+
+    for s in g.subjects(predicate=RDF.type, object=PROVWF.Block):
+        for o in g.objects(subject=s, predicate=PROV.startedAtTime):
+            if datetime.strptime(str(o), "%Y-%m-%dT%H:%M:%S%z") < w_sat:
+                raise ProvWorkflowException(
+                    "The started at times of all Blocks within a workflow must be greater than, or equal to, "
+                    "the started at time of the Workflow")
+
+        for o in g.objects(subject=s, predicate=PROV.endedAtTime):
+            if datetime.strptime(str(o), "%Y-%m-%dT%H:%M:%S%z") > w_eat:
+                raise ProvWorkflowException(
+                    "The ended at times of all Blocks within a workflow must be greater than, or equal to, "
+                    "the ended at time of the Workflow")
+
+
 
 
 if __name__ == "__main__":
