@@ -31,6 +31,8 @@ class Entity(ProvReporter):
         was_used_by=None,
         was_generated_by=None,
         was_attributed_to: Agent = None,
+        was_version_of=None,  # Entity
+        external: bool = None
     ):
         super().__init__(uri=uri, label=label, named_graph_uri=named_graph_uri)
 
@@ -46,6 +48,8 @@ class Entity(ProvReporter):
         else:
             self.was_used_by = was_used_by
         self.was_attributed_to = was_attributed_to
+        self.was_version_of = was_version_of
+        self.external = external
 
     def prov_to_graph(self, g: Graph = None) -> Graph:
         g = super().prov_to_graph(g)
@@ -59,7 +63,7 @@ class Entity(ProvReporter):
             g.add((self.uri, PROV.value, self.value))
 
         if self.access_uri is not None:
-            g.add((self.uri, DCAT.accesURL, self.access_uri))
+            g.add((self.uri, DCAT.accessURL, self.access_uri))
 
         if self.service_parameters is not None:
             g.add((self.uri, PROVWF.serviceParameters, self.service_parameters))
@@ -80,5 +84,8 @@ class Entity(ProvReporter):
             self.was_attributed_to.prov_to_graph(g)
 
             g.add((self.uri, PROV.wasAttributedTo, self.was_attributed_to.uri))
+
+        if self.external:
+            g.add((self.uri, PROV.wasAttributedTo, Literal("Workflow")))
 
         return g

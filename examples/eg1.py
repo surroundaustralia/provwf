@@ -8,7 +8,6 @@ b = Block(was_associated_with=nick)
 
 # do some (fake) work
 fake_data = "local data"
-fake_web_service = "http://example.com/endpoint"
 params = """
 {
     "a": 42,
@@ -19,11 +18,11 @@ Accept: application/json
 """
 b.used = [
     Entity(value=fake_data),
-    Entity(access_uri=fake_web_service, service_parameters=params)
+    Entity(access_uri="http://example.com/endpoint", service_parameters=params)
 ]
 
 b.generated.append(
-    Entity(access_uri="http://fake-s3-in-aws.com/object/x", was_attributed_to=nick)
+    Entity(was_attributed_to=nick, access_uri="http://somewhere-on-s3/a/b/c")
 )
 
 w.blocks.append(b)

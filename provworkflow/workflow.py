@@ -1,7 +1,7 @@
 from typing import List
 
-from rdflib import URIRef, Graph
-from rdflib.namespace import RDF
+from rdflib import URIRef, Graph, Literal
+from rdflib.namespace import PROV, RDF
 
 from .namespace import PROVWF
 from .activity import Activity
@@ -62,6 +62,20 @@ class Workflow(Activity):
 
         # build all the details for the Workflow itself
         g = super().prov_to_graph(g)
+
+        # attach external Block inputs and outputs to the Workflow
+        all_inputs = [o for o in g.objects(subject=None, predicate=PROV.used)]
+        all_outputs = [o for o in g.objects(subject=None, predicate=PROV.generated)]
+        for i in [x for x in all_inputs if x not in all_outputs]:
+            g.add((self.uri, PROV.used, i))
+
+        for o in [x for x in all_outputs if x not in all_inputs]:
+            g.add((self.uri, PROV.generated, o))
+
+        # add back in any externals
+        for s in g.subjects(predicate=PROV.wasAttributedTo, object=Literal("Workflow")):
+            g.add((self.uri, PROV.generated, s))
+            g.remove((s, PROV.generated, Literal("")))
 
         return g
 
