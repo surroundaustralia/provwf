@@ -1,11 +1,13 @@
 import logging
 import os
+
 # import signal
 import uuid
 from _datetime import datetime
 from typing import Union
 
 import requests
+
 # from franz.openrdf.connect import ag_connect
 # from franz.openrdf.rio.rdfformat import RDFFormat
 from rdflib import Graph, URIRef, Literal
@@ -14,6 +16,12 @@ from rdflib.namespace import DCTERMS, PROV, OWL, RDF, RDFS, XSD
 from .exceptions import ProvWorkflowException
 from .namespace import PROVWF, PWFS
 from .utils import make_sparql_insert_data, query_sop_sparql, get_version_uri
+
+
+class class_or_instance_method(classmethod):
+    def __get__(self, instance, type_):
+        descr_get = super().__get__ if instance is None else self.__func__.__get__
+        return descr_get(instance, type_)
 
 
 class ProvReporter:
@@ -39,10 +47,12 @@ class ProvReporter:
     :param named_graph_uri: A Named Graph URI you assign, defaults to None
     :type named_graph_uri: Union[URIRef, str], optional
     """
+
     def __init__(
-        self, uri: Union[URIRef, str] = None,
-            label: Union[Literal, str] = None,
-            named_graph_uri: Union[URIRef, str] = None,
+        self,
+        uri: Union[URIRef, str] = None,
+        label: Union[Literal, str] = None,
+        named_graph_uri: Union[URIRef, str] = None,
     ):
         # give it an opaque UUID-based URI if one not given
         if uri is not None:
@@ -50,11 +60,16 @@ class ProvReporter:
         else:
             self.uri = URIRef(PWFS + str(uuid.uuid1()))
         self.label = Literal(label) if type(label) == str else label
-        self.named_graph_uri = URIRef(named_graph_uri) if type(named_graph_uri) == str else named_graph_uri
+        self.named_graph_uri = (
+            URIRef(named_graph_uri) if type(named_graph_uri) == str else named_graph_uri
+        )
 
         # from Git info
         self.version_uri = URIRef(get_version_uri())
-        self.created = Literal(datetime.now().astimezone().strftime("%Y-%m-%dT%H:%M:%S%z"), datatype=XSD.dateTimeStamp)
+        self.created = Literal(
+            datetime.now().astimezone().strftime("%Y-%m-%dT%H:%M:%S%z"),
+            datatype=XSD.dateTimeStamp,
+        )
 
     def prov_to_graph(self, g: Graph = None) -> Graph:
         if g is None:
@@ -78,30 +93,33 @@ class ProvReporter:
 
         return g
 
-    def _persist_to_file(self, g: Graph = None, rdf_file_path: str = "prov_reporter"):
-        if g is None:
-            g = self.prov_to_graph()
-
+    @classmethod
+    def _persist_to_file(
+        cls,
+        g: Graph,
+        rdf_file_path: str = "prov_reporter",
+        named_graph_uri: Union[URIRef, str] = None,
+    ):
         # remove file extension if added as system will add appropriate one
         rdf_file_path = rdf_file_path.replace(".ttl", "")
         rdf_file_path = rdf_file_path.replace(".trig", "")
 
-        if self.named_graph_uri is None:
+        if named_graph_uri is None:
             g.serialize(destination=rdf_file_path + ".ttl", format="turtle")
         else:
             g.serialize(destination=rdf_file_path + ".trig", format="trig")
 
-    def _persist_to_graphdb(self, g: Graph = None):
+    @classmethod
+    def _persist_to_graphdb(cls, g: Graph, named_graph_uri: Union[URIRef, str] = None):
         """
         generic util to write a given graph to graphdb
         :param context: the named graph to add the triples to
         :param graph:
         :return: a status code
         """
-        if g is None:
-            g = self.prov_to_graph()
-
-        GRAPH_DB_SYSTEM_URI = os.environ.get("GRAPH_DB_SYSTEM_URI", "http://localhost:7200")
+        GRAPH_DB_SYSTEM_URI = os.environ.get(
+            "GRAPH_DB_SYSTEM_URI", "http://localhost:7200"
+        )
         GRAPH_DB_REPO_ID = os.environ.get("GRAPH_DB_REPO_ID", "provwftesting")
         GRAPHDB_USR = os.environ.get("GRAPHDB_USR", "")
         GRAPHDB_PWD = os.environ.get("GRAPHDB_PWD", "")
@@ -109,11 +127,11 @@ class ProvReporter:
         data = g.serialize(format="turtle", encoding="utf-8")
 
         # graphdb expects the context (named graph) wrapped in < & >
-        if self.named_graph_uri != "null":
-            if self.named_graph_uri is None:
+        if named_graph_uri != "null":
+            if named_graph_uri is None:
                 context = "null"
             else:
-                context = "<" + self.named_graph_uri + ">"
+                context = "<" + str(named_graph_uri) + ">"
 
         r = requests.post(
             GRAPH_DB_SYSTEM_URI + "/repositories/" + GRAPH_DB_REPO_ID + "/statements",
@@ -128,21 +146,19 @@ class ProvReporter:
         if r.status_code != 204:
             raise Exception(f"GraphDB says: {r.text}")
 
-    def _persist_to_sop(self, g: Graph = None):
+    @classmethod
+    def _persist_to_sop(cls, g: Graph, named_graph_uri: Union[URIRef, str] = None):
         """
         generic util to write a given graph to graphdb
         :param named_graph_uri: the data graph to add the triples to
         :param graph: the graph to be written out
         :return: a status code
         """
-        if g is None:
-            g = self.prov_to_graph()
-
         # TODO: determine if we need to set a default SOP graph ID
         # if self.named_graph_uri is None:
         #     self.named_graph_uri = "http://example.com"
-        query = make_sparql_insert_data(self.named_graph_uri, g)
-        r = query_sop_sparql(self.named_graph_uri, query, update=True)
+        query = make_sparql_insert_data(named_graph_uri, g)
+        r = query_sop_sparql(named_graph_uri, query, update=True)
 
         logging.info(
             f"Attempted to write triples to SOP and got status code: {r.status_code} returned"
@@ -151,7 +167,8 @@ class ProvReporter:
             raise Exception(f"SOP HTTP error: {r.text}")
 
     # TODO: retest this method as needed
-    # def _persist_to_allegro(self, g: Graph = None):
+    # @classmethod
+    # def _persist_to_allegro(self, g: Graph):
     #     """Sends the provenance graph of this Workflow to an AllegroGraph instance as a Turtle string
     #
     #     The URI assigned to the Workflow us used for AllegroGraph context (graph URI) or a Blank Node is generated, if
@@ -251,13 +268,21 @@ class ProvReporter:
     #     except Exception as exc:
     #         print(exc)
 
+    @class_or_instance_method
     def persist(
-        self, methods: Union[str, list], rdf_file_path: str = "prov_reporter"
+        cls_or_self,
+        g: Union[Graph, None],
+        methods: Union[str, list, None],
+        rdf_file_path: str = "prov_reporter",
+        named_graph_uri: Union[URIRef, str] = None,
     ) -> Union[None, str]:
+        """This class method persists a given RDFlib Graph according to one or more given methods."""
         if type(methods) == str:
             methods = [methods]
+        elif methods is None:
+            methods = ["string"]
 
-        known_methods = ["graphdb", "sop", "allegro", "file", "string"]
+        known_methods = ["graphdb", "sop", "file", "string"]  # "allegro",
         for method in methods:
             if method not in known_methods:
                 raise ProvWorkflowException(
@@ -266,20 +291,30 @@ class ProvReporter:
                     )
                 )
 
+        # if called on an instance, get the graph from this instance's graph generation method
+        if not isinstance(cls_or_self, type):
+            g = cls_or_self.prov_to_graph()
+            if cls_or_self.named_graph_uri is not None:
+                named_graph_uri = cls_or_self.named_graph_uri
+        else:
+            if g is None:
+                raise ProvWorkflowException(
+                    "When called as a class method, i.e. ProvReporter.persist(...), you must supply a non-null Graph g"
+                )
+
         # write to one or more persistence layers
-        g = self.prov_to_graph()
         if "file" in methods:
-            self._persist_to_file(g, rdf_file_path)
+            ProvReporter._persist_to_file(g, rdf_file_path, named_graph_uri)
         if "graphdb" in methods:
-            self._persist_to_graphdb(g)
+            ProvReporter._persist_to_graphdb(g, named_graph_uri)
         if "sop" in methods:
-            self._persist_to_sop(g)
-        if "allegro" in methods:
-            self._persist_to_allegro(g)
+            ProvReporter._persist_to_sop(g, named_graph_uri)
+        # if "allegro" in methods:
+        #     ProvReporter._persist_to_allegro(g)
 
         # final persistent option
         if "string" in methods:
-            if self.named_graph_uri is None:
+            if named_graph_uri is None:
                 return g.serialize(format="turtle").decode()
             else:
                 return g.serialize(format="trig").decode()

@@ -1,5 +1,6 @@
 from provworkflow import Block, PROVWF
-from rdflib.namespace import RDF, PROV
+from rdflib import Literal
+from rdflib.namespace import OWL, RDF, PROV, XSD
 
 
 def test_prov_to_graph():
@@ -12,8 +13,14 @@ def test_prov_to_graph():
     g = b.prov_to_graph()
 
     # check both generic and specific typing
-    assert (None, RDF.type, PROV.Activity) in g, "g must contain a prov:Activity"
-    assert (None, RDF.type, PROVWF.Block) in g, "g must contain a provwf:Block"
+    assert (b.uri, RDF.type, PROV.Activity) in g, "g must contain a prov:Activity"
+    assert (b.uri, RDF.type, PROVWF.Block) in g, "g must contain a provwf:Block"
+
+    assert (
+        b.uri,
+        OWL.versionIRI,
+        Literal(b.version_uri, datatype=XSD.anyURI),
+    ) in g, "g must contain an owl:versionIRI property for a provwf:Block instance"
 
 
 if __name__ == "__main__":

@@ -98,7 +98,7 @@ def get_tag_or_commit(only_commit=False):
         return repo.heads.master.commit
 
     if repo.tags:
-         return repo.tags[0]
+        return repo.tags[0]
     else:
         return repo.heads.master.commit
 
@@ -132,4 +132,3 @@ def get_version_uri():
         raise Exception("Only GitHub & BitBucket repos are supported")
 
     return repo_uri.replace(".git", "") + path + id
-

@@ -2,7 +2,7 @@ from provworkflow.prov_reporter import ProvReporter
 from provworkflow import ProvWorkflowException
 from provworkflow.namespace import PROVWF
 from rdflib import URIRef, Graph, Literal
-from rdflib.namespace import DCTERMS, OWL, RDF, RDFS, XSD
+from rdflib.namespace import DCTERMS, RDF, RDFS, XSD
 import os
 import requests
 import pytest
@@ -13,20 +13,28 @@ def test_prov_to_graph():
     pr = ProvReporter()
     g = pr.prov_to_graph()
 
-    assert (pr.uri, RDF.type, PROVWF.ProvReporter) in g, \
-        "g must contain a provwf:ProvReporter"
+    assert (
+        pr.uri,
+        RDF.type,
+        PROVWF.ProvReporter,
+    ) in g, "g must contain a provwf:ProvReporter"
 
-    assert (pr.uri, OWL.versionIRI, pr.version_uri) in g, \
-        "g must contain an owl:versionIRI property for the provwf:ProvReporter instance"
-
-    assert (pr.uri, DCTERMS.created, None) in g, \
+    assert (
+        pr.uri,
+        DCTERMS.created,
+        None,
+    ) in g, (
         "g must contain a dcterms:created property for the provwf:ProvReporter instance"
+    )
 
     pr2 = ProvReporter(label="Test PR")
     g2 = pr2.prov_to_graph()
 
-    assert (pr2.uri, RDFS.label, Literal("Test PR", datatype=XSD.string)) in g2, \
-        "g must contain the label 'Test PR'"
+    assert (
+        pr2.uri,
+        RDFS.label,
+        Literal("Test PR", datatype=XSD.string),
+    ) in g2, "g must contain the label 'Test PR'"
 
 
 def test_persist_to_string():
@@ -43,7 +51,7 @@ def test_persist_to_string():
 def test_persist_to_file():
     p = "/tmp/prov_reporter_x"
     pr = ProvReporter()
-    pr.persist("file", rdf_file_path=p)
+    pr.persist(methods="file", rdf_file_path=p)
     with open(p + ".ttl") as f:
         assert str(f.read()).startswith("@prefix")
     os.unlink(p + ".ttl")
@@ -60,7 +68,7 @@ def test_persist_to_graphdb():
     os.environ["GRAPH_DB_REPO_ID"] = "provwftesting"
 
     pr = ProvReporter()
-    ttl = pr.persist(["graphdb", "string"])
+    ttl = pr.persist(methods=["graphdb", "string"])
     pr_uri = None
     for s in (
         Graph()
@@ -77,7 +85,9 @@ def test_persist_to_graphdb():
             ?pr_uri a provwf:ProvReporter .
         }}
         LIMIT 1
-        """.format(PROVWF)
+        """.format(
+        PROVWF
+    )
     r = requests.get(
         GRAPH_DB_SYSTEM_URI + "/repositories/" + os.environ["GRAPH_DB_REPO_ID"],
         params={"query": q},
@@ -102,7 +112,7 @@ def test_persist_to_graphdb():
 def test_persist_unknown():
     pr = ProvReporter()
     with pytest.raises(ProvWorkflowException):
-        pr.persist("unknown")
+        pr.persist(methods="unknown")
 
 
 if __name__ == "__main__":

@@ -9,7 +9,10 @@ def setup_graphdb():
         return "Local GraphDB not available"
 
     # check to see if we have a repository available for testing
-    r = requests.get("http://localhost:7200/rest/repositories", headers={"Accept": "application/json"})
+    r = requests.get(
+        "http://localhost:7200/rest/repositories",
+        headers={"Accept": "application/json"},
+    )
     have_repo = False
     if hasattr(r.json(), "message"):
         if r.json()["message"] == "There is no active location!":
@@ -20,16 +23,21 @@ def setup_graphdb():
             have_repo = True
     if not have_repo:
         multipart_form_data = {
-            'config': ("_graphdb-repo-config.ttl", open("_graphdb-repo-config.ttl", 'r'))
+            "config": (
+                "_graphdb-repo-config.ttl",
+                open("_graphdb-repo-config.ttl", "r"),
+            )
         }
-        r = requests.post("http://localhost:7200/rest/repositories", files=multipart_form_data)
+        r = requests.post(
+            "http://localhost:7200/rest/repositories", files=multipart_form_data
+        )
         if not r.ok:
             return "Unable to access or create testing repo"
 
     # clear repo
     r = requests.delete(
         "http://localhost:7200/repositories/provwftesting/statements",
-        headers={"Accept": "application/json"}
+        headers={"Accept": "application/json"},
     )
     if not r.ok:
         return "Could not clear all data in provwftesting repository"
@@ -40,7 +48,7 @@ def setup_graphdb():
 def teardown_graphdb():
     r = requests.delete(
         "http://localhost:7200/repositories/provwftesting",
-        headers={"Accept": "application/json"}
+        headers={"Accept": "application/json"},
     )
     if not r.ok:
         return "Could not delete repo provwftesting"

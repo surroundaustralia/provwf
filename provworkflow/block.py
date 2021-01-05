@@ -39,6 +39,7 @@ class Block(Activity):
         (rdf:type) with this URI as well as being subclassed (rdfs:subClassOf) provwf:Block
     :type class_uri: Union[URIRef, str], optional
     """
+
     def __init__(
         self,
         uri: Union[URIRef, str] = None,
@@ -62,9 +63,12 @@ class Block(Activity):
 
         if self.__class__.__name__ == "Block" and self.class_uri is not None:
             raise ProvWorkflowException(
-                "If the class Block is used directly, i.e. without specialisation, class_uri must not be set")
+                "If the class Block is used directly, i.e. without specialisation, class_uri must not be set"
+            )
         elif self.__class__.__name__ != "Block" and self.class_uri is None:
-            raise ProvWorkflowException("A specialised Block must have a class_uri instance variable supplied")
+            raise ProvWorkflowException(
+                "A specialised Block must have a class_uri instance variable supplied"
+            )
         elif self.class_uri is not None and not self.class_uri.startswith("http"):
             raise ProvWorkflowException("If supplied, a class_uri must start with http")
 
@@ -79,6 +83,12 @@ class Block(Activity):
             g.add((self.uri, RDF.type, self.class_uri))
 
         # soft typing using the version_uri
-        g.add((self.uri, OWL.versionIRI, Literal(str(self.version_uri), datatype=XSD.anyURI)))
+        g.add(
+            (
+                self.uri,
+                OWL.versionIRI,
+                Literal(str(self.version_uri), datatype=XSD.anyURI),
+            )
+        )
 
         return g

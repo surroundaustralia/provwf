@@ -6,6 +6,7 @@ from rdflib.namespace import DCAT, PROV, RDF, XSD
 from .namespace import PROVWF
 from .prov_reporter import ProvReporter
 from .agent import Agent
+
 # from .activity import Activity
 
 
@@ -51,6 +52,7 @@ class Entity(ProvReporter):
     :param external: Whether or not this Entity exists outside the workflow
     :type external: bool, optional
     """
+
     def __init__(
         self,
         uri: URIRef = None,
@@ -63,13 +65,17 @@ class Entity(ProvReporter):
         was_generated_by=None,
         was_attributed_to: Agent = None,
         was_revision_of=None,  # Entity
-        external: bool = None
+        external: bool = None,
     ):
         super().__init__(uri=uri, label=label, named_graph_uri=named_graph_uri)
 
         self.value = Literal(value) if value is not None else None
-        self.access_uri = Literal(access_uri, datatype=XSD.anyURI) if access_uri is not None else None
-        self.service_parameters = Literal(service_parameters) if service_parameters is not None else None
+        self.access_uri = (
+            Literal(access_uri, datatype=XSD.anyURI) if access_uri is not None else None
+        )
+        self.service_parameters = (
+            Literal(service_parameters) if service_parameters is not None else None
+        )
         if type(was_used_by) != list:
             self.was_used_by = [was_used_by]
         else:

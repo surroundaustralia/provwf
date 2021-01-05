@@ -1,6 +1,7 @@
 from provworkflow import Workflow, PROVWF, ProvWorkflowException
 import provworkflow.block
-from rdflib.namespace import RDF, PROV
+from rdflib import Literal
+from rdflib.namespace import OWL, RDF, PROV, XSD
 from datetime import datetime
 
 
@@ -19,8 +20,14 @@ def test_prov_to_graph():
     g = w.prov_to_graph()
 
     # check both generic and specific typing
-    assert (None, RDF.type, PROV.Activity) in g, "g must contain a prov:Activity"
-    assert (None, RDF.type, PROVWF.Workflow) in g, "g must contain a provwf:Workflow"
+    assert (w.uri, RDF.type, PROV.Activity) in g, "g must contain a prov:Activity"
+    assert (w.uri, RDF.type, PROVWF.Workflow) in g, "g must contain a provwf:Workflow"
+
+    assert (
+        w.uri,
+        OWL.versionIRI,
+        Literal(w.version_uri, datatype=XSD.anyURI),
+    ) in g, "g must contain an owl:versionIRI property for a provwf:Workflow instance"
 
     # check it contains 2 Blocks
     count = 0
@@ -41,15 +48,15 @@ def test_prov_to_graph():
             if datetime.strptime(str(o), "%Y-%m-%dT%H:%M:%S%z") < w_sat:
                 raise ProvWorkflowException(
                     "The started at times of all Blocks within a workflow must be greater than, or equal to, "
-                    "the started at time of the Workflow")
+                    "the started at time of the Workflow"
+                )
 
         for o in g.objects(subject=s, predicate=PROV.endedAtTime):
             if datetime.strptime(str(o), "%Y-%m-%dT%H:%M:%S%z") > w_eat:
                 raise ProvWorkflowException(
                     "The ended at times of all Blocks within a workflow must be greater than, or equal to, "
-                    "the ended at time of the Workflow")
-
-
+                    "the ended at time of the Workflow"
+                )
 
 
 if __name__ == "__main__":

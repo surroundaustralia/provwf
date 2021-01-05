@@ -34,6 +34,7 @@ class Activity(ProvReporter):
         the one associated with the Workflow, defaults to None
     :type was_associated_with: Agent, optional
     """
+
     def __init__(
         self,
         uri: URIRef = None,
@@ -66,7 +67,8 @@ class Activity(ProvReporter):
                 PROV.startedAtTime,
                 Literal(
                     datetime.now().astimezone().strftime("%Y-%m-%dT%H:%M:%S%z"),
-                    datatype=XSD.dateTimeStamp),
+                    datatype=XSD.dateTimeStamp,
+                ),
             )
         )
 
@@ -97,9 +99,9 @@ class Activity(ProvReporter):
                 PROV.endedAtTime,
                 Literal(
                     datetime.now().astimezone().strftime("%Y-%m-%dT%H:%M:%S%z"),
-                    datatype=XSD.dateTimeStamp),
+                    datatype=XSD.dateTimeStamp,
+                ),
             )
         )
 
         return g
-

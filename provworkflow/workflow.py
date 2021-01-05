@@ -59,7 +59,9 @@ class Workflow(Activity):
 
     def prov_to_graph(self, g=None):
         if self.blocks is None or len(self.blocks) < 1:
-            raise ProvWorkflowException("A Workflow must have at least one Block within it")
+            raise ProvWorkflowException(
+                "A Workflow must have at least one Block within it"
+            )
 
         if g is None:
             if self.named_graph_uri is not None:
@@ -71,7 +73,13 @@ class Workflow(Activity):
         g.add((self.uri, RDF.type, PROVWF.Workflow))
 
         # soft typing using the version_uri
-        g.add((self.uri, OWL.versionIRI, Literal(str(self.version_uri), datatype=XSD.anyURI)))
+        g.add(
+            (
+                self.uri,
+                OWL.versionIRI,
+                Literal(str(self.version_uri), datatype=XSD.anyURI),
+            )
+        )
 
         # add the prov graph of each block to this Workflow's prov graph
         for block in self.blocks:

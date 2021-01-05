@@ -17,10 +17,9 @@ class Agent(ProvReporter):
     :param named_graph_uri: A Named Graph URI you assign, defaults to None
     :type named_graph_uri: Union[URIRef, str], optional
     """
+
     def __init__(
-        self, uri: URIRef = None,
-            label: str = None,
-            named_graph_uri: URIRef = None,
+        self, uri: URIRef = None, label: str = None, named_graph_uri: URIRef = None,
     ):
         super().__init__(uri=uri, label=label, named_graph_uri=named_graph_uri)
 
