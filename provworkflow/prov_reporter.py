@@ -70,8 +70,6 @@ class ProvReporter:
 
         # this instance's URI
         g.add((self.uri, RDF.type, PROVWF.ProvReporter))
-        # soft typing using the version_uri
-        g.add((self.uri, OWL.versionIRI, self.version_uri))
         g.add((self.uri, DCTERMS.created, self.created))
 
         # add a label if this Activity has one

@@ -12,7 +12,7 @@ pwfs:eee55f64-49a9-11eb-a153-acde48001122 a prov:Activity,
         provwf:Workflow ;
     rdfs:label "My Simple Workflow"^^xsd:string ;
     dcterms:created "2020-12-29T17:46:17+1000"^^xsd:dateTimeStamp ;
-    owl:versionIRI <https://bitbucket.org/surroundbitbucket/provwf/commits/tag/0.5> ;
+    owl:versionIRI "https://bitbucket.org/surroundbitbucket/provwf/commits/tag/0.5"^^xsd:anyURI ;
     prov:endedAtTime "2020-12-29T17:46:17+1000"^^xsd:dateTimeStamp ;
     prov:startedAtTime "2020-12-29T17:46:17+1000"^^xsd:dateTimeStamp ;
     prov:used pwfs:eee6ef46-49a9-11eb-a153-acde48001122,
@@ -24,7 +24,7 @@ pwfs:eee67156-49a9-11eb-a153-acde48001122 a prov:Activity,
         provwf:Block,
         provwf:ProvReporter ;
     dcterms:created "2020-12-29T17:46:17+1000"^^xsd:dateTimeStamp ;
-    owl:versionIRI <https://bitbucket.org/surroundbitbucket/provwf/commits/tag/0.5> ;
+    owl:versionIRI "https://bitbucket.org/surroundbitbucket/provwf/commits/tag/0.5"^^xsd:anyURI ;
     prov:endedAtTime "2020-12-29T17:46:17+1000"^^xsd:dateTimeStamp ;
     prov:generated pwfs:eee7e202-49a9-11eb-a153-acde48001122 ;
     prov:startedAtTime "2020-12-29T17:46:17+1000"^^xsd:dateTimeStamp ;
@@ -35,13 +35,13 @@ pwfs:eee67156-49a9-11eb-a153-acde48001122 a prov:Activity,
 pwfs:eee6ef46-49a9-11eb-a153-acde48001122 a prov:Entity,
         provwf:ProvReporter ;
     dcterms:created "2020-12-29T17:46:17+1000"^^xsd:dateTimeStamp ;
-    owl:versionIRI <https://bitbucket.org/surroundbitbucket/provwf/commits/tag/0.5> ;
+    owl:versionIRI "https://bitbucket.org/surroundbitbucket/provwf/commits/tag/0.5"^^xsd:anyURI ;
     prov:value "local data" .
 
 pwfs:eee76b6a-49a9-11eb-a153-acde48001122 a prov:Entity,
         provwf:ProvReporter ;
     dcterms:created "2020-12-29T17:46:17+1000"^^xsd:dateTimeStamp ;
-    owl:versionIRI <https://bitbucket.org/surroundbitbucket/provwf/commits/tag/0.5> ;
+    owl:versionIRI "https://bitbucket.org/surroundbitbucket/provwf/commits/tag/0.5"^^xsd:anyURI ;
     dcat:accessURL "http://example.com/endpoint"^^xsd:anyURI ;
     provwf:serviceParameters """
 {
@@ -55,7 +55,7 @@ Accept: application/json
 pwfs:eee7e202-49a9-11eb-a153-acde48001122 a prov:Entity,
         provwf:ProvReporter ;
     dcterms:created "2020-12-29T17:46:17+1000"^^xsd:dateTimeStamp ;
-    owl:versionIRI <https://bitbucket.org/surroundbitbucket/provwf/commits/tag/0.5> ;
+    owl:versionIRI "https://bitbucket.org/surroundbitbucket/provwf/commits/tag/0.5"^^xsd:anyURI ;
     dcat:accessURL "http://somewhere-on-s3/a/b/c"^^xsd:anyURI ;
     prov:wasAttributedTo <https://orcid.org/0000-0002-8742-7730> .
 
@@ -63,4 +63,4 @@ pwfs:eee7e202-49a9-11eb-a153-acde48001122 a prov:Entity,
         provwf:ProvReporter ;
     rdfs:label "Nick"^^xsd:string ;
     dcterms:created "2020-12-29T17:46:17+1000"^^xsd:dateTimeStamp ;
-    owl:versionIRI <https://bitbucket.org/surroundbitbucket/provwf/commits/tag/0.5> .
+    owl:versionIRI "https://bitbucket.org/surroundbitbucket/provwf/commits/tag/0.5"^^xsd:anyURI .

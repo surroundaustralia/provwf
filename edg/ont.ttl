@@ -82,7 +82,9 @@ Block may be specialised in application code class/object hierarchies to create 
 
 A Block must always have at least one input (an Entity that it uses, prov:used) at least one thing. The input can be a data location, an API endpoint, a literal value, a random number seed etc.
 
-A Block must always have at least one output (an Entity that it generates, prov:generated). The thing generated can be a file on a system, a state change in an existing digital asset etc."""@en ;
+A Block must always have at least one output (an Entity that it generates, prov:generated). The thing generated can be a file on a system, a state change in an existing digital asset etc.
+
+Each Block must have one and only one owl:versionIRI property that indicates an xsd:anyURI object, that is a URI literal. We (SURROUND) further require that the literal be a Git resource in BitBucket, CodeCommit etc. This owl:versionIRI property indicates the specific version of the source code used by this instance of the Workflow. ProvWF, as implemented in Python, will automatically calcualte this value for each Block using Python / Git interactions."""@en ;
   skos:example """:block_x
     a profwf:Block ;
     skos:prefLabel \"Block X\" ;
@@ -173,7 +175,9 @@ A Workflow must always have at least one input (an Entity that it uses, prov:use
 
 A Workflow must always have at least one output (an Entity that it generates, prov:generated). The thing generated can be a file on a system, a state change in an existing digital asset etc. 
 
-Workflows' inputs and outputs should be automatically derived from the Blocks within the Workflow and no Workflow input our output should exist that is not also an input/output to a Block within that Workflow."""@en ;
+Workflows' inputs and outputs should be automatically derived from the Blocks within the Workflow and no Workflow input our output should exist that is not also an input/output to a Block within that Workflow.
+
+Each Workflow must have one and only one owl:versionIRI property that indicates an xsd:anyURI object, that is a URI literal. We (SURROUND) further require that the literal be a Git resource in BitBucket, CodeCommit etc. This owl:versionIRI property indicates the specific version of the source code used by this instance of the Workflow. ProvWF, as implemented in Python, will automatically calcualte this value for each Workflow using Python / Git interactions."""@en ;
   skos:example """# a minimal Workflow instance
 :workflow_a
     a profwf:Workflow ;

@@ -1,7 +1,7 @@
 from typing import List, Union
 
-from rdflib import URIRef
-from rdflib.namespace import RDF, RDFS
+from rdflib import URIRef, Literal
+from rdflib.namespace import OWL, RDF, RDFS, XSD
 
 from .activity import Activity
 from .agent import Agent
@@ -77,5 +77,8 @@ class Block(Activity):
         if self.__class__.__name__ != "Block":
             g.add((self.uri, RDFS.subClassOf, PROVWF.Block))
             g.add((self.uri, RDF.type, self.class_uri))
+
+        # soft typing using the version_uri
+        g.add((self.uri, OWL.versionIRI, Literal(str(self.version_uri), datatype=XSD.anyURI)))
 
         return g

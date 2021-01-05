@@ -1,7 +1,7 @@
 from typing import List
 
 from rdflib import URIRef, Graph, Literal
-from rdflib.namespace import PROV, RDF
+from rdflib.namespace import OWL, PROV, RDF, XSD
 
 from .namespace import PROVWF
 from .activity import Activity
@@ -69,6 +69,9 @@ class Workflow(Activity):
 
         # add in type
         g.add((self.uri, RDF.type, PROVWF.Workflow))
+
+        # soft typing using the version_uri
+        g.add((self.uri, OWL.versionIRI, Literal(str(self.version_uri), datatype=XSD.anyURI)))
 
         # add the prov graph of each block to this Workflow's prov graph
         for block in self.blocks:

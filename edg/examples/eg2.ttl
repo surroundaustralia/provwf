@@ -12,7 +12,7 @@ pwfs:07263a20-49b0-11eb-8e39-acde48001122 a prov:Activity,
         provwf:Workflow ;
     rdfs:label "My Simple Workflow 2"^^xsd:string ;
     dcterms:created "2020-12-29T18:29:54+1000"^^xsd:dateTimeStamp ;
-    owl:versionIRI <https://bitbucket.org/surroundbitbucket/provwf/commits/tag/0.5> ;
+    owl:versionIRI "https://bitbucket.org/surroundbitbucket/provwf/commits/tag/0.5"^^xsd:anyURI ;
     prov:endedAtTime "2020-12-29T18:29:54+1000"^^xsd:dateTimeStamp ;
     prov:generated pwfs:0728fc6a-49b0-11eb-8e39-acde48001122,
         pwfs:072a97e6-49b0-11eb-8e39-acde48001122 ;
@@ -27,7 +27,7 @@ pwfs:0726e236-49b0-11eb-8e39-acde48001122 a prov:Activity,
         provwf:Block,
         provwf:ProvReporter ;
     dcterms:created "2020-12-29T18:29:54+1000"^^xsd:dateTimeStamp ;
-    owl:versionIRI <https://bitbucket.org/surroundbitbucket/provwf/commits/tag/0.5> ;
+    owl:versionIRI "https://bitbucket.org/surroundbitbucket/provwf/commits/tag/0.5"^^xsd:anyURI ;
     prov:endedAtTime "2020-12-29T18:29:54+1000"^^xsd:dateTimeStamp ;
     prov:generated pwfs:07287a38-49b0-11eb-8e39-acde48001122,
         pwfs:0728fc6a-49b0-11eb-8e39-acde48001122 ;
@@ -39,7 +39,7 @@ pwfs:072988a6-49b0-11eb-8e39-acde48001122 a prov:Activity,
         provwf:Block,
         provwf:ProvReporter ;
     dcterms:created "2020-12-29T18:29:54+1000"^^xsd:dateTimeStamp ;
-    owl:versionIRI <https://bitbucket.org/surroundbitbucket/provwf/commits/tag/0.5> ;
+    owl:versionIRI "https://bitbucket.org/surroundbitbucket/provwf/commits/tag/0.5"^^xsd:anyURI ;
     prov:endedAtTime "2020-12-29T18:29:54+1000"^^xsd:dateTimeStamp ;
     prov:generated pwfs:072a97e6-49b0-11eb-8e39-acde48001122 ;
     prov:startedAtTime "2020-12-29T18:29:54+1000"^^xsd:dateTimeStamp ;
@@ -50,13 +50,13 @@ pwfs:072988a6-49b0-11eb-8e39-acde48001122 a prov:Activity,
 pwfs:072768dc-49b0-11eb-8e39-acde48001122 a prov:Entity,
         provwf:ProvReporter ;
     dcterms:created "2020-12-29T18:29:54+1000"^^xsd:dateTimeStamp ;
-    owl:versionIRI <https://bitbucket.org/surroundbitbucket/provwf/commits/tag/0.5> ;
+    owl:versionIRI "https://bitbucket.org/surroundbitbucket/provwf/commits/tag/0.5"^^xsd:anyURI ;
     prov:value "local data" .
 
 pwfs:0727f004-49b0-11eb-8e39-acde48001122 a prov:Entity,
         provwf:ProvReporter ;
     dcterms:created "2020-12-29T18:29:54+1000"^^xsd:dateTimeStamp ;
-    owl:versionIRI <https://bitbucket.org/surroundbitbucket/provwf/commits/tag/0.5> ;
+    owl:versionIRI "https://bitbucket.org/surroundbitbucket/provwf/commits/tag/0.5"^^xsd:anyURI ;
     dcat:accessURL "http://example.com/endpoint"^^xsd:anyURI ;
     provwf:serviceParameters "x=42" .
 
@@ -64,24 +64,24 @@ pwfs:07287a38-49b0-11eb-8e39-acde48001122 a prov:Entity,
         provwf:ProvReporter ;
     rdfs:label "Internal Entity"^^xsd:string ;
     dcterms:created "2020-12-29T18:29:54+1000"^^xsd:dateTimeStamp ;
-    owl:versionIRI <https://bitbucket.org/surroundbitbucket/provwf/commits/tag/0.5> .
+    owl:versionIRI "https://bitbucket.org/surroundbitbucket/provwf/commits/tag/0.5"^^xsd:anyURI .
 
 pwfs:072a14d8-49b0-11eb-8e39-acde48001122 a prov:Entity,
         provwf:ProvReporter ;
     dcterms:created "2020-12-29T18:29:54+1000"^^xsd:dateTimeStamp ;
-    owl:versionIRI <https://bitbucket.org/surroundbitbucket/provwf/commits/tag/0.5> ;
+    owl:versionIRI "https://bitbucket.org/surroundbitbucket/provwf/commits/tag/0.5"^^xsd:anyURI ;
     prov:value "other local data" .
 
 pwfs:072a97e6-49b0-11eb-8e39-acde48001122 a prov:Entity,
         provwf:ProvReporter ;
     rdfs:label "Final Workflow Output"^^xsd:string ;
     dcterms:created "2020-12-29T18:29:54+1000"^^xsd:dateTimeStamp ;
-    owl:versionIRI <https://bitbucket.org/surroundbitbucket/provwf/commits/tag/0.5> ;
+    owl:versionIRI "https://bitbucket.org/surroundbitbucket/provwf/commits/tag/0.5"^^xsd:anyURI ;
     dcat:accessURL "http://somewhere-on-s3/d/e/f"^^xsd:anyURI .
 
 pwfs:0728fc6a-49b0-11eb-8e39-acde48001122 a prov:Entity,
         provwf:ProvReporter ;
     rdfs:label "External Entity"^^xsd:string ;
     dcterms:created "2020-12-29T18:29:54+1000"^^xsd:dateTimeStamp ;
-    owl:versionIRI <https://bitbucket.org/surroundbitbucket/provwf/commits/tag/0.5> ;
+    owl:versionIRI "https://bitbucket.org/surroundbitbucket/provwf/commits/tag/0.5"^^xsd:anyURI ;
     prov:wasAttributedTo "Workflow" .
