@@ -1,4 +1,4 @@
-from provworkflow.prov_reporter import ProvReporter
+from provworkflow import ProvReporter, Workflow, Block
 from rdflib import Graph
 
 
@@ -15,6 +15,11 @@ def test_persist():
 
     s = ProvReporter.persist(g, ["string"])
     assert "title" in s
+
+    w = Workflow()
+    b = Block()
+    w.blocks.append(b)
+    print(w.persist(methods="string"))
 
 
 if __name__ == "__main__":

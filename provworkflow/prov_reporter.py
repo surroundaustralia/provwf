@@ -271,8 +271,8 @@ class ProvReporter:
     @class_or_instance_method
     def persist(
         cls_or_self,
-        g: Union[Graph, None],
-        methods: Union[str, list, None],
+        g: Union[Graph] = None,
+        methods: Union[str, list] = None,
         rdf_file_path: str = "prov_reporter",
         named_graph_uri: Union[URIRef, str] = None,
     ) -> Union[None, str]:
