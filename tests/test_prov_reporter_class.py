@@ -1,5 +1,5 @@
 from provworkflow.prov_reporter import ProvReporter
-from rdflib import URIRef, Graph, Literal
+from rdflib import Graph
 
 
 def test_persist():
