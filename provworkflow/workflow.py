@@ -22,7 +22,7 @@ class Workflow(Activity):
     You can either set the (list of) the Workflow's Blocks at creation time or afterwards. The order is unimportant as
     Block ordering is understood using Blocks' startedAtTime property.
 
-    :param uri: A URI you assign to the ProvReporter instance. If None, a UUID-based URI will be created,
+    :param uri: A URI you assign to the Workflow instance. If None, a UUID-based URI will be created,
     defaults to None
     :type uri: Union[URIRef, str], optional
 

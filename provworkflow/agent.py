@@ -8,7 +8,7 @@ from .prov_reporter import ProvReporter, PROVWF
 class Agent(ProvReporter):
     """prov:Agent
 
-    :param uri: A URI you assign to the ProvReporter instance. If None, a UUID-based URI will be created,
+    :param uri: A URI you assign to the Agent instance. If None, a UUID-based URI will be created,
     defaults to None
     :type uri: Union[URIRef, str], optional
 
@@ -40,7 +40,7 @@ class Agent(ProvReporter):
         g.add((self.uri, RDF.type, PROV.Agent))
         g.remove((self.uri, RDF.type, PROVWF.ProvReporter))
 
-        # special Agent relationships
+        # special Agent properties
         if hasattr(self, "acted_on_behalf_of"):
             # bring in Agent's graph
             self.acted_on_behalf_of.prov_to_graph(g)

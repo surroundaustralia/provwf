@@ -14,7 +14,7 @@ from .agent import Agent
 class Activity(ProvReporter):
     """prov:Activity
 
-    :param uri: A URI you assign to the ProvReporter instance. If None, a UUID-based URI will be created,
+    :param uri: A URI you assign to the Activity instance. If None, a UUID-based URI will be created,
     defaults to None
     :type uri: Union[URIRef, str], optional
 

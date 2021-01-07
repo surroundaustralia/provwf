@@ -15,7 +15,7 @@ class Block(Activity):
 
     For its Semantic Web definition, see https://data.surroundaustralia.com/def/provworkflow/Block (not available yet)
 
-    :param uri: A URI you assign to the ProvReporter instance. If None, a UUID-based URI will be created,
+    :param uri: A URI you assign to the Block instance. If None, a UUID-based URI will be created,
     defaults to None
     :type uri: Union[URIRef, str], optional
 
