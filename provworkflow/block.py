@@ -1,7 +1,7 @@
 from typing import List, Union
 
 from rdflib import URIRef, Literal
-from rdflib.namespace import OWL, RDF, RDFS, XSD
+from rdflib.namespace import OWL, PROV, RDF, RDFS, XSD
 
 from .activity import Activity
 from .agent import Agent
@@ -57,30 +57,21 @@ class Block(Activity):
             used=used,
             generated=generated,
             was_associated_with=was_associated_with,
+            class_uri=class_uri,
         )
-
-        self.class_uri = URIRef(class_uri) if type(class_uri) == str else class_uri
-
-        if self.__class__.__name__ == "Block" and self.class_uri is not None:
-            raise ProvWorkflowException(
-                "If the class Block is used directly, i.e. without specialisation, class_uri must not be set"
-            )
-        elif self.__class__.__name__ != "Block" and self.class_uri is None:
-            raise ProvWorkflowException(
-                "A specialised Block must have a class_uri instance variable supplied"
-            )
-        elif self.class_uri is not None and not self.class_uri.startswith("http"):
-            raise ProvWorkflowException("If supplied, a class_uri must start with http")
 
     def prov_to_graph(self, g=None):
         g = super().prov_to_graph(g)
 
+        # add in type
         g.add((self.uri, RDF.type, PROVWF.Block))
+        g.remove((self.uri, RDF.type, PROV.Activity))
 
         # add in type
         if self.__class__.__name__ != "Block":
             g.add((self.uri, RDFS.subClassOf, PROVWF.Block))
             g.add((self.uri, RDF.type, self.class_uri))
+            g.remove((self.uri, RDF.type, PROV.Activity))
 
         # soft typing using the version_uri
         g.add(

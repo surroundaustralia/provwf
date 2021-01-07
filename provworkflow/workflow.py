@@ -1,7 +1,7 @@
-from typing import List
+from typing import List, Union
 
 from rdflib import URIRef, Graph, Literal
-from rdflib.namespace import OWL, PROV, RDF, XSD
+from rdflib.namespace import OWL, PROV, RDF, RDFS, XSD
 
 from .namespace import PROVWF
 from .activity import Activity
@@ -46,13 +46,16 @@ class Workflow(Activity):
         named_graph_uri: URIRef = None,
         was_associated_with: Agent = None,
         blocks: List[Block] = None,
+        class_uri: Union[URIRef, str] = None,
     ):
         super().__init__(
             uri=uri,
             label=label,
             named_graph_uri=named_graph_uri,
             was_associated_with=was_associated_with,
+            class_uri=class_uri
         )
+
         self.blocks = blocks
         if self.blocks is None:
             self.blocks = []
@@ -71,6 +74,13 @@ class Workflow(Activity):
 
         # add in type
         g.add((self.uri, RDF.type, PROVWF.Workflow))
+        g.remove((self.uri, RDF.type, PROV.Activity))
+
+        # add in type
+        if self.__class__.__name__ != "Workflow":
+            g.add((self.uri, RDFS.subClassOf, PROVWF.Block))
+            g.add((self.uri, RDF.type, self.class_uri))
+            g.remove((self.uri, RDF.type, PROV.Activity))
 
         # soft typing using the version_uri
         g.add(

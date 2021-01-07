@@ -53,6 +53,7 @@ class ProvReporter:
         uri: Union[URIRef, str] = None,
         label: Union[Literal, str] = None,
         named_graph_uri: Union[URIRef, str] = None,
+        class_uri: Union[URIRef, str] = None,
     ):
         # give it an opaque UUID-based URI if one not given
         if uri is not None:
@@ -63,6 +64,28 @@ class ProvReporter:
         self.named_graph_uri = (
             URIRef(named_graph_uri) if type(named_graph_uri) == str else named_graph_uri
         )
+
+        # class specialisations
+        if class_uri is not None:
+            self.class_uri = URIRef(class_uri) if type(class_uri) == str else class_uri
+
+            known_classes = [
+                "Entity",
+                "Activity",
+                "Agent",
+                "Workflow",
+                "Block"
+            ]
+            if self.__class__.__name__ in known_classes and self.class_uri is not None:
+                raise ProvWorkflowException(
+                    "If a ProvWorkflow-defined class is used without specialisation, class_uri must not be set"
+                )
+            elif self.__class__.__name__ not in known_classes and self.class_uri is None:
+                raise ProvWorkflowException(
+                    "A specialised Block must have a class_uri instance variable supplied"
+                )
+            elif self.class_uri is not None and not self.class_uri.startswith("http"):
+                raise ProvWorkflowException("If supplied, a class_uri must start with http")
 
         # from Git info
         self.version_uri = URIRef(get_version_uri())

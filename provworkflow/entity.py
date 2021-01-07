@@ -64,7 +64,7 @@ class Entity(ProvReporter):
         was_used_by=None,
         was_generated_by=None,
         was_attributed_to: Agent = None,
-        was_revision_of=None,  # Entity
+        was_revision_of: "Entity" = None,
         external: bool = None,
     ):
         super().__init__(uri=uri, label=label, named_graph_uri=named_graph_uri)
@@ -95,6 +95,7 @@ class Entity(ProvReporter):
 
         # add in type
         g.add((self.uri, RDF.type, PROV.Entity))
+        g.remove((self.uri, RDF.type, PROVWF.ProvReporter))
 
         if self.value is not None:
             g.add((self.uri, PROV.value, self.value))

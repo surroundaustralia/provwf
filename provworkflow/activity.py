@@ -1,12 +1,12 @@
 from datetime import datetime
-from typing import List
+from typing import List, Union
 
 from rdflib import Graph, URIRef, Literal
 from rdflib.namespace import PROV, RDF, XSD
 
 # from franz.openrdf.connect import ag_connect
 # from franz.openrdf.rio.rdfformat import RDFFormat
-from .prov_reporter import ProvReporter
+from .prov_reporter import ProvReporter, PROVWF
 from .entity import Entity
 from .agent import Agent
 
@@ -43,8 +43,9 @@ class Activity(ProvReporter):
         used: List[Entity] = None,
         generated: List[Entity] = None,
         was_associated_with: Agent = None,
+        class_uri: Union[URIRef, str] = None,
     ):
-        super().__init__(uri=uri, label=label, named_graph_uri=named_graph_uri)
+        super().__init__(uri=uri, label=label, named_graph_uri=named_graph_uri, class_uri=class_uri)
 
         self.started_at_time = datetime.now()
         self.ended_at_time = None
@@ -58,6 +59,7 @@ class Activity(ProvReporter):
 
         # add in type
         g.add((self.uri, RDF.type, PROV.Activity))
+        g.remove((self.uri, RDF.type, PROVWF.ProvReporter))
 
         # all Activities have a startedAtTime
         # made at __init__() time

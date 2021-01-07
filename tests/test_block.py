@@ -1,6 +1,6 @@
 from provworkflow import Block, PROVWF
 from rdflib import Literal
-from rdflib.namespace import OWL, RDF, PROV, XSD
+from rdflib.namespace import OWL, RDF, XSD
 
 
 def test_prov_to_graph():
@@ -12,8 +12,7 @@ def test_prov_to_graph():
     b = Block()
     g = b.prov_to_graph()
 
-    # check both generic and specific typing
-    assert (b.uri, RDF.type, PROV.Activity) in g, "g must contain a prov:Activity"
+    # check typing
     assert (b.uri, RDF.type, PROVWF.Block) in g, "g must contain a provwf:Block"
 
     assert (

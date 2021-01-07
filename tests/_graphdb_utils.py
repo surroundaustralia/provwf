@@ -1,4 +1,5 @@
 import requests
+from pathlib import Path
 
 
 def setup_graphdb():
@@ -25,7 +26,7 @@ def setup_graphdb():
         multipart_form_data = {
             "config": (
                 "_graphdb-repo-config.ttl",
-                open("_graphdb-repo-config.ttl", "r"),
+                open(Path(__file__).parent / "_graphdb-repo-config.ttl", "r"),
             )
         }
         r = requests.post(
