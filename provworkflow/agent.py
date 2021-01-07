@@ -20,10 +20,11 @@ class Agent(ProvReporter):
     """
 
     def __init__(
-        self, uri: URIRef = None,
-            label: str = None,
-            named_graph_uri: URIRef = None,
-            acted_on_behalf_of: Union["Agent", URIRef] = None
+        self,
+        uri: URIRef = None,
+        label: str = None,
+        named_graph_uri: URIRef = None,
+        acted_on_behalf_of: Union["Agent", URIRef] = None,
     ):
         # handle URIRef or Agent acted_on_behalf_of
         if acted_on_behalf_of is not None:

@@ -85,6 +85,7 @@ def is_git_repo(path):
 def get_git_repo():
     """Finds the Git repo location (folder) if a given file is within one, however deep"""
     import __main__
+
     p = Path(__main__.__file__).parent
     if is_git_repo(p):
         return p

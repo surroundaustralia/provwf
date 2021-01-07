@@ -19,5 +19,10 @@ def test_prov_to_graph():
     p = Person()
     p.email = URIRef("mailto:nicholas.car@surroundaustralia.com")
     g = p.prov_to_graph()
-    assert (p.uri, SDO.email, URIRef("mailto:nicholas.car@surroundaustralia.com")) in g, \
-        "g must contain {} sdo:email {}".format(p.uri, URIRef("mailto:nicholas.car@surroundaustralia.com"))
+    assert (
+        p.uri,
+        SDO.email,
+        URIRef("mailto:nicholas.car@surroundaustralia.com"),
+    ) in g, "g must contain {} sdo:email {}".format(
+        p.uri, URIRef("mailto:nicholas.car@surroundaustralia.com")
+    )

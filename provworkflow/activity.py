@@ -45,7 +45,9 @@ class Activity(ProvReporter):
         was_associated_with: Agent = None,
         class_uri: Union[URIRef, str] = None,
     ):
-        super().__init__(uri=uri, label=label, named_graph_uri=named_graph_uri, class_uri=class_uri)
+        super().__init__(
+            uri=uri, label=label, named_graph_uri=named_graph_uri, class_uri=class_uri
+        )
 
         self.started_at_time = datetime.now()
         self.ended_at_time = None
@@ -63,14 +65,16 @@ class Activity(ProvReporter):
 
         # all Activities have a startedAtTime
         # made at __init__() time
-        g.add((
-            self.uri,
-            PROV.startedAtTime,
-            Literal(
-                datetime.now().astimezone().strftime("%Y-%m-%dT%H:%M:%S%z"),
-                datatype=XSD.dateTimeStamp,
-            ),
-        ))
+        g.add(
+            (
+                self.uri,
+                PROV.startedAtTime,
+                Literal(
+                    datetime.now().astimezone().strftime("%Y-%m-%dT%H:%M:%S%z"),
+                    datatype=XSD.dateTimeStamp,
+                ),
+            )
+        )
 
         if self.used is not None:
             for e in self.used:
@@ -91,13 +95,15 @@ class Activity(ProvReporter):
             self.ended_at_time = datetime.now()
 
         # all Activities have a endedAtTime
-        g.add((
-            self.uri,
-            PROV.endedAtTime,
-            Literal(
-                datetime.now().astimezone().strftime("%Y-%m-%dT%H:%M:%S%z"),
-                datatype=XSD.dateTimeStamp,
-            ),
-        ))
+        g.add(
+            (
+                self.uri,
+                PROV.endedAtTime,
+                Literal(
+                    datetime.now().astimezone().strftime("%Y-%m-%dT%H:%M:%S%z"),
+                    datatype=XSD.dateTimeStamp,
+                ),
+            )
+        )
 
         return g

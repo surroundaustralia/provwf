@@ -21,12 +21,18 @@ class Machine(Agent):
     """
 
     def __init__(
-        self, uri: URIRef = None,
-            label: str = None,
-            named_graph_uri: URIRef = None,
-            acted_on_behalf_of: Union[Agent, URIRef] = None,
+        self,
+        uri: URIRef = None,
+        label: str = None,
+        named_graph_uri: URIRef = None,
+        acted_on_behalf_of: Union[Agent, URIRef] = None,
     ):
-        super().__init__(uri=uri, label=label, named_graph_uri=named_graph_uri, acted_on_behalf_of=acted_on_behalf_of)
+        super().__init__(
+            uri=uri,
+            label=label,
+            named_graph_uri=named_graph_uri,
+            acted_on_behalf_of=acted_on_behalf_of,
+        )
 
     def prov_to_graph(self, g: Graph = None) -> Graph:
         g = super().prov_to_graph(g)
