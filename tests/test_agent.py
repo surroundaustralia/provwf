@@ -8,12 +8,14 @@ def test_prov_to_graph():
     :return: None
     """
 
-    pr = Agent()
-    g = pr.prov_to_graph()
+    a = Agent()
+    g = a.prov_to_graph()
 
     # check all properties required do exist
-    assert (None, RDF.type, PROV.Agent) in g, "g must contain a prov:Agent"
+    assert (a.uri, RDF.type, PROV.Agent) in g, "g must contain a prov:Agent"
 
-
-if __name__ == "__main__":
-    pass
+    # actedOnBehalfOf test
+    a1 = Agent()
+    a2 = Agent(acted_on_behalf_of=a1)
+    g = a2.prov_to_graph()
+    assert (a2.uri, PROV.actedOnBehalfOf, a1.uri) in g, "g must contain a2 prov:actedOnBehalfOf a1"
