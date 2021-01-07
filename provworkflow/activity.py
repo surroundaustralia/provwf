@@ -63,27 +63,23 @@ class Activity(ProvReporter):
 
         # all Activities have a startedAtTime
         # made at __init__() time
-        g.add(
-            (
-                self.uri,
-                PROV.startedAtTime,
-                Literal(
-                    datetime.now().astimezone().strftime("%Y-%m-%dT%H:%M:%S%z"),
-                    datatype=XSD.dateTimeStamp,
-                ),
-            )
-        )
+        g.add((
+            self.uri,
+            PROV.startedAtTime,
+            Literal(
+                datetime.now().astimezone().strftime("%Y-%m-%dT%H:%M:%S%z"),
+                datatype=XSD.dateTimeStamp,
+            ),
+        ))
 
         if self.used is not None:
             for e in self.used:
                 e.prov_to_graph(g)
-
                 g.add((self.uri, PROV.used, e.uri))
 
         if self.generated is not None:
             for e in self.generated:
                 e.prov_to_graph(g)
-
                 g.add((self.uri, PROV.generated, e.uri))
 
         if self.was_associated_with is not None:
@@ -95,15 +91,13 @@ class Activity(ProvReporter):
             self.ended_at_time = datetime.now()
 
         # all Activities have a endedAtTime
-        g.add(
-            (
-                self.uri,
-                PROV.endedAtTime,
-                Literal(
-                    datetime.now().astimezone().strftime("%Y-%m-%dT%H:%M:%S%z"),
-                    datatype=XSD.dateTimeStamp,
-                ),
-            )
-        )
+        g.add((
+            self.uri,
+            PROV.endedAtTime,
+            Literal(
+                datetime.now().astimezone().strftime("%Y-%m-%dT%H:%M:%S%z"),
+                datatype=XSD.dateTimeStamp,
+            ),
+        ))
 
         return g

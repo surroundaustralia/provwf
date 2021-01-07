@@ -42,10 +42,7 @@ class Agent(ProvReporter):
 
         # special Agent properties
         if hasattr(self, "acted_on_behalf_of"):
-            # bring in Agent's graph
             self.acted_on_behalf_of.prov_to_graph(g)
-
-            # link to other agent
             g.add((self.uri, PROV.actedOnBehalfOf, self.acted_on_behalf_of.uri))
 
         return g

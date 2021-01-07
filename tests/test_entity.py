@@ -10,19 +10,19 @@ def test_prov_to_graph():
     :return: None
     """
 
-    pr = Entity()
-    g = pr.prov_to_graph()
+    e = Entity()
+    g = e.prov_to_graph()
 
     # check basic typing
-    assert (pr.uri, RDF.type, PROV.Entity) in g, "g must contain a prov:Entity"
+    assert (e.uri, RDF.type, PROV.Entity) in g, "g must contain a prov:Entity"
 
-    pr = Entity(was_used_by=Activity(uri=URIRef("https://something.com/x")))
-    g = pr.prov_to_graph()
+    e = Entity(was_used_by=Activity(uri=URIRef("https://something.com/x")))
+    g = e.prov_to_graph()
 
     assert (
         URIRef("https://something.com/x"),
         PROV.used,
-        pr.uri,
+        e.uri,
     ) in g, "g must contain a prov:Activity with URI <https://something.com/x>"
 
 
