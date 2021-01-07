@@ -18,4 +18,8 @@ def test_prov_to_graph():
     a1 = Agent()
     a2 = Agent(acted_on_behalf_of=a1)
     g = a2.prov_to_graph()
-    assert (a2.uri, PROV.actedOnBehalfOf, a1.uri) in g, "g must contain a2 prov:actedOnBehalfOf a1"
+    assert (
+        a2.uri,
+        PROV.actedOnBehalfOf,
+        a1.uri,
+    ) in g, "g must contain a2 prov:actedOnBehalfOf a1"

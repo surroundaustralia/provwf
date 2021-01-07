@@ -20,10 +20,11 @@ class Agent(ProvReporter):
     """
 
     def __init__(
-        self, uri: URIRef = None,
-            label: str = None,
-            named_graph_uri: URIRef = None,
-            acted_on_behalf_of: Union["Agent", URIRef] = None
+        self,
+        uri: URIRef = None,
+        label: str = None,
+        named_graph_uri: URIRef = None,
+        acted_on_behalf_of: Union["Agent", URIRef] = None,
     ):
         # handle URIRef or Agent acted_on_behalf_of
         if acted_on_behalf_of is not None:
@@ -42,10 +43,7 @@ class Agent(ProvReporter):
 
         # special Agent properties
         if hasattr(self, "acted_on_behalf_of"):
-            # bring in Agent's graph
             self.acted_on_behalf_of.prov_to_graph(g)
-
-            # link to other agent
             g.add((self.uri, PROV.actedOnBehalfOf, self.acted_on_behalf_of.uri))
 
         return g

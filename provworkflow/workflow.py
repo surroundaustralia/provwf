@@ -53,7 +53,7 @@ class Workflow(Activity):
             label=label,
             named_graph_uri=named_graph_uri,
             was_associated_with=was_associated_with,
-            class_uri=class_uri
+            class_uri=class_uri,
         )
 
         self.blocks = blocks

@@ -45,7 +45,9 @@ class Activity(ProvReporter):
         was_associated_with: Agent = None,
         class_uri: Union[URIRef, str] = None,
     ):
-        super().__init__(uri=uri, label=label, named_graph_uri=named_graph_uri, class_uri=class_uri)
+        super().__init__(
+            uri=uri, label=label, named_graph_uri=named_graph_uri, class_uri=class_uri
+        )
 
         self.started_at_time = datetime.now()
         self.ended_at_time = None
@@ -77,13 +79,11 @@ class Activity(ProvReporter):
         if self.used is not None:
             for e in self.used:
                 e.prov_to_graph(g)
-
                 g.add((self.uri, PROV.used, e.uri))
 
         if self.generated is not None:
             for e in self.generated:
                 e.prov_to_graph(g)
-
                 g.add((self.uri, PROV.generated, e.uri))
 
         if self.was_associated_with is not None:

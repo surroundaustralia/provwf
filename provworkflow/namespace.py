@@ -11,7 +11,7 @@ PROVWF = ClosedNamespace(
         "Block",
         "Machine",
         "hadBlock",
-        "serviceParameters"
+        "serviceParameters",
     ],
 )
 

@@ -14,4 +14,3 @@ def test_prov_to_graph():
 
     # check all properties required do exist
     assert (m.uri, RDF.type, PROVWF.Machine) in g, "g must contain a prov:Person"
-
