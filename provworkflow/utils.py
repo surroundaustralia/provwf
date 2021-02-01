@@ -82,15 +82,19 @@ def is_git_repo(path):
         return False
 
 
-def get_git_repo():
+def get_git_repo(starting_dir: Path= None):
     """Finds the Git repo location (folder) if a given file is within one, however deep"""
     import __main__
 
-    p = Path(__main__.__file__).parent
+    if starting_dir is not None:
+        p = starting_dir
+    else:
+        p = Path(__main__.__file__).parent
+
     if is_git_repo(p):
         return p
     else:
-        return is_git_repo(p.parent)
+        return get_git_repo(p.parent)
 
 
 def get_tag_or_commit(only_commit=False):
