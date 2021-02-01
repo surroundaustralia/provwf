@@ -16,8 +16,8 @@ def query_sop_sparql(named_graph_uri, query, update=False):
     """
 
     endpoint = os.environ.get("SOP_BASE_URI", "http://localhost:8083")
-    username = os.environ.get("GRAPHDB_USR", "Administrator")
-    password = os.environ.get("GRAPHDB_PWD", "")
+    username = os.environ.get("SOP_USR", "Administrator")
+    password = os.environ.get("SOP_PWD", "")
 
     global saved_session_cookies
     with requests.session() as s:
