@@ -4,6 +4,10 @@ import os
 from pathlib import Path
 import git
 import requests
+from typing import Union
+from rdflib import Graph, URIRef, BNode, Literal
+from rdflib.namespace import DCTERMS, PROV, RDF, XSD
+from datetime import datetime
 
 
 def query_sop_sparql(named_graph_uri, query, update=False):
@@ -138,3 +142,23 @@ def get_version_uri():
         raise Exception("Only GitHub & BitBucket repos are supported")
 
     return repo_uri.replace(".git", "") + path + id
+
+
+def add_with_provenance(
+        s: Union[URIRef, BNode], p: URIRef, o: Union[URIRef, BNode, Literal],
+        block_uri: URIRef) -> Graph:
+    """Creates a small graph, adds the given triple and also adds reified provenances for that triple"""
+    g = Graph()
+    # add the triple
+    g.add((s, p, o))
+
+    # add reified provenance
+    x = BNode()
+    g.add((x, RDF.type, RDF.Statement))
+    g.add((x, RDF.subject, s))
+    g.add((x, RDF.predicate, p))
+    g.add((x, RDF.object, o))
+    g.add((x, DCTERMS.created, Literal(datetime.now().strftime("%Y-%m-%dT%H:%M:%S"), datatype=XSD.dateTime)))
+    g.add((x, PROV.wasAssociatedWith, block_uri))
+
+    return g
