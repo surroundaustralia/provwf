@@ -22,9 +22,8 @@ class Entity(ProvReporter):
     :param named_graph_uri: A Named Graph URI you assign, defaults to None
     :type named_graph_uri: Union[URIRef, str], optional
 
-    :param value: (prov:value) should be used to contain simple literal values when the Entity is entirely defined
-        by that value.
-    :type value: Literal, optional
+    :param value: (prov:value) should be used to contain any Python object - str, fancy class, whatever - so data can
+        be exchanged within the workflow. When reported to PROV, this variable is converted to a Literal
 
     :param was_used_by: The inverse of prov:used: this indicates which Activities prov:used this Entity
     :type was_used_by: Activity, optional
@@ -49,7 +48,7 @@ class Entity(ProvReporter):
         uri: URIRef = None,
         label: str = None,
         named_graph_uri: URIRef = None,
-        value: str = None,
+        value = None,
         was_used_by=None,
         was_generated_by=None,
         was_attributed_to: Agent = None,
@@ -58,7 +57,7 @@ class Entity(ProvReporter):
     ):
         super().__init__(uri=uri, label=label, named_graph_uri=named_graph_uri)
 
-        self.value = Literal(value) if value is not None else None
+        self.value = value
         if type(was_used_by) != list:
             self.was_used_by = [was_used_by]
         else:
@@ -81,7 +80,7 @@ class Entity(ProvReporter):
         g.remove((self.uri, RDF.type, PROVWF.ProvReporter))
 
         if self.value is not None:
-            g.add((self.uri, PROV.value, self.value))
+            g.add((self.uri, PROV.value, Literal(self.value)))
 
         if all(self.was_used_by):
             for a in self.was_used_by:
