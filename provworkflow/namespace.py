@@ -9,6 +9,7 @@ PROVWF = ClosedNamespace(
         "ProvReporter",
         "Workflow",
         "Block",
+        "ErrorEntity",
         "Machine",
         "hadBlock",
         "serviceParameters",

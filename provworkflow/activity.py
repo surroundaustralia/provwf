@@ -35,9 +35,11 @@ class Activity(ProvReporter):
         the one associated with the Workflow
     :type was_associated_with: Agent, optional
 
+    :param informed: Another Activity that this Activity triggered the creation of
+    :type informed: Activity, optional
+
     :param was_informed_by: Another Activity that triggered the creation of this Activity
     :type was_informed_by: Activity, optional
-
     """
 
     def __init__(
@@ -48,7 +50,7 @@ class Activity(ProvReporter):
         used: List[Entity] = None,
         generated: List[Entity] = None,
         was_associated_with: Agent = None,
-        was_informed_by: Activity = None,
+        informed: List[Activity] = None,
         class_uri: Union[URIRef, str] = None,
     ):
         super().__init__(
@@ -61,7 +63,7 @@ class Activity(ProvReporter):
         self.used = used if used is not None else []
         self.generated = generated if generated is not None else []
         self.was_associated_with = was_associated_with
-        self.was_informed_by = was_informed_by
+        self.informed = informed if informed is not None else []
 
     def prov_to_graph(self, g: Graph = None) -> Graph:
         g = super().prov_to_graph(g)
@@ -97,9 +99,11 @@ class Activity(ProvReporter):
             self.was_associated_with.prov_to_graph(g)
             g.add((self.uri, PROV.wasAssociatedWith, self.was_associated_with.uri))
 
-        if self.was_informed_by is not None:
-            self.was_informed_by.prov_to_graph(g)
-            g.add((self.uri, PROV.wasInformedBy, self.was_informed_by.uri))
+        if self.informed is not None:
+            for i in self.informed:
+                i.prov_to_graph(g)
+                # g.add((self.uri, PROV.informed, i.uri))
+                g.add((i.uri, PROV.wasInformedBy, self.uri))
 
         # if we don't yet have an endedAtTime recorded, make it now
         if self.ended_at_time is None:

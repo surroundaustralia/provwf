@@ -1,3 +1,4 @@
+from __future__ import annotations
 from rdflib import Graph, URIRef, Literal
 from rdflib.namespace import DCAT, PROV, RDF, XSD
 
@@ -52,7 +53,7 @@ class Entity(ProvReporter):
         was_used_by=None,
         was_generated_by=None,
         was_attributed_to: Agent = None,
-        was_revision_of: "Entity" = None,
+        was_revision_of: Entity = None,
         external: bool = None,
     ):
         super().__init__(uri=uri, label=label, named_graph_uri=named_graph_uri)
