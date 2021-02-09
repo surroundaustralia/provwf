@@ -48,7 +48,7 @@ class Entity(ProvReporter):
         uri: URIRef = None,
         label: str = None,
         named_graph_uri: URIRef = None,
-        value = None,
+        value=None,
         was_used_by=None,
         was_generated_by=None,
         was_attributed_to: Agent = None,

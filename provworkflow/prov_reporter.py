@@ -336,6 +336,8 @@ class ProvReporter:
         # final persistent option
         if "string" in methods:
             if named_graph_uri is None:
-                return g.serialize(format="turtle").decode()
+                x = g.serialize(format="turtle")
             else:
-                return g.serialize(format="trig").decode()
+                x = g.serialize(format="trig").decode()
+
+            return x if type(x) is str else x.decode()
