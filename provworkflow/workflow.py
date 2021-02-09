@@ -83,13 +83,14 @@ class Workflow(Activity):
             g.remove((self.uri, RDF.type, PROV.Activity))
 
         # soft typing using the version_uri
-        g.add(
-            (
-                self.uri,
-                OWL.versionIRI,
-                Literal(str(self.version_uri), datatype=XSD.anyURI),
+        if self.version_uri is not None:
+            g.add(
+                (
+                    self.uri,
+                    OWL.versionIRI,
+                    Literal(str(self.version_uri), datatype=XSD.anyURI),
+                )
             )
-        )
 
         # add the prov graph of each block to this Workflow's prov graph
         for block in self.blocks:

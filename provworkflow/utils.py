@@ -86,7 +86,7 @@ def is_git_repo(path):
         return False
 
 
-def get_git_repo(starting_dir: Path= None):
+def get_git_repo(starting_dir: Path = None):
     """Finds the Git repo location (folder) if a given file is within one, however deep"""
     import __main__
 
@@ -94,6 +94,9 @@ def get_git_repo(starting_dir: Path= None):
         p = starting_dir
     else:
         p = Path(__main__.__file__).parent
+
+    if p == Path("/"):
+        return None
 
     if is_git_repo(p):
         return p
@@ -115,7 +118,10 @@ def get_tag_or_commit(only_commit=False):
 
 def get_repo_uri():
     """Gets the URI of a file's repo's origin"""
-    repo = git.Repo(get_git_repo())
+    repo_dir = get_git_repo()
+    if repo_dir is None:
+        return None
+    repo = git.Repo(repo_dir)
     origin_uri_with_user = repo.remotes.origin.url
     return "https://" + origin_uri_with_user.split("@")[1]
 
@@ -123,6 +129,8 @@ def get_repo_uri():
 def get_version_uri():
     """Gets the URI of a file's origin's commit or tag"""
     repo_uri = get_repo_uri()
+    if repo_uri is None:
+        return None
     id = str(get_tag_or_commit())
 
     if "bitbucket" in repo_uri:

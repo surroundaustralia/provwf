@@ -86,7 +86,9 @@ class ProvReporter:
                 )
 
         # from Git info
-        self.version_uri = URIRef(get_version_uri())
+        uri_str = get_version_uri()
+        if uri_str is not None:
+            self.version_uri = URIRef(uri_str)
         self.created = Literal(
             datetime.now().astimezone().strftime("%Y-%m-%dT%H:%M:%S%z"),
             datatype=XSD.dateTimeStamp,
