@@ -6,6 +6,7 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sop: <http://surroundaustralia.com/ns/platform/> .
 @prefix sopbl: <https://data.surroundaustralia.com/def/standards-baseline#> .
 @prefix swa: <http://topbraid.org/swa#> .
 @prefix teamwork: <http://topbraid.org/teamwork#> .
@@ -18,6 +19,13 @@
   rdfs:comment "This Manifest contains a list of all the assets within the ProvWorkflow Profile" ;
   rdfs:label "ProvWF Manifest" ;
   owl:imports <https://data.surroundaustralia.com/def/standards-baseline> ;
+.
+<https://data.surroundaustralia.com/manifest/provwf/register/examplest>
+  a sopbl:Manifest ;
+  rdfs:label "ProvWF Examples Manifest" ;
+  sopbl:edgType sop:OntologyRegister ;
+  sopbl:preload "https://data.surroundaustralia.com/manifest/provwf/examples" ;
+  sopbl:purpose "Test and demonstrate provwf generics in SOP environments" ;
 .
 <https://data.surroundaustralia.com/manifest/provwf/register/ont>
   a sopbl:ManagedGraph ;

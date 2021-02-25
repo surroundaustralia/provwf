@@ -1,0 +1,152 @@
+# baseURI: https://data.surroundaustralia.com/dataset/provworkflows/examples/ner
+# imports: https://data.surroundaustralia.com/def/provwf/ont
+
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix provwf: <https://data.surroundaustralia.com/def/provworkflow/> .
+@prefix pwfs: <https://data.surroundaustralia.com/dataset/provworkflows/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://data.surroundaustralia.com/dataset/provworkflows/79909596-7673-11eb-ad44-e442a6b30e38>
+  a prov:Agent ;
+  dcterms:created "2021-02-24T18:39:49+1100"^^xsd:dateTimeStamp ;
+  rdfs:label "Nicholas Car" ;
+.
+<https://data.surroundaustralia.com/dataset/provworkflows/799fd7b3-7673-11eb-bd9d-e442a6b30e38>
+  a prov:Activity ;
+  a provwf:Workflow ;
+  dcterms:created "2021-02-24T18:39:49+1100"^^xsd:dateTimeStamp ;
+  rdfs:label "NER+GovKG Demonstrator" ;
+  owl:versionIRI "https://bitbucket.org/surroundbitbucket/document-processing/commits/98b1ba647c6d834f02170159fc98b2c43c5dffed"^^xsd:anyURI ;
+  prov:endedAtTime "2021-02-24T18:40:45+1100"^^xsd:dateTimeStamp ;
+  prov:generated <https://data.surroundaustralia.com/dataset/provworkflows/7a78f9a6-7673-11eb-aeea-e442a6b30e38> ;
+  prov:generated <https://data.surroundaustralia.com/dataset/provworkflows/9a9b04d6-7673-11eb-a441-e442a6b30e38> ;
+  prov:generated _:b40312 ;
+  prov:startedAtTime "2021-02-24T18:40:45+1100"^^xsd:dateTimeStamp ;
+  prov:used <https://data.surroundaustralia.com/dataset/provworkflows/79b2ea80-7673-11eb-a555-e442a6b30e38> ;
+  prov:used <https://data.surroundaustralia.com/dataset/provworkflows/79d40721-7673-11eb-a543-e442a6b30e38> ;
+  prov:used <https://data.surroundaustralia.com/dataset/provworkflows/7a53e589-7673-11eb-b2a5-e442a6b30e38> ;
+  prov:used <https://data.surroundaustralia.com/dataset/provworkflows/7a5e45e2-7673-11eb-b93d-e442a6b30e38> ;
+  prov:used <https://data.surroundaustralia.com/dataset/provworkflows/7a6c9d99-7673-11eb-88a3-e442a6b30e38> ;
+  prov:used <https://data.surroundaustralia.com/dataset/provworkflows/9a92040c-7673-11eb-b4eb-e442a6b30e38> ;
+  prov:wasAssociatedWith <https://data.surroundaustralia.com/dataset/provworkflows/79909596-7673-11eb-ad44-e442a6b30e38> ;
+  provwf:hadBlock <https://data.surroundaustralia.com/dataset/provworkflows/79aa10e4-7673-11eb-b202-e442a6b30e38> ;
+  provwf:hadBlock <https://data.surroundaustralia.com/dataset/provworkflows/79c9f4ec-7673-11eb-83b0-e442a6b30e38> ;
+  provwf:hadBlock <https://data.surroundaustralia.com/dataset/provworkflows/79e8526d-7673-11eb-96d3-e442a6b30e38> ;
+.
+<https://data.surroundaustralia.com/dataset/provworkflows/79aa10e4-7673-11eb-b202-e442a6b30e38>
+  a <https://data.surroundaustralia.com/block/EstMetaFromFiles> ;
+  a provwf:Block ;
+  dcterms:created "2021-02-24T18:39:50+1100"^^xsd:dateTimeStamp ;
+  rdfs:label "Establish Basic Metadata" ;
+  rdfs:subClassOf provwf:Block ;
+  owl:versionIRI "https://bitbucket.org/surroundbitbucket/document-processing/commits/98b1ba647c6d834f02170159fc98b2c43c5dffed"^^xsd:anyURI ;
+  prov:endedAtTime "2021-02-24T18:40:45+1100"^^xsd:dateTimeStamp ;
+  prov:generated _:b40312 ;
+  prov:startedAtTime "2021-02-24T18:40:45+1100"^^xsd:dateTimeStamp ;
+  prov:used <https://data.surroundaustralia.com/dataset/provworkflows/79b2ea80-7673-11eb-a555-e442a6b30e38> ;
+.
+<https://data.surroundaustralia.com/dataset/provworkflows/79b2ea80-7673-11eb-a555-e442a6b30e38>
+  a prov:Entity ;
+  dcterms:created "2021-02-24T18:39:50+1100"^^xsd:dateTimeStamp ;
+  rdfs:label "Records directory" ;
+  prov:value "C:\\repos\\surround-bb\\document-processing\\examples\\ner_govkg\\records" ;
+.
+<https://data.surroundaustralia.com/dataset/provworkflows/79c9f4ec-7673-11eb-83b0-e442a6b30e38>
+  a <https://data.surroundaustralia.com/block/ExtractTextFromFiles> ;
+  a provwf:Block ;
+  dcterms:created "2021-02-24T18:39:50+1100"^^xsd:dateTimeStamp ;
+  rdfs:label "Extract Text From Files" ;
+  rdfs:subClassOf provwf:Block ;
+  owl:versionIRI "https://bitbucket.org/surroundbitbucket/document-processing/commits/98b1ba647c6d834f02170159fc98b2c43c5dffed"^^xsd:anyURI ;
+  prov:endedAtTime "2021-02-24T18:40:45+1100"^^xsd:dateTimeStamp ;
+  prov:generated _:b40312 ;
+  prov:startedAtTime "2021-02-24T18:40:45+1100"^^xsd:dateTimeStamp ;
+  prov:used <https://data.surroundaustralia.com/dataset/provworkflows/79d40721-7673-11eb-a543-e442a6b30e38> ;
+.
+<https://data.surroundaustralia.com/dataset/provworkflows/79d40721-7673-11eb-a543-e442a6b30e38>
+  a prov:Entity ;
+  dcterms:created "2021-02-24T18:39:50+1100"^^xsd:dateTimeStamp ;
+  rdfs:label "Records Metadata Graph" ;
+.
+<https://data.surroundaustralia.com/dataset/provworkflows/79e8526d-7673-11eb-96d3-e442a6b30e38>
+  a <https://data.surroundaustralia.com/block/NERGovKGOrgMatch> ;
+  a provwf:Block ;
+  dcterms:created "2021-02-24T18:39:50+1100"^^xsd:dateTimeStamp ;
+  rdfs:label "Match Orgs to GovKG" ;
+  rdfs:subClassOf provwf:Block ;
+  owl:versionIRI "https://bitbucket.org/surroundbitbucket/document-processing/commits/98b1ba647c6d834f02170159fc98b2c43c5dffed"^^xsd:anyURI ;
+  prov:endedAtTime "2021-02-24T18:40:45+1100"^^xsd:dateTimeStamp ;
+  prov:generated <https://data.surroundaustralia.com/dataset/provworkflows/9a9b04d6-7673-11eb-a441-e442a6b30e38> ;
+  prov:startedAtTime "2021-02-24T18:40:45+1100"^^xsd:dateTimeStamp ;
+  prov:used <https://data.surroundaustralia.com/dataset/provworkflows/9a92040c-7673-11eb-b4eb-e442a6b30e38> ;
+.
+<https://data.surroundaustralia.com/dataset/provworkflows/7a059e75-7673-11eb-9403-e442a6b30e38>
+  a prov:Activity ;
+  dcterms:created "2021-02-24T18:39:50+1100"^^xsd:dateTimeStamp ;
+  prov:endedAtTime "2021-02-24T18:40:45+1100"^^xsd:dateTimeStamp ;
+  prov:generated <https://data.surroundaustralia.com/dataset/provworkflows/7a78f9a6-7673-11eb-aeea-e442a6b30e38> ;
+  prov:startedAtTime "2021-02-24T18:40:45+1100"^^xsd:dateTimeStamp ;
+  prov:used <https://data.surroundaustralia.com/dataset/provworkflows/7a53e589-7673-11eb-b2a5-e442a6b30e38> ;
+  prov:used <https://data.surroundaustralia.com/dataset/provworkflows/7a5e45e2-7673-11eb-b93d-e442a6b30e38> ;
+  prov:used <https://data.surroundaustralia.com/dataset/provworkflows/7a6c9d99-7673-11eb-88a3-e442a6b30e38> ;
+  prov:wasInformedBy <https://data.surroundaustralia.com/dataset/provworkflows/79e8526d-7673-11eb-96d3-e442a6b30e38> ;
+.
+<https://data.surroundaustralia.com/dataset/provworkflows/7a53e589-7673-11eb-b2a5-e442a6b30e38>
+  a dcat:DataService ;
+  dcterms:created "2021-02-24T18:39:51+1100"^^xsd:dateTimeStamp ;
+  rdfs:label "GovKG SPARQL Service" ;
+.
+<https://data.surroundaustralia.com/dataset/provworkflows/7a5e45e2-7673-11eb-b93d-e442a6b30e38>
+  a prov:Entity ;
+  dcterms:created "2021-02-24T18:39:51+1100"^^xsd:dateTimeStamp ;
+  rdfs:label "Graph IRI" ;
+  prov:value "urn:x-evn-master:agor_dataset" ;
+.
+<https://data.surroundaustralia.com/dataset/provworkflows/7a6c9d99-7673-11eb-88a3-e442a6b30e38>
+  a prov:Entity ;
+  dcterms:created "2021-02-24T18:39:51+1100"^^xsd:dateTimeStamp ;
+  rdfs:label "SPARQL Query" ;
+  prov:value """
+                PREFIX sdo: <https://schema.org/>
+                
+                SELECT *
+                WHERE { 
+                    ?o a sdo:GovernmentOrganization ;
+                       sdo:name ?name ;
+                       sdo:description ?description .
+                }
+                ORDER BY ?name
+                """ ;
+.
+<https://data.surroundaustralia.com/dataset/provworkflows/7a78f9a6-767prov:value3-11eb-aeea-e442a6b30e38>
+  a prov:Entity ;
+  dcterms:created "2021-02-24T18:39:51+1100"^^xsd:dateTimeStamp ;
+  rdfs:label "GovKG Org List" ;
+.
+<https://data.surroundaustralia.com/dataset/provworkflows/9a92040c-7673-11eb-b4eb-e442a6b30e38>
+  a prov:Entity ;
+  dcterms:created "2021-02-24T18:40:45+1100"^^xsd:dateTimeStamp ;
+  rdfs:label "Records Metadata Graph" ;
+  prov:value "N8dbfaeb081fb40e79e17c9b49b438a00" ;
+.
+<https://data.surroundaustralia.com/dataset/provworkflows/9a9b04d6-7673-11eb-a441-e442a6b30e38>
+  a prov:Entity ;
+  dcterms:created "2021-02-24T18:40:45+1100"^^xsd:dateTimeStamp ;
+  rdfs:label "Enhanced Records Metadata Graph" ;
+  prov:value "N8dbfaeb081fb40e79e17c9b49b438a00" ;
+.
+<https://data.surroundaustralia.com/dataset/provworkflows/examples/ner>
+  a owl:Ontology ;
+  owl:imports <https://data.surroundaustralia.com/def/provwf/ont> ;
+.
+_:b40312
+  a prov:Entity ;
+  dcterms:created "2021-02-24T18:39:50+1100"^^xsd:dateTimeStamp ;
+  rdfs:label "RDF Graph of Records' metadata" ;
+  rdfs:label "Updated Records Metadata Graph" ;
+.
