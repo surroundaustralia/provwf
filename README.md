@@ -1,9 +1,9 @@
 # ProvWorkflow
 
 This is a Python library for creating workflows of blocks (workflow components) that log their actions in RDF, 
-according to the PROV-O standard.
+according to the [PROV-O standard](https://www.w3.org/TR/2013/REC-prov-o-20130430/).
 
-A brief description of what provenance is, reproduced from [PROV-DM: The PROV Data Model](https://www.w3.org/TR/2013/REC-prov-dm-20130430/):
+A brief description of what provenance is, and the components used, reproduced from [PROV-DM: The PROV Data Model](https://www.w3.org/TR/2013/REC-prov-dm-20130430/):  
 *Provenance is information about entities, activities, and people involved in producing a piece of data or thing, 
 which can be used to form assessments about its quality, reliability or trustworthiness. PROV-DM is the conceptual 
 data model that forms a basis for the W3C provenance (PROV) family of specifications. PROV-DM distinguishes core 
