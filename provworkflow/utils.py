@@ -94,7 +94,7 @@ def get_git_repo(starting_dir: Path = None):
         p = starting_dir
         print(f"starting_dir passed to function: {starting_dir}")
     else:
-        p = Path(__main__.__file__).parent
+        p = Path(__main__.__file__).parent.resolve()
         print(f"setting p to parent dir: {p}")
 
     if p == Path("/"):
@@ -103,7 +103,7 @@ def get_git_repo(starting_dir: Path = None):
     if is_git_repo(p):
         return p
     else:
-        return get_git_repo(p.parent)
+        return get_git_repo(p.parent.resolve())
 
 
 def get_tag_or_commit(only_commit=False):
