@@ -92,8 +92,10 @@ def get_git_repo(starting_dir: Path = None):
 
     if starting_dir is not None:
         p = starting_dir
+        print(f"starting_dir passed to function: {starting_dir}")
     else:
         p = Path(__main__.__file__).parent
+        print(f"setting p to parent dir: {p}")
 
     if p == Path("/"):
         return None
