@@ -1,0 +1,16 @@
+SURROUND Specific Project Software License
+------------------------------------------
+
+This software, PROV Workflow (ProvWF) has been provided to you by SURROUND Australia Pty Ltd for your use in a particular project application and is licensed 
+to you for use for that project application only.
+
+Due to the nature of Python software, this ProvWF code is distributed as open source for it to work, however you are not free to use this software for 
+purposes other than the particular project for which this software was provided. When used for that project purpose, you may continue to use ProvWF indefinitely.
+
+Prohibited use of this software includes derivative work, so you may not extend or alter this software for non-project use. If you are interested in such use,
+please contact SURROUND Australia Pty Ltd and other arrangements may be made.
+
+If you wish to contribute to ProvWF, contributions will currently only be accepted if copyright is assigend to SURROUND Australia Pty Ltd.
+
+SURROUND reserves the right to change these conditions, and probbaly will, for future provisioning of ProvWF, however the conditions specified here are forever applicable to this 
+particular distribution, for this project.
