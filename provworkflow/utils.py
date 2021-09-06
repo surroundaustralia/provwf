@@ -13,7 +13,8 @@ from datetime import datetime
 def query_sop_sparql(named_graph_uri, query, update=False):
     """
     Perform read and write SPARQL queries against a Surround Ontology Platform (SOP) instance
-    :param named_graph_uri: the graph to write to within SOP, using it's internal name e.g. "urn:x-evn-master:test-datagraph"
+    :param named_graph_uri: the graph to write to within SOP, using it's internal name e.g.
+    "urn:x-evn-master:test-datagraph"
     :param query: SPARQL query to send to the SPARQL endpoint
     :param update: update = write
     :return: HTTP response
@@ -25,9 +26,9 @@ def query_sop_sparql(named_graph_uri, query, update=False):
 
     global saved_session_cookies
     with requests.session() as s:
-        site = s.get(endpoint + "/tbl")
+        s.get(endpoint + "/tbl")
         reuse_sessions = False
-        ## should be able to check the response contains
+        # should be able to check the response contains
         if reuse_sessions and saved_session_cookies:
             s.cookies = saved_session_cookies
         else:
@@ -54,7 +55,7 @@ def query_sop_sparql(named_graph_uri, query, update=False):
             data=data,
             headers={"Accept": "application/sparql-results+json"},
         )
-        ## force logout of session
+        # force logout of session
         s.get(endpoint + "/tbl/purgeuser?app=edg")
         return response
         # .json() if response.text else {}
@@ -88,12 +89,11 @@ def is_git_repo(path):
 
 def get_git_repo(starting_dir: Path = None):
     """Finds the Git repo location (folder) if a given file is within one, however deep"""
-    import __main__
 
     if starting_dir is not None:
         p = starting_dir
     else:
-        p = Path(__main__.__file__).parent.resolve()
+        p = Path.cwd().resolve()
 
     if p == Path("/"):
         return None
@@ -123,10 +123,9 @@ def get_repo_uri():
         return None
     repo = git.Repo(repo_dir)
     origin_uri_with_user = repo.remotes.origin.url
-    if origin_uri_with_user.find('@') >=0:
+    if origin_uri_with_user.find('@') >= 0:
         origin_uri_with_user = "https://" + origin_uri_with_user.split("@")[1]
     return origin_uri_with_user
-
 
 
 def get_version_uri():
@@ -134,15 +133,15 @@ def get_version_uri():
     repo_uri = get_repo_uri()
     if repo_uri is None:
         return None
-    id = str(get_tag_or_commit())
+    id_ = str(get_tag_or_commit())
 
     if "bitbucket" in repo_uri:
-        if len(id) < 10:  # tag
+        if len(id_) < 10:  # tag
             path = "/commits/tag/"
         else:  # commit
             path = "/commits/"
     elif "github" in repo_uri:
-        if len(id) < 10:  # tag
+        if len(id_) < 10:  # tag
             path = "/releases/tag/"
         else:  # commit
             path = "/commit/"
@@ -152,7 +151,7 @@ def get_version_uri():
     else:
         raise Exception("Only GitHub & BitBucket repos are supported")
 
-    return repo_uri.replace(".git", "") + path + id
+    return repo_uri.replace(".git", "") + path + id_
 
 
 def add_with_provenance(
