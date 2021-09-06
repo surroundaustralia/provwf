@@ -122,7 +122,10 @@ def get_repo_uri():
         return None
     repo = git.Repo(repo_dir)
     origin_uri_with_user = repo.remotes.origin.url
-    return "https://" + origin_uri_with_user.split("@")[1]
+    if origin_uri_with_user.find('@') >=0:
+        origin_uri_with_user = "https://" + origin_uri_with_user.split("@")[1]
+    return origin_uri_with_user
+
 
 
 def get_version_uri():
