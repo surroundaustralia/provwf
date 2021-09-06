@@ -6,7 +6,7 @@ from rdflib.namespace import DCTERMS, RDF, RDFS, XSD
 import os
 import requests
 import pytest
-from _graphdb_utils import setup_graphdb
+from tests._graphdb_utils import setup_graphdb
 
 
 def test_prov_to_graph():
