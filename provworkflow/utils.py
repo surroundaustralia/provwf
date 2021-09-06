@@ -88,12 +88,11 @@ def is_git_repo(path):
 
 def get_git_repo(starting_dir: Path = None):
     """Finds the Git repo location (folder) if a given file is within one, however deep"""
-    import __main__
 
     if starting_dir is not None:
         p = starting_dir
     else:
-        p = Path(__main__.__file__).parent.resolve()
+        p = Path.cwd().resolve()
 
     if p == Path("/"):
         return None
