@@ -11,7 +11,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='provworkflow',  # Required
-    version='0.5',  # Required
+    version='0.6',  # Required
     install_requires=['gitpython'],
     description='This is a Python library for creating workflows of methods that log their actions according '
                 'to the PROV-O standard.',  # Optional
