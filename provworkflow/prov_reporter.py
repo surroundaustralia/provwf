@@ -340,6 +340,6 @@ class ProvReporter:
             if named_graph_uri is None:
                 x = g.serialize(format="turtle")
             else:
-                x = g.serialize(format="trig").decode()
+                x = g.serialize(format="trig")
 
             return x if type(x) is str else x.decode()

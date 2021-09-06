@@ -15,6 +15,8 @@ def setup_graphdb():
         headers={"Accept": "application/json"},
     )
     have_repo = False
+    if r.status_code == 401:
+        return "Your local GraphDB needs authentication"
     if hasattr(r.json(), "message"):
         if r.json()["message"] == "There is no active location!":
             return "Local GraphDB has no active locations"
