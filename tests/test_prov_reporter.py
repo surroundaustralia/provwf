@@ -7,7 +7,7 @@ import os
 import requests
 import pytest
 from tests._graphdb_utils import setup_graphdb
-
+import tempfile
 
 def test_prov_to_graph():
     pr = ProvReporter()
@@ -49,12 +49,14 @@ def test_persist_to_string():
 
 
 def test_persist_to_file():
-    p = "/tmp/prov_reporter_x"
+    tmp = tempfile.NamedTemporaryFile()
+    tmp.close()
+
     pr = ProvReporter()
-    pr.persist(methods="file", rdf_file_path=p)
-    with open(p + ".ttl") as f:
+    pr.persist(methods="file", rdf_file_path=tmp.name)
+    with open(tmp.name + ".ttl") as f:
         assert str(f.read()).startswith("@prefix")
-    os.unlink(p + ".ttl")
+    os.unlink(tmp.name + ".ttl")
 
 
 def test_persist_to_graphdb():
