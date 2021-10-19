@@ -6,3 +6,6 @@ from .error_entity import ErrorEntity
 from .exceptions import ProvWorkflowException
 from .prov_reporter import ProvReporter, PROVWF, PWFS
 from .workflow import Workflow
+
+
+__version__ = "1.0.0"
