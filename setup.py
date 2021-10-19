@@ -1,19 +1,30 @@
 from setuptools import setup, find_packages
 from os import path
 from io import open
-from provworkflow import __version__
+import re
 
 here = path.abspath(path.dirname(__file__))
+
+# Get the version from the package
+with open('provworkflow/__init__.py') as f:
+    for line in f.readlines():
+        m = re.search(r'__version__ = "(.*)"', line)
+        if m is not None:
+            version = m.group(0)
+            break
 
 # Get the long description from the README file
 with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
+# Get required packages from requirements.txt, but not the dev packages
+with open('requirements.txt') as f:
+    required = f.read().splitlines()
 
 setup(
     name='provworkflow',
-    version=__version__,
-    install_requires=['gitpython'],
+    version=version,
+    install_requires=required,
     description='A Python library for creating Workflows containing Blocks that log their actions according to a '
                 'specialisation of the PROV-O standard.',
     long_description=long_description,
