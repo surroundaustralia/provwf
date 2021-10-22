@@ -6,12 +6,8 @@ import re
 here = path.abspath(path.dirname(__file__))
 
 # Get the version from the package
-with open('provworkflow/__init__.py') as f:
-    for line in f.readlines():
-        m = re.search(r'__version__ = "(.*)"', line)
-        if m is not None:
-            version = m.group(0)
-            break
+
+version = "1.0.0"
 
 # Get the long description from the README file
 with open(path.join(here, 'README.md'), encoding='utf-8') as f:
