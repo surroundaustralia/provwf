@@ -7,7 +7,7 @@ here = path.abspath(path.dirname(__file__))
 
 # Get the version from the package
 
-version = "1.0.0"
+version = "1.1.0"
 
 # Get the long description from the README file
 with open(path.join(here, 'README.md'), encoding='utf-8') as f:
