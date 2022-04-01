@@ -18,12 +18,10 @@ Accept: application/json
 """
 b.used = [
     Entity(value=fake_data),
-    Entity(uri="http://example.com/endpoint", value=params)
+    Entity(uri="http://example.com/endpoint", value=params),
 ]
 
-b.generated.append(
-    Entity(was_attributed_to=nick, uri="http://somewhere-on-s3/a/b/c")
-)
+b.generated.append(Entity(was_attributed_to=nick, uri="http://somewhere-on-s3/a/b/c"))
 
 w.blocks.append(b)
 

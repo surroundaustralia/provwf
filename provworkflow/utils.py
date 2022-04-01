@@ -123,7 +123,7 @@ def get_repo_uri():
         return None
     repo = git.Repo(repo_dir)
     origin_uri_with_user = repo.remotes.origin.url
-    if origin_uri_with_user.find('@') >= 0:
+    if origin_uri_with_user.find("@") >= 0:
         origin_uri_with_user = "https://" + origin_uri_with_user.split("@")[1]
     return origin_uri_with_user
 
@@ -155,8 +155,11 @@ def get_version_uri():
 
 
 def add_with_provenance(
-        s: Union[URIRef, BNode], p: URIRef, o: Union[URIRef, BNode, Literal],
-        block_uri: URIRef) -> Graph:
+    s: Union[URIRef, BNode],
+    p: URIRef,
+    o: Union[URIRef, BNode, Literal],
+    block_uri: URIRef,
+) -> Graph:
     """Creates a small graph, adds the given triple and also adds reified provenances for that triple"""
     g = Graph()
     # add the triple
@@ -168,7 +171,15 @@ def add_with_provenance(
     g.add((x, RDF.subject, s))
     g.add((x, RDF.predicate, p))
     g.add((x, RDF.object, o))
-    g.add((x, DCTERMS.created, Literal(datetime.now().strftime("%Y-%m-%dT%H:%M:%S"), datatype=XSD.dateTime)))
+    g.add(
+        (
+            x,
+            DCTERMS.created,
+            Literal(
+                datetime.now().strftime("%Y-%m-%dT%H:%M:%S"), datatype=XSD.dateTime
+            ),
+        )
+    )
     g.add((x, PROV.wasAssociatedWith, block_uri))
 
     return g

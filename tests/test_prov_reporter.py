@@ -9,6 +9,7 @@ import pytest
 from tests._graphdb_utils import setup_graphdb
 import tempfile
 
+
 def test_prov_to_graph():
     pr = ProvReporter()
     g = pr.prov_to_graph()
