@@ -23,12 +23,9 @@ To use this library, add either of these to a requirements.txt and install, or i
 * `git+https://{USERNAME}@bitbucket.org/surroundbitbucket/provwf.git`
 
 ## Use & License
-This software is not for distribution in the for that it is in here, in this repository. SURROUND will distribute static 
-versions of this software to clients, as needed. The [LICENSE](LICENSE) file contains a copy of a custom license that
-should be used for distributed versions.
+This software is made available for use under the [Creative Common Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/). See the [LICENSE](LICENSE) file for the deed.
 
 ## Contact
-Contact SURROUND Australia Pty Ltd for any licensing or technical issues:
 
 **SURROUND Australia Pty Ltd**  
 <https://surroundaustralia.com>  
