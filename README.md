@@ -19,8 +19,8 @@ provenance. PROV-DM is organized in six components, respectively dealing with: (
 
 To use this library, add either of these to a requirements.txt and install, or install directly with pip install:  
 
-* `git+ssh://git@bitbucket.org/surroundbitbucket/provwf.git`  
-* `git+https://{USERNAME}@bitbucket.org/surroundbitbucket/provwf.git`
+* `git+ssh://git@github.com/surroundaustralia/provwf.git`  
+* `git+https://{USERNAME}@bgithub.com/surroundaustralia/provwf.git`
 
 ## Use & License
 This software is made available for use under the [Creative Common Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/). See the [LICENSE](LICENSE) file for the deed.
